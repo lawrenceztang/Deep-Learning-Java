@@ -56,6 +56,8 @@ public class ImageReader implements Serializable{
 
     }
 
+
+
     public ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> get2dColorMatrices (int batchSize) throws Exception{
         ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> imagesAsMatrices = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
         oneHotOutputs = new ArrayList<ArrayList<Double>>();
@@ -86,7 +88,7 @@ public class ImageReader implements Serializable{
         return imagesAsMatrices;
     }
 
-    public ArrayList<ArrayList<Double>> get1dColorMatricesFromImages(int batchSize) throws Exception{
+    public ArrayList<ArrayList<Double>> get1dColorMatricesFromImages(int batchSize, int newWidth) throws Exception{
         ArrayList<ArrayList<Double>> imagesAsMatrices = new ArrayList<ArrayList<Double>>();
         oneHotOutputs = new ArrayList<ArrayList<Double>>();
 
@@ -101,7 +103,7 @@ public class ImageReader implements Serializable{
                 break;
             }
 
-            imagesAsMatrices.add(getImageAs1DMatrix(allFiles[random][newImageReferenceForEachClass.get(random)].getPath()));
+            imagesAsMatrices.add(getImageAs1DMatrix(allFiles[random][newImageReferenceForEachClass.get(random)].getPath(), newWidth));
             newImageReferenceForEachClass.set(random, newImageReferenceForEachClass.get(random) + 1);
 
             oneHotOutputs.add(new ArrayList<Double>());
@@ -136,16 +138,35 @@ public class ImageReader implements Serializable{
     }
 
     //return image as 1d matrix with color
-    public ArrayList<Double> getImageAs1DMatrix(String filePath) throws Exception {
+    public ArrayList<Double> getImageAs1DMatrix(String filePath, int newWidth) throws Exception {
         BufferedImage image = ImageIO.read(new File(filePath));
         ArrayList<Double> matrix = new ArrayList<Double>();
-        for (int x = 0; x < image.getWidth(); x++) {
+        int chunkSize = image.getWidth() / newWidth;
 
-            for (int y = 0; y < image.getHeight(); y++) {
-                Color color = new Color(image.getRGB(x, y));
-                matrix.add((double)color.getRed());
-                matrix.add((double)color.getGreen());
-                matrix.add((double)color.getBlue());
+        for (int x = 0; x < image.getWidth(); x += chunkSize) {
+
+            for (int y = 0; y < image.getHeight(); y += chunkSize) {
+                if(x + chunkSize > image.getWidth()) {
+                    return matrix;
+                }
+                else if(y + chunkSize > image.getHeight()) {
+                    break;
+                }
+
+                int averageR = 0;
+                int averageG = 0;
+                int averageB = 0;
+                for(int p = 0; p < chunkSize; p++) {
+                    for(int u = 0; u < chunkSize; u++) {
+                        Color color = new Color(image.getRGB(x + p, y + u));
+                        averageB += color.getBlue();
+                        averageG += color.getGreen();
+                        averageR += color.getRed();
+                    }
+                }
+                matrix.add((double)averageR);
+                matrix.add((double)averageG);
+                matrix.add((double)averageB);
             }
         }
         return matrix;

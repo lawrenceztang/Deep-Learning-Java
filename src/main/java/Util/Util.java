@@ -1,10 +1,11 @@
 package Util;
 
-import Kernels.AdditionKernel;
-import Kernels.MultiplicationKernel;
+import Kernels.DotProductKernel;
 import com.aparapi.Kernel;
 import com.aparapi.Range;
 import com.aparapi.device.Device;
+import com.aparapi.device.JavaDevice;
+import com.aparapi.internal.kernel.KernelManager;
 import com.sun.org.apache.xpath.internal.operations.Mult;
 
 
@@ -32,8 +33,8 @@ public class Util {
 
     public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2, final int chunkSize) {
         //device.setSharedMemory(false)
-        //map: corresponding entries multiplied
-        final double[] result = new double[in1.size()];
+        //Device device = KernelManager.instance().bestDevice();
+
         final double[] in1Copy = new double[in1.size()];
         final double[] in2Copy = new double[in1.size()];
         for (int i = 0; i < in1.size(); i++) {
@@ -41,76 +42,13 @@ public class Util {
             in2Copy[i] = in2.get(i);
         }
 
-        MultiplicationKernel multiplicationKernel = new MultiplicationKernel(in1Copy, in2Copy, result);
-        Range range = Range.create(in1Copy.length);
-        multiplicationKernel.execute(range);
+        Device device = Device.firstCPU();
 
+        DotProductKernel kernel = new DotProductKernel(in1Copy, in2Copy, chunkSize);
+        Range range = JavaDevice.THREAD_POOL.createRange(in1Copy.length, 2);
+        kernel.execute(range);
 
-        //reduce: addition
-
-//        final AdditionKernel additionKernel = new AdditionKernel(result, 2);
-//
-//        int passes = 0;
-//        int size = result.length;
-//        while (true) {
-//            if (size == 1) {
-//                break;
-//            }
-//            size = (int) Math.ceil((double) size / (double) chunkSize);
-//            passes++;
-//        }
-//
-//        Range additionRange = Range.create(result.length);
-//        additionKernel.execute(additionRange, passes);
-//
-//
-//        return additionKernel.getResult();
-        //reduce: addition
-
-
-        final int[] arraySize = new int[1];
-        arraySize[0] = result.length;
-        final int[] numPasses = new int[1];
-        numPasses[0] = 0;
-
-        int passes = 0;
-        int size = result.length;
-        while (true) {
-            if (size == 1) {
-                break;
-            }
-            size = (int) Math.ceil((double) size / (double) chunkSize);
-            passes++;
-        }
-
-
-        Kernel additionKernel = new Kernel() {
-
-            @Override
-            public void run() {
-                int gap = (int) Math.pow(chunkSize, numPasses[0]);
-                int i = getGlobalId() * gap * chunkSize;
-
-                for (int a = 1; a < chunkSize; a++) {
-                    if (i + a * gap < arraySize[0] * gap) {
-                        result[i] += result[i + a * gap];
-                    } else {
-                        break;
-                    }
-                }
-                if(getGlobalId() == arraySize[0] - 1) {
-                    arraySize[0] = (int) Math.ceil((double) arraySize[0] / (double) chunkSize);
-                    numPasses[0]++;
-                }
-            }
-        };
-
-
-        Range additionRange = Range.create(arraySize[0]);
-        additionKernel.execute(additionRange, passes);
-
-
-        return result[0];
+        return kernel.getResult();
     }
 
     public static double matrixProductSum(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> anotherIn) {

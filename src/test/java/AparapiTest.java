@@ -17,7 +17,7 @@ public class AparapiTest {
 
         ArrayList<Double> vector1 = new ArrayList<Double>();
         ArrayList<Double> vector2 = new ArrayList<Double>();
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 2; i++) {
             vector1.add(3d);
             vector2.add(7d);
         }

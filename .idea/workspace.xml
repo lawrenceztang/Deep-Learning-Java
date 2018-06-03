@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8505bc8e-fdb7-46e2-96e6-9cfe50d2d317" name="Default" comment="" />
+    <list default="true" id="8505bc8e-fdb7-46e2-96e6-9cfe50d2d317" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" afterPath="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util/Util.java" afterPath="$PROJECT_DIR$/src/main/java/Util/Util.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/AparapiTest.java" afterPath="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Kernels/AdditionKernel.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Kernels/MultiplicationKernel.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" afterPath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,96 +25,55 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/machine_learning$AparapiTest.coverage" NAME="AparapiTest Coverage Results" MODIFIED="1527721279895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/machine_learning$AparapiTest.coverage" NAME="AparapiTest Coverage Results" MODIFIED="1527959171504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="KernelRunner.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/internal/kernel/KernelRunner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="718" column="0" lean-forward="false" selection-start-line="718" selection-start-column="0" selection-end-line="718" selection-end-column="0" />
-              <folding>
-                <element signature="e#33901#34838#0" expanded="true" />
-                <element signature="e#34837#34838#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="109" column="0" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+            <state relative-caret-position="542">
+              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2418#3114#0" expanded="true" />
-                <element signature="e#3113#3114#0" expanded="true" />
-                <element signature="e#3933#3952#0" expanded="true" />
-                <element signature="e#4375#4383#0" expanded="true" />
-                <element signature="e#4577#4578#0" expanded="true" />
-                <element signature="e#4630#4631#0" expanded="true" />
-                <element signature="e#4895#4903#0" expanded="true" />
-                <element signature="e#5717#5725#0" expanded="true" />
-                <element signature="e#6143#6151#0" expanded="true" />
-                <element signature="e#6497#6505#0" expanded="true" />
-                <element signature="e#7301#7309#0" expanded="true" />
-                <element signature="e#7804#7834#0" expanded="true" />
-                <element signature="e#8706#8714#0" expanded="true" />
-                <element signature="e#11062#11081#0" expanded="true" />
-                <element signature="e#11407#11415#0" expanded="true" />
+                <element signature="e#2159#2178#0" expanded="true" />
+                <element signature="e#2601#2609#0" expanded="true" />
+                <element signature="e#2803#2804#0" expanded="true" />
+                <element signature="e#2856#2857#0" expanded="true" />
+                <element signature="e#3121#3129#0" expanded="true" />
+                <element signature="e#3943#3951#0" expanded="true" />
+                <element signature="e#4369#4377#0" expanded="true" />
+                <element signature="e#4723#4731#0" expanded="true" />
+                <element signature="e#5527#5535#0" expanded="true" />
+                <element signature="e#6030#6060#0" expanded="true" />
+                <element signature="e#6932#6940#0" expanded="true" />
+                <element signature="e#9288#9307#0" expanded="true" />
+                <element signature="e#9633#9641#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdditionKernel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java">
+      <file leaf-file-name="DotProductKernel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-119">
-              <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="372">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1578#1579#0" expanded="true" />
+                <element signature="e#1610#1611#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="13" column="61" lean-forward="false" selection-start-line="13" selection-start-column="61" selection-end-line="13" selection-end-column="61" />
+            <state relative-caret-position="272">
+              <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiplicationKernel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="50" lean-forward="false" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Kernel.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/Kernel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="750" column="0" lean-forward="false" selection-start-line="750" selection-start-column="0" selection-end-line="750" selection-end-column="0" />
-              <folding>
-                <element signature="e#21433#21434#0" expanded="true" />
-                <element signature="e#21468#21469#0" expanded="true" />
-                <element signature="e#26787#26788#0" expanded="true" />
-                <element signature="e#26854#26855#0" expanded="true" />
-                <element signature="e#26906#26907#0" expanded="true" />
-                <element signature="e#29471#29472#0" expanded="true" />
-                <element signature="e#29514#29515#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -109,11 +81,21 @@
       <file leaf-file-name="AparapiTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="323">
+              <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageReader.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,16 +132,17 @@
         <option value="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/NetworkSaver.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/LoadNetwork.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/RunCNN.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/Kernels/AdditionKernel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java" />
-        <option value="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/Util.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
+        <option value="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
       </list>
     </option>
   </component>
@@ -170,7 +153,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="235" />
     <option name="y" value="115" />
     <option name="width" value="1400" />
@@ -192,6 +175,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -274,10 +261,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -304,7 +287,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RunFullyConnected">
+  <component name="RunManager" selected="JUnit.AparapiTest">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -477,8 +460,8 @@
     </list>
     <recent_temporary>
       <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.RunFullyConnected" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.AparapiTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.AparapiTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.RunFullyConnected" />
         <item index="2" class="java.lang.String" itemvalue="Application.MultiplicationKernel" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.Util" />
       </list>
@@ -501,34 +484,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 25m 03s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 13h 06m 20s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 27m 59s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 13h 07m 23s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 35m 57s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 13h 07m 28s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 36m 06s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 13h 09m 39s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 45m 17s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 13h 09m 45s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 47m 21s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 22h 00m 58s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 47m 34s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 29s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 47m 39s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 44s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 47m 42s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 59s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.05.30 at 19h 47m 46s.xml">
+    <history-entry file="AparapiTest - 2018.06.02 at 22h 02m 44s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -542,7 +525,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -552,14 +536,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31277058" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2707889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27985075" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -571,6 +554,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -601,31 +585,86 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java</url>
-          <line>38</line>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java</url>
+          <line>33</line>
           <properties />
-          <option name="timeStamp" value="52" />
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java</url>
-          <line>45</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java</url>
+          <line>31</line>
           <properties />
-          <option name="timeStamp" value="55" />
+          <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="59" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="102" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="result" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>getGlobalId() * gap[0] * chunkSize &lt; arraySize[0]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getGlobalId() * gap[0] * chunkSize[0] &lt; result.length &amp;&amp; getGlobalId() == 1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getGlobalId() * gap[0] * chunkSize[0] &lt; result.length</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>getGlobalId() * gap[0] * chunkSize[0]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>getGlobalId()</expression-string>
         <language-id>JAVA</language-id>
@@ -644,16 +683,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -692,21 +721,19 @@
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -749,21 +776,19 @@
           <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -806,21 +831,19 @@
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -863,21 +886,19 @@
           <caret line="45" column="51" lean-forward="false" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -914,21 +935,19 @@
           <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1034,16 +1053,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="54" column="16" lean-forward="false" selection-start-line="54" selection-start-column="16" selection-end-line="54" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/machine-learning.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1077,17 +1086,8 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/Range.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2890">
-          <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2046">
-          <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="175">
+          <caret line="193" column="0" lean-forward="false" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1095,76 +1095,67 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="718" column="0" lean-forward="false" selection-start-line="718" selection-start-column="0" selection-end-line="718" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="30" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="140" column="16" lean-forward="false" selection-start-line="140" selection-start-column="16" selection-end-line="140" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/Kernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="2493" column="0" lean-forward="false" selection-start-line="2493" selection-start-column="0" selection-end-line="2493" selection-end-column="0" />
           <folding>
-            <element signature="e#33901#34838#0" expanded="true" />
-            <element signature="e#34837#34838#0" expanded="true" />
+            <element signature="e#21433#21434#0" expanded="false" />
+            <element signature="e#21468#21469#0" expanded="false" />
+            <element signature="e#26753#26754#0" expanded="false" />
+            <element signature="e#26787#26788#0" expanded="false" />
+            <element signature="e#26854#26855#0" expanded="false" />
+            <element signature="e#26906#26907#0" expanded="false" />
+            <element signature="e#120256#120257#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/JavaDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1578#1579#0" expanded="true" />
+            <element signature="e#1610#1611#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/Kernel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="750" column="0" lean-forward="false" selection-start-line="750" selection-start-column="0" selection-end-line="750" selection-end-column="0" />
-          <folding>
-            <element signature="e#21433#21434#0" expanded="true" />
-            <element signature="e#21468#21469#0" expanded="true" />
-            <element signature="e#26787#26788#0" expanded="true" />
-            <element signature="e#26854#26855#0" expanded="true" />
-            <element signature="e#26906#26907#0" expanded="true" />
-            <element signature="e#29471#29472#0" expanded="true" />
-            <element signature="e#29514#29515#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="50" lean-forward="false" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="109" column="0" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2418#3114#0" expanded="true" />
-            <element signature="e#3113#3114#0" expanded="true" />
-            <element signature="e#3933#3952#0" expanded="true" />
-            <element signature="e#4375#4383#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4895#4903#0" expanded="true" />
-            <element signature="e#5717#5725#0" expanded="true" />
-            <element signature="e#6143#6151#0" expanded="true" />
-            <element signature="e#6497#6505#0" expanded="true" />
-            <element signature="e#7301#7309#0" expanded="true" />
-            <element signature="e#7804#7834#0" expanded="true" />
-            <element signature="e#8706#8714#0" expanded="true" />
-            <element signature="e#11062#11081#0" expanded="true" />
-            <element signature="e#11407#11415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-119">
-          <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state relative-caret-position="323">
+          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1173,8 +1164,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="13" column="61" lean-forward="false" selection-start-line="13" selection-start-column="61" selection-end-line="13" selection-end-column="61" />
+        <state relative-caret-position="272">
+          <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2159#2178#0" expanded="true" />
+            <element signature="e#2601#2609#0" expanded="true" />
+            <element signature="e#2803#2804#0" expanded="true" />
+            <element signature="e#2856#2857#0" expanded="true" />
+            <element signature="e#3121#3129#0" expanded="true" />
+            <element signature="e#3943#3951#0" expanded="true" />
+            <element signature="e#4369#4377#0" expanded="true" />
+            <element signature="e#4723#4731#0" expanded="true" />
+            <element signature="e#5527#5535#0" expanded="true" />
+            <element signature="e#6030#6060#0" expanded="true" />
+            <element signature="e#6932#6940#0" expanded="true" />
+            <element signature="e#9288#9307#0" expanded="true" />
+            <element signature="e#9633#9641#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding />
         </state>
       </provider>

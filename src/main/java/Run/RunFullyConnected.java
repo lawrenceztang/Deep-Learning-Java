@@ -20,7 +20,7 @@ public class RunFullyConnected {
         ArrayList<ArrayList<Double>> trainingData = new ArrayList<ArrayList<Double>>();
         ImageReader reader = new ImageReader(trainingDataPath);
 
-        trainingData = reader.get1dColorMatricesFromImages(200);
+        trainingData = reader.get1dColorMatricesFromImages(200, 28);
         reader.setPreprocessParameters(trainingData);
         trainingData = reader.preprocessTrainingSet(trainingData);
         ArrayList<ArrayList<Double>> trainingDataOutputs = reader.oneHotOutputs;
@@ -59,7 +59,7 @@ public class RunFullyConnected {
 
         //testing
         Scanner scan = new Scanner(System.in);
-        ArrayList<ArrayList<Double>> testingData = reader.get1dColorMatricesFromImages(20);
+        ArrayList<ArrayList<Double>> testingData = reader.get1dColorMatricesFromImages(20, 28);
         testingData = reader.preprocessTrainingSet(testingData);
         ArrayList<ArrayList<Double>> testingOutputs = reader.oneHotOutputs;
         System.out.println("Percentage accurate after training on training data: " + network.test(trainingData, trainingDataOutputs));
