@@ -140,7 +140,7 @@ public class FullyConnectedNetwork implements Serializable {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProduct(weightsAfterDropout.get(i).get(u), in, 2) + biases.get(i).get(u));
+                    temp.add(Util.dotProduct(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u));
                 }
                 temp = Util.softmax(temp);
                 outputsInHiddenLayersTemp.add(temp);
@@ -151,7 +151,7 @@ public class FullyConnectedNetwork implements Serializable {
             } else {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < nodesPerLayer; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProduct(weightsAfterDropout.get(i).get(u), in, 2) + biases.get(i).get(u)));
+                    temp.add(Util.sigmoidFunction(Util.dotProduct(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u)));
                 }
                 outputsInHiddenLayersTemp.add(temp);
                 in = temp;
@@ -170,7 +170,7 @@ public class FullyConnectedNetwork implements Serializable {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in, 2) + biases.get(i).get(u));
+                    temp.add(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u));
                 }
                 in = Util.softmax(temp);
             } else if (i == 0) {
@@ -178,7 +178,7 @@ public class FullyConnectedNetwork implements Serializable {
             } else {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < nodesPerLayer; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in, 2) + biases.get(i).get(u)));
+                    temp.add(Util.sigmoidFunction(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u)));
                 }
                 in = temp;
             }

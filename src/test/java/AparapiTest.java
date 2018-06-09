@@ -17,17 +17,17 @@ public class AparapiTest {
 
         ArrayList<Double> vector1 = new ArrayList<Double>();
         ArrayList<Double> vector2 = new ArrayList<Double>();
-        for(int i = 0; i < 160; i++) {
+        for(int i = 0; i < 60000; i++) {
             vector1.add(3d);
             vector2.add(5d);
         }
 
         double startTime = System.currentTimeMillis();
-        double dotProduct = Util.dotProduct(vector1, vector2, 1);
+        double dotProduct = Util.dotProduct(vector1, vector2);
         System.out.println("With GPU: " + (System.currentTimeMillis() - startTime));
 
         double startTime2 = System.currentTimeMillis();
-        double dotProduct2 = Util.dotProduct(vector1, vector2, 1);
+        double dotProduct2 = Util.dotProduct(vector1, vector2);
         System.out.println("With GPU second time: " + (System.currentTimeMillis() - startTime2));
 
         double startTime3 = System.currentTimeMillis();

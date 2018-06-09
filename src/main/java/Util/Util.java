@@ -34,9 +34,8 @@ public class Util {
     }
 
 
-    public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2, final int chunkSize) throws Exception {
+    public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2) throws Exception {
 
-        final int maxLocalGroupSize = 256;
         final double[] in1Copy = new double[in1.size()];
         final double[] in2Copy = new double[in1.size()];
         for (int i = 0; i < in1.size(); i++) {
@@ -48,13 +47,17 @@ public class Util {
 //       KernelManager.setKernelManager(new JTPKernelManager());
 
         OpenCLDevice device = (OpenCLDevice) KernelManager.instance().bestDevice();
-        System.out.println(device.getLocalMemSize());
-//        device.setSharedMemory(false);
+        device.setSharedMemory(false);
 
-        int groupSize = device.getMaxWorkGroupSize();
-        int numIterations = (int) Math.ceil((double) in1Copy.length / (double) groupSize);
-        RunKernelThread[] threads = new RunKernelThread[numIterations];
+        //max 4000 doubles / 2 arrays = 2000 doubles per array - 200 for extra space
+        final int maxDoubles = (int) device.getLocalMemSize() / 16 - 200;
+        int chunkSize = (int) Math.ceil((double) maxDoubles / (double) device.getMaxWorkGroupSize());
+        if(chunkSize == 1) {
+            chunkSize = 2;
+        }
+        int numIterations = (int) Math.ceil((double) in1Copy.length / (double) maxDoubles);
         CountDownLatch latch = new CountDownLatch(numIterations);
+        double[] out = new double[numIterations];
 
         for (int u = 0; u < numIterations; u++) {
 
@@ -62,31 +65,25 @@ public class Util {
             double[] subarray1;
             double[] subarray2;
             if (u < numIterations - 1) {
-                subarray1 = new double[groupSize];
-                subarray2 = new double[groupSize];
-                for (int d = 0; d < groupSize; d++) {
-                    subarray1[d] = in1Copy[u * groupSize + d];
-                    subarray2[d] = in2Copy[u * groupSize + d];
-                }
+                subarray1 = Arrays.copyOfRange(in1Copy, u * maxDoubles, (u + 1) * maxDoubles);
+                subarray2 = Arrays.copyOfRange(in2Copy, u * maxDoubles, (u + 1) * maxDoubles);
             } else {
-                subarray1 = new double[in1Copy.length - u * groupSize];
-                subarray2 = new double[in1Copy.length - u * groupSize];
-                for (int d = 0; d < in1Copy.length - u * groupSize; d++) {
-                    subarray1[d] = in1Copy[u * groupSize + d];
-                    subarray2[d] = in2Copy[u * groupSize + d];
-                }
+                subarray1 = Arrays.copyOfRange(in1Copy, u * maxDoubles, in1Copy.length);
+                subarray2 = Arrays.copyOfRange(in2Copy, u * maxDoubles, in1Copy.length);
             }
 
-            threads[u] = new RunKernelThread(subarray1, subarray2, chunkSize, device, in1Copy, u, latch);
-            threads[u].start();
-            System.out.println("run");
+            RunKernelThread thread = new RunKernelThread(subarray1, subarray2, chunkSize, device, out, u, latch);
+            thread.start();
         }
 
         //wait until all threads complete
         latch.await();
 
         //now safe to retrieve output
-        return in1Copy[0];
+        for (int i = 1; i < out.length; i++) {
+            out[0] += out[i];
+        }
+        return out[0];
     }
 
     public static class RunKernelThread extends Thread {
@@ -115,7 +112,6 @@ public class Util {
             kernel.execute(device.createRange(kernel.getRange(), kernel.getRange()));
             out[iteration] += kernel.getResult();
             latch.countDown();
-            System.out.println("count down");
         }
     }
 
