@@ -164,9 +164,9 @@ public class ImageReader implements Serializable{
                         averageR += color.getRed();
                     }
                 }
-                matrix.add((double)averageR);
-                matrix.add((double)averageG);
-                matrix.add((double)averageB);
+                matrix.add((double)(averageR / chunkSize / chunkSize));
+                matrix.add((double)(averageG / chunkSize / chunkSize));
+                matrix.add((double)(averageB / chunkSize / chunkSize));
             }
         }
         return matrix;

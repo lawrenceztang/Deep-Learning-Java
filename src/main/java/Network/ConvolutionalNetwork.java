@@ -69,7 +69,7 @@ public class ConvolutionalNetwork {
     }
 
     //i think backprop is correctly done
-    public void getGradientsWeightsWithRespectToError(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> inputs, ArrayList<ArrayList<Double>> outputs) {
+    public void getGradientsWeightsWithRespectToError(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> inputs, ArrayList<ArrayList<Double>> outputs) throws Exception{
 
         forwardPass(inputs.get(0));
 
@@ -130,7 +130,7 @@ public class ConvolutionalNetwork {
         }
     }
 
-    public ArrayList<Double> predictOutput(ArrayList<ArrayList<ArrayList<Double>>> inputs) {
+    public ArrayList<Double> predictOutput(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception{
         ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
         for (int e = 0; e < numLayers; e++) {
             layerInputs = Util.pad(layerInputs, padding.get(e));
@@ -166,7 +166,7 @@ public class ConvolutionalNetwork {
     }
 
     //input layer is counted as a layer
-    public void forwardPass(ArrayList<ArrayList<ArrayList<Double>>> inputs) {
+    public void forwardPass(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception{
         outputsInLayers = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
         ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
         outputsInLayers.add(layerInputs);
@@ -306,7 +306,7 @@ public class ConvolutionalNetwork {
     }
 
     //tests on dataset, returns percentage accurate
-    public double test(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> in, ArrayList<ArrayList<Double>> out) {
+    public double test(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> in, ArrayList<ArrayList<Double>> out) throws Exception{
         int numCorrect = 0;
         for (int i = 0; i < in.size(); i++) {
             ArrayList<Double> array = predictOutput(in.get(i));

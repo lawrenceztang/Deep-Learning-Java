@@ -19,6 +19,7 @@ public class RunFullyConnected {
         String trainingDataPath = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
         ArrayList<ArrayList<Double>> trainingData = new ArrayList<ArrayList<Double>>();
         ImageReader reader = new ImageReader(trainingDataPath);
+  //      BufferedImage imaged = Util.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
 
         trainingData = reader.get1dColorMatricesFromImages(200, 28);
         reader.setPreprocessParameters(trainingData);
@@ -46,6 +47,7 @@ public class RunFullyConnected {
                 network.setDropout(1);
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
 
+                //test derivative to see if theyre accurate
 //                System.out.println(network.derivativesErrorWithRespectToWeights.get(1).get(190).get(1900));
 //                System.out.println(network.derivativeOfWeightCheck(tempIn.get(0), tempOut.get(0), 1, 190, 1900));
 
@@ -74,6 +76,7 @@ public class RunFullyConnected {
         BufferedImage dreamedImage = Util.convert1dArrayToImage(reader.unpreprocessExample(dream.image), 28, 28);
         BufferedImage previousImage = Util.convert1dArrayToImage(reader.unpreprocessExample(trainingData.get(0)), 28, 28);
         System.out.println(network.predictOutput(dream.image));
+
 
         //specific example
         while (true) {

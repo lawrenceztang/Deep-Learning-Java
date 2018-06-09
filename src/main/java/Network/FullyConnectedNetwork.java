@@ -9,7 +9,7 @@ import java.util.Random;
 import Util.*;
 
 
-public class FullyConnectedNetwork implements Serializable  {
+public class FullyConnectedNetwork implements Serializable {
     Random rand;
 
     int layers;
@@ -72,7 +72,7 @@ public class FullyConnectedNetwork implements Serializable  {
     }
 
     //todo: gradients are 10 times larger than actually in last layer, gradients completely innacurate in other layers
-    public void getDerivativeOfErrorWithRespectToWeights(ArrayList<ArrayList<Double>> inputs, ArrayList<ArrayList<Double>> outputs) {
+    public void getDerivativeOfErrorWithRespectToWeights(ArrayList<ArrayList<Double>> inputs, ArrayList<ArrayList<Double>> outputs) throws Exception{
 
         //try mean squared error
         derivativesErrorWithRespectToWeights = getNewDerivativeWeights();
@@ -131,7 +131,7 @@ public class FullyConnectedNetwork implements Serializable  {
     //TODO: dropout
     //forward pass - first thing
     //stores outputs of each neuron in hidden layers
-    public void forwardPass(ArrayList<Double> inputs) {
+    public void forwardPass(ArrayList<Double> inputs) throws Exception{
         ArrayList<Double> in = inputs;
         ArrayList<ArrayList<Double>> outputsInHiddenLayersTemp = new ArrayList<ArrayList<Double>>();
 
@@ -162,7 +162,7 @@ public class FullyConnectedNetwork implements Serializable  {
     }
 
     //output as array of probabililities
-    public ArrayList<Double> predictOutput(ArrayList<Double> array) {
+    public ArrayList<Double> predictOutput(ArrayList<Double> array) throws Exception{
         ArrayList<Double> in = array;
 
         for (int i = 0; i < layers; i++) {
@@ -315,7 +315,7 @@ public class FullyConnectedNetwork implements Serializable  {
     }
 
     //tests on dataset, returns percentage accurate
-    public double test(ArrayList<ArrayList<Double>> in, ArrayList<ArrayList<Double>> out) {
+    public double test(ArrayList<ArrayList<Double>> in, ArrayList<ArrayList<Double>> out) throws Exception{
         int numCorrect = 0;
         for (int i = 0; i < in.size(); i++) {
             ArrayList<Double> array = predictOutput(in.get(i));
@@ -346,7 +346,7 @@ public class FullyConnectedNetwork implements Serializable  {
 
 
     //output as highest probability classname
-    public String getPredictionClass(ArrayList<Double> in) {
+    public String getPredictionClass(ArrayList<Double> in) throws Exception{
         ArrayList<Double> out = predictOutput(in);
 
         int maxOutput = 0;
@@ -370,7 +370,7 @@ public class FullyConnectedNetwork implements Serializable  {
 
             File file = fc.getSelectedFile();
             String fileName = file.getAbsolutePath();
-            return this.getPredictionClass(reader.preprocessExample(reader.getImageAs1DMatrix(fileName)));
+            return this.getPredictionClass(reader.preprocessExample(reader.getImageAs1DMatrix(fileName, 28)));
 
         } else {
             return null;
@@ -393,7 +393,7 @@ public class FullyConnectedNetwork implements Serializable  {
         learningRate = range / nodesPerLayer;
     }
 
-    public double derivativeOfWeightCheck(ArrayList<Double> in, ArrayList<Double> out, int layer, int node, int previousLayerNode) {
+    public double derivativeOfWeightCheck(ArrayList<Double> in, ArrayList<Double> out, int layer, int node, int previousLayerNode) throws Exception{
         double interval = .000001;
         weights.get(layer).get(node).set(previousLayerNode, weights.get(layer).get(node).get(previousLayerNode) - interval);
         double loss = Util.meanSquaredError(predictOutput(in), out);
@@ -440,7 +440,7 @@ public class FullyConnectedNetwork implements Serializable  {
             }
         }
 
-        public void updateImage(int desiredOutput) {
+        public void updateImage(int desiredOutput) throws  Exception{
 
             derivativeErrorWithRespectToInputs = new ArrayList<Double>();
             for(int i = 0; i < image.size(); i++) {

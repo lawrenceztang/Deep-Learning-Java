@@ -13,21 +13,21 @@ public class AparapiTest {
     }
 
     @Test
-    public void testDotProduct () {
+    public void testDotProduct () throws Exception {
 
         ArrayList<Double> vector1 = new ArrayList<Double>();
         ArrayList<Double> vector2 = new ArrayList<Double>();
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 160; i++) {
             vector1.add(3d);
-            vector2.add(7d);
+            vector2.add(5d);
         }
 
         double startTime = System.currentTimeMillis();
-        double dotProduct = Util.dotProduct(vector1, vector2, 2);
+        double dotProduct = Util.dotProduct(vector1, vector2, 1);
         System.out.println("With GPU: " + (System.currentTimeMillis() - startTime));
 
         double startTime2 = System.currentTimeMillis();
-        double dotProduct2 = Util.dotProduct(vector1, vector2, 2);
+        double dotProduct2 = Util.dotProduct(vector1, vector2, 1);
         System.out.println("With GPU second time: " + (System.currentTimeMillis() - startTime2));
 
         double startTime3 = System.currentTimeMillis();

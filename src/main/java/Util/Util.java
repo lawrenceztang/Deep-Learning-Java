@@ -5,6 +5,7 @@ import com.aparapi.Kernel;
 import com.aparapi.Range;
 import com.aparapi.device.Device;
 import com.aparapi.device.JavaDevice;
+import com.aparapi.device.OpenCLDevice;
 import com.aparapi.internal.kernel.KernelManager;
 import com.sun.org.apache.xpath.internal.operations.Mult;
 
@@ -14,8 +15,10 @@ import java.awt.image.BufferedImage;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Util {
 
@@ -31,10 +34,9 @@ public class Util {
     }
 
 
-    public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2, final int chunkSize) {
-        //device.setSharedMemory(false)
-        //Device device = KernelManager.instance().bestDevice();
+    public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2, final int chunkSize) throws Exception {
 
+        final int maxLocalGroupSize = 256;
         final double[] in1Copy = new double[in1.size()];
         final double[] in2Copy = new double[in1.size()];
         for (int i = 0; i < in1.size(); i++) {
@@ -42,13 +44,92 @@ public class Util {
             in2Copy[i] = in2.get(i);
         }
 
-        Device device = Device.firstCPU();
+        //for running in Java mode:
+//       KernelManager.setKernelManager(new JTPKernelManager());
 
-        DotProductKernel kernel = new DotProductKernel(in1Copy, in2Copy, chunkSize);
-        Range range = JavaDevice.THREAD_POOL.createRange(in1Copy.length, 2);
-        kernel.execute(range);
+        OpenCLDevice device = (OpenCLDevice) KernelManager.instance().bestDevice();
+        System.out.println(device.getLocalMemSize());
+//        device.setSharedMemory(false);
 
-        return kernel.getResult();
+        int groupSize = device.getMaxWorkGroupSize();
+        int numIterations = (int) Math.ceil((double) in1Copy.length / (double) groupSize);
+        RunKernelThread[] threads = new RunKernelThread[numIterations];
+        CountDownLatch latch = new CountDownLatch(numIterations);
+
+        for (int u = 0; u < numIterations; u++) {
+
+            //create subarrays that are less than max local size
+            double[] subarray1;
+            double[] subarray2;
+            if (u < numIterations - 1) {
+                subarray1 = new double[groupSize];
+                subarray2 = new double[groupSize];
+                for (int d = 0; d < groupSize; d++) {
+                    subarray1[d] = in1Copy[u * groupSize + d];
+                    subarray2[d] = in2Copy[u * groupSize + d];
+                }
+            } else {
+                subarray1 = new double[in1Copy.length - u * groupSize];
+                subarray2 = new double[in1Copy.length - u * groupSize];
+                for (int d = 0; d < in1Copy.length - u * groupSize; d++) {
+                    subarray1[d] = in1Copy[u * groupSize + d];
+                    subarray2[d] = in2Copy[u * groupSize + d];
+                }
+            }
+
+            threads[u] = new RunKernelThread(subarray1, subarray2, chunkSize, device, in1Copy, u, latch);
+            threads[u].start();
+            System.out.println("run");
+        }
+
+        //wait until all threads complete
+        latch.await();
+
+        //now safe to retrieve output
+        return in1Copy[0];
+    }
+
+    public static class RunKernelThread extends Thread {
+        double[] in1;
+        double[] in2;
+        int chunkSize;
+        Device device;
+        int iteration;
+        public final double[] out;
+        CountDownLatch latch;
+
+        public RunKernelThread(double[] in1, double[] in2, int chunkSize, Device device, double[] out, int iteration, CountDownLatch latch) {
+            this.in1 = in1;
+            this.in2 = in2;
+            this.chunkSize = chunkSize;
+            this.device = device;
+            this.out = out;
+            this.iteration = iteration;
+            this.latch = latch;
+        }
+
+        @Override
+        public synchronized void run() {
+            super.run();
+            DotProductKernel kernel = new DotProductKernel(in1, in2, chunkSize);
+            kernel.execute(device.createRange(kernel.getRange(), kernel.getRange()));
+            out[iteration] += kernel.getResult();
+            latch.countDown();
+            System.out.println("count down");
+        }
+    }
+
+    public static class JTPKernelManager extends KernelManager {
+        public JTPKernelManager() {
+            LinkedHashSet<Device> preferredDevices = new LinkedHashSet<Device>(1);
+            preferredDevices.add(JavaDevice.THREAD_POOL);
+            setDefaultPreferredDevices(preferredDevices);
+        }
+
+        @Override
+        protected List<Device.TYPE> getPreferredDeviceTypes() {
+            return Arrays.asList(Device.TYPE.JTP);
+        }
     }
 
     public static double matrixProductSum(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> anotherIn) {
@@ -233,6 +314,7 @@ public class Util {
         return max;
     }
 
+    //doesnt work
     public static BufferedImage convert1dArrayToImage(ArrayList<Double> in, int width, int height) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -242,9 +324,7 @@ public class Util {
                     Color color = new Color(in.get(i * height * 3 + u * 3).intValue(), in.get(i * height * 3 + u * 3 + 1).intValue(), in.get(i * height * 3 + u * 3 + 2).intValue());
                     out.setRGB(i, u, color.getRGB());
                 } catch (Exception e) {
-                    System.out.println(in.get(i * height * 3 + u * 3).intValue());
-                    System.out.println(in.get(i * height * 3 + u * 3 + 1).intValue());
-                    System.out.println(in.get(i * height * 3 + u * 3 + 2).intValue());
+
                 }
 
             }
@@ -267,6 +347,36 @@ public class Util {
         ArrayList<Double> out = new ArrayList<Double>();
         for (int i = 0; i < in.size(); i++) {
             out.add(in.get(i));
+        }
+        return out;
+    }
+
+    public static BufferedImage resizeImage(BufferedImage image, int newWidth) {
+        int chunkSize = image.getWidth() / newWidth;
+        BufferedImage out = new BufferedImage(newWidth, image.getHeight() / chunkSize, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < image.getWidth(); i += chunkSize) {
+            for (int u = 0; u < image.getHeight(); u += chunkSize) {
+                if (i + chunkSize > image.getWidth()) {
+                    return out;
+                } else if (u + chunkSize > image.getHeight()) {
+                    break;
+                }
+
+                int averageR = 0;
+                int averageG = 0;
+                int averageB = 0;
+                for (int p = 0; p < chunkSize; p++) {
+                    for (int a = 0; a < chunkSize; a++) {
+                        Color color = new Color(image.getRGB(p + i, a + u));
+                        averageB += color.getBlue();
+                        averageG += color.getGreen();
+                        averageR += color.getRed();
+                    }
+                }
+                Color outColor = new Color(averageR / chunkSize / chunkSize, averageG / chunkSize / chunkSize, averageB / chunkSize / chunkSize);
+                out.setRGB(i / chunkSize, u / chunkSize, outColor.getRGB());
+            }
         }
         return out;
     }

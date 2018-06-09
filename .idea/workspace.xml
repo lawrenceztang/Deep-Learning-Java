@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/Util/Util.java" line="81" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="8505bc8e-fdb7-46e2-96e6-9cfe50d2d317" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" afterPath="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" afterPath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" afterPath="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Util/Util.java" afterPath="$PROJECT_DIR$/src/main/java/Util/Util.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/AparapiTest.java" afterPath="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Kernels/AdditionKernel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Kernels/MultiplicationKernel.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Kernels/DotProductKernel.class" afterPath="$PROJECT_DIR$/target/classes/Kernels/DotProductKernel.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Network/ConvolutionalNetwork.class" afterPath="$PROJECT_DIR$/target/classes/Network/ConvolutionalNetwork.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Network/FullyConnectedNetwork$DeepDream.class" afterPath="$PROJECT_DIR$/target/classes/Network/FullyConnectedNetwork$DeepDream.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Network/FullyConnectedNetwork.class" afterPath="$PROJECT_DIR$/target/classes/Network/FullyConnectedNetwork.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" afterPath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Util/ImageReader.class" afterPath="$PROJECT_DIR$/target/classes/Util/ImageReader.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util.class" afterPath="$PROJECT_DIR$/target/classes/Util/Util.class" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" afterPath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,26 +36,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Util.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state relative-caret-position="355">
+              <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2159#2178#0" expanded="true" />
-                <element signature="e#2601#2609#0" expanded="true" />
-                <element signature="e#2803#2804#0" expanded="true" />
-                <element signature="e#2856#2857#0" expanded="true" />
-                <element signature="e#3121#3129#0" expanded="true" />
-                <element signature="e#3943#3951#0" expanded="true" />
-                <element signature="e#4369#4377#0" expanded="true" />
-                <element signature="e#4723#4731#0" expanded="true" />
-                <element signature="e#5527#5535#0" expanded="true" />
-                <element signature="e#6030#6060#0" expanded="true" />
-                <element signature="e#6932#6940#0" expanded="true" />
-                <element signature="e#9288#9307#0" expanded="true" />
-                <element signature="e#9633#9641#0" expanded="true" />
+                <element signature="e#4492#4493#0" expanded="true" />
+                <element signature="e#4553#4554#0" expanded="true" />
+                <element signature="e#5873#5874#0" expanded="true" />
+                <element signature="e#5926#5927#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,23 +55,13 @@
       <file leaf-file-name="DotProductKernel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="317">
+              <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1578#1579#0" expanded="true" />
-                <element signature="e#1610#1611#0" expanded="true" />
+                <element signature="e#3590#3591#0" expanded="true" />
+                <element signature="e#3619#3620#0" expanded="true" />
+                <element signature="e#3728#3729#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -81,8 +69,8 @@
       <file leaf-file-name="AparapiTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+            <state relative-caret-position="493">
+              <caret line="29" column="64" lean-forward="false" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageReader.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
+      <file leaf-file-name="FullyConnectedNetwork.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+            <state relative-caret-position="7412">
+              <caret line="442" column="68" lean-forward="false" selection-start-line="442" selection-start-column="68" selection-end-line="442" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -112,7 +100,16 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>getcurr</find>
+      <find>system</find>
+      <find>result</find>
+      <find>in2</find>
+      <find>i</find>
     </findStrings>
+    <replaceStrings>
+      <replace>localResult</replace>
+      <replace>localIn2</replace>
+      <replace>position</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -129,20 +126,21 @@
         <option value="$PROJECT_DIR$/src/main/java/ActivationFunctions/Relu.java" />
         <option value="$PROJECT_DIR$/src/main/java/ActivationFunctions/Sigmoid.java" />
         <option value="$PROJECT_DIR$/src/main/java/ActivationFunctions/TanH.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/NetworkSaver.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/LoadNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/RunCNN.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/Kernels/AdditionKernel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Util/Util.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
-        <option value="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Kernels/JTPKernelManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Kernels/AdditionKernel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Util/Util.java" />
+        <option value="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
       </list>
     </option>
   </component>
@@ -154,10 +152,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="235" />
-    <option name="y" value="115" />
+    <option name="x" value="260" />
+    <option name="y" value="20" />
     <option name="width" value="1400" />
-    <option name="height" value="920" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -175,10 +173,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -261,6 +258,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -484,34 +482,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AparapiTest - 2018.06.02 at 13h 06m 20s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 18h 31m 46s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 13h 07m 23s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 21h 02m 50s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 13h 07m 28s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 21h 18m 41s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 13h 09m 39s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 21h 18m 48s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 13h 09m 45s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 21h 20m 13s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 22h 00m 58s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 22h 02m 33s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 29s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 22h 07m 03s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 44s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 22h 09m 14s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 22h 01m 59s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 22h 09m 34s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AparapiTest - 2018.06.02 at 22h 02m 44s.xml">
+    <history-entry file="AparapiTest - 2018.06.08 at 22h 11m 00s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -536,24 +534,24 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31277058" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31277058" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27985075" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28624734" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -570,16 +568,17 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31277058" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27132195" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27985075" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
@@ -617,23 +616,35 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java</url>
-          <line>33</line>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java</url>
+          <line>23</line>
           <properties />
-          <option name="timeStamp" value="97" />
+          <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java</url>
-          <line>31</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Util/Util.java</url>
+          <line>79</line>
           <properties />
-          <option name="timeStamp" value="100" />
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Util/Util.java</url>
+          <line>117</line>
+          <properties />
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Util/Util.java</url>
+          <line>112</line>
+          <properties />
+          <option name="timeStamp" value="167" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="102" />
+      <option name="time" value="168" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -643,6 +654,16 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>s &gt; 500</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>s &gt; 15000</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>getGlobalId() * gap[0] * chunkSize &lt; arraySize[0]</expression-string>
         <language-id>JAVA</language-id>
@@ -661,83 +682,56 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>getGlobalId() * gap[0] * chunkSize[0]</expression-string>
+        <expression-string>localResult[1500]</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>getGlobalId()</expression-string>
+        <expression-string>localResult[1500]</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>double[],Kernels.DotProductKernel</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>localIn2[1599]</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result[1999]</expression-string>
+        <expression-string>localIn2[599]</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result[1900]</expression-string>
+        <expression-string>localIn2[1000]</expression-string>
         <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>localIn2[1500]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>localIn2[297]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>localResult[900]</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>Kernels.DotProductKernel</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>localResult[1000]</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>Kernels.DotProductKernel</custom-info>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6154">
-          <caret line="362" column="28" lean-forward="false" selection-start-line="362" selection-start-column="28" selection-end-line="362" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -776,19 +770,10 @@
           <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
+            <element signature="e#4492#4493#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#5873#5874#0" expanded="true" />
+            <element signature="e#5926#5927#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -831,19 +816,10 @@
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
+            <element signature="e#4492#4493#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#5873#5874#0" expanded="true" />
+            <element signature="e#5926#5927#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -886,19 +862,10 @@
           <caret line="45" column="51" lean-forward="false" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
+            <element signature="e#4492#4493#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#5873#5874#0" expanded="true" />
+            <element signature="e#5926#5927#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -915,9 +882,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5678">
           <caret line="337" column="0" lean-forward="false" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -935,19 +900,10 @@
           <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
+            <element signature="e#4492#4493#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#5873#5874#0" expanded="true" />
+            <element signature="e#5926#5927#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -976,9 +932,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1023,16 +977,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/NetworkLoader.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="839">
-          <caret line="337" column="0" lean-forward="false" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/NetworkSaver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1054">
@@ -1057,14 +1001,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="180" column="147" lean-forward="false" selection-start-line="180" selection-start-column="147" selection-end-line="180" selection-end-column="147" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1098,18 +1034,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" />
+    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/JavaDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="30" selection-end-column="36" />
+        <state relative-caret-position="175">
+          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/JTPKernelManager.java" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/runners/BlockJUnit4ClassRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/MultiplicationKernel.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="168" column="71" lean-forward="true" selection-start-line="148" selection-start-column="14" selection-end-line="168" selection-end-column="71" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="21" column="4" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/concurrent/atomic/AtomicInteger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="49" column="2" lean-forward="true" selection-start-line="49" selection-start-column="2" selection-end-line="49" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/OpenCLDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-210">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="168" column="82" lean-forward="true" selection-start-line="168" selection-start-column="82" selection-end-line="168" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7412">
+          <caret line="442" column="68" lean-forward="false" selection-start-line="442" selection-start-column="68" selection-end-line="442" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="64" lean-forward="false" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/Device.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="140" column="16" lean-forward="false" selection-start-line="140" selection-start-column="16" selection-end-line="140" selection-end-column="16" />
+        <state relative-caret-position="272">
+          <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1117,87 +1118,36 @@
     <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/Kernel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="2493" column="0" lean-forward="false" selection-start-line="2493" selection-start-column="0" selection-end-line="2493" selection-end-column="0" />
+          <caret line="2793" column="0" lean-forward="false" selection-start-line="2793" selection-start-column="0" selection-end-line="2793" selection-end-column="0" />
           <folding>
-            <element signature="e#21433#21434#0" expanded="false" />
-            <element signature="e#21468#21469#0" expanded="false" />
-            <element signature="e#26753#26754#0" expanded="false" />
-            <element signature="e#26787#26788#0" expanded="false" />
-            <element signature="e#26854#26855#0" expanded="false" />
-            <element signature="e#26906#26907#0" expanded="false" />
-            <element signature="e#120256#120257#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/aparapi/aparapi/1.10.0-SNAPSHOT/aparapi-1.10.0-SNAPSHOT-sources.jar!/com/aparapi/device/JavaDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#133371#133372#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Kernels/DotProductKernel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state relative-caret-position="317">
+          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1578#1579#0" expanded="true" />
-            <element signature="e#1610#1611#0" expanded="true" />
+            <element signature="e#3590#3591#0" expanded="true" />
+            <element signature="e#3619#3620#0" expanded="true" />
+            <element signature="e#3728#3729#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state relative-caret-position="355">
+          <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2159#2178#0" expanded="true" />
-            <element signature="e#2601#2609#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2856#2857#0" expanded="true" />
-            <element signature="e#3121#3129#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4369#4377#0" expanded="true" />
-            <element signature="e#4723#4731#0" expanded="true" />
-            <element signature="e#5527#5535#0" expanded="true" />
-            <element signature="e#6030#6060#0" expanded="true" />
-            <element signature="e#6932#6940#0" expanded="true" />
-            <element signature="e#9288#9307#0" expanded="true" />
-            <element signature="e#9633#9641#0" expanded="true" />
+            <element signature="e#4492#4493#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#5873#5874#0" expanded="true" />
+            <element signature="e#5926#5927#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
