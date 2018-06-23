@@ -1,6 +1,8 @@
 package Util;
 
 import Kernels.DotProductKernel;
+import Kernels.MatrixVectorKernel;
+import Kernels.TestKernel;
 import com.aparapi.Kernel;
 import com.aparapi.Range;
 import com.aparapi.device.Device;
@@ -33,6 +35,37 @@ public class Util {
         return sum;
     }
 
+    public static double dotProductNoGPU(double[] in1, double[] in2) {
+        double sum = 0;
+        for (int i = 0; i < in1.length; i++) {
+            sum += in1[i] * in2[i];
+        }
+        return sum;
+    }
+
+    public static double[] matrixVectorProduct (double[] vector, double[][] matrix) {
+
+        int groupSize = 2;
+        int chunkSize = (int) Math.ceil((double) vector.length / groupSize);
+
+//        KernelManager.setKernelManager(new JTPKernelManager());
+//        Device device = KernelManager.instance().bestDevice();
+//        MatrixVectorKernel kernel = new MatrixVectorKernel(matrix, vector, chunkSize);
+//        kernel.execute(device.createRange(groupSize * matrix.length, groupSize));
+
+
+
+        MatrixVectorKernel kernel = new MatrixVectorKernel(matrix, vector, chunkSize);
+        kernel.execute(Range.create(groupSize * matrix.length, groupSize));
+
+        double[] out = new double[matrix.length];
+        for(int i = 0; i < out.length; i++) {
+            out[i] = kernel.in1[i][0];
+        }
+
+        return out;
+    }
+
 
     public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2) throws Exception {
 
@@ -62,6 +95,7 @@ public class Util {
         for (int u = 0; u < numIterations; u++) {
 
             //create subarrays that are less than max local size
+            //todo: don't use copy just pass bounds as parameter
             double[] subarray1;
             double[] subarray2;
             if (u < numIterations - 1) {
