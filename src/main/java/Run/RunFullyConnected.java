@@ -1,5 +1,6 @@
 package Run;
 
+import Display.DisplayImage;
 import Network.FullyConnectedNetwork;
 import Util.*;
 
@@ -21,13 +22,13 @@ public class RunFullyConnected {
         ImageReader reader = new ImageReader(trainingDataPath);
   //      BufferedImage imaged = Util.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
 
-        trainingData = reader.get1dColorMatricesFromImages(200, 28);
+        trainingData = reader.get1dColorMatricesFromImages(8000, 28);
         reader.setPreprocessParameters(trainingData);
         trainingData = reader.preprocessTrainingSet(trainingData);
         ArrayList<ArrayList<Double>> trainingDataOutputs = reader.oneHotOutputs;
 
 
-        FullyConnectedNetwork network = new FullyConnectedNetwork(3, 200 , 1932, 10, .02, .9);
+        FullyConnectedNetwork network = new FullyConnectedNetwork(4, 200 , 1932, 10, .05, .9);
         network.printStats();
         network.classNames = reader.classes;
         System.out.println("Percentage accurate before training: " + network.test(trainingData, trainingDataOutputs));
@@ -44,7 +45,7 @@ public class RunFullyConnected {
                     tempOut.add(trainingDataOutputs.get(i));
                 }
 
-                network.setDropout(1);
+                network.setDropout(.8);
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
 
                 //test derivative to see if theyre accurate
@@ -68,7 +69,7 @@ public class RunFullyConnected {
         System.out.println("Percentage accurate after training on testing data: " + network.test(testingData, testingOutputs));
 
         //dreaming
-        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData.get(0), 100);
+        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData.get(0), 1000);
         for (int i = 0; i < 100; i++) {
             dream.updateImage(2);
         }
@@ -76,6 +77,8 @@ public class RunFullyConnected {
         BufferedImage dreamedImage = Util.convert1dArrayToImage(reader.unpreprocessExample(dream.image), 28, 28);
         BufferedImage previousImage = Util.convert1dArrayToImage(reader.unpreprocessExample(trainingData.get(0)), 28, 28);
         System.out.println(network.predictOutput(dream.image));
+//        new DisplayImage(dreamedImage);
+//        new DisplayImage(previousImage);
 
 
         //specific example

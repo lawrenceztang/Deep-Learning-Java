@@ -5,19 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8505bc8e-fdb7-46e2-96e6-9cfe50d2d317" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Util/Sorter.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_aparapi_aparapi_1_10_0_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_aparapi_aparapi_1_9_0.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_aparapi_aparapi_jni_1_4_2_SNAPSHOT.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_aparapi_aparapi_jni_1_4_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Display/DisplayImage.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Printer/ConvolutionalPrinter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Printer/FullyConnectedPrinter.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/machine-learning.iml" afterPath="$PROJECT_DIR$/machine-learning.iml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" afterPath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Util/Util.java" afterPath="$PROJECT_DIR$/src/main/java/Util/Util.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/AparapiTest.java" afterPath="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Util/Util.class" afterPath="$PROJECT_DIR$/target/classes/Util/Util.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" afterPath="$PROJECT_DIR$/target/test-classes/AparapiTest.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" afterPath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -36,8 +29,8 @@
       <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="336" column="63" lean-forward="false" selection-start-line="336" selection-start-column="58" selection-end-line="336" selection-end-column="63" />
+            <state relative-caret-position="7775">
+              <caret line="335" column="0" lean-forward="false" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5509#5510#0" expanded="true" />
@@ -52,7 +45,7 @@
       <file leaf-file-name="ConvolutionalNetwork.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
+            <state relative-caret-position="3025">
               <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
               <folding />
             </state>
@@ -62,20 +55,29 @@
       <file leaf-file-name="FullyConnectedNetwork.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="466" column="0" lean-forward="false" selection-start-line="466" selection-start-column="0" selection-end-line="466" selection-end-column="0" />
-              <folding>
-                <element signature="e#6767#6786#0" expanded="true" />
-                <element signature="e#6923#6931#0" expanded="true" />
-                <element signature="e#7510#7518#0" expanded="true" />
-                <element signature="e#8200#8208#0" expanded="true" />
-                <element signature="e#8647#8655#0" expanded="true" />
-                <element signature="e#11043#11062#0" expanded="true" />
-                <element signature="e#12235#12265#0" expanded="true" />
-                <element signature="e#19429#19437#0" expanded="true" />
-                <element signature="e#19745#19764#0" expanded="true" />
-                <element signature="e#19882#19901#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="625">
+              <caret line="31" column="62" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FullyConnectedPrinter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Printer/FullyConnectedPrinter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConvolutionalPrinter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Printer/ConvolutionalPrinter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,9 +85,21 @@
       <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1900">
-              <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+            <state relative-caret-position="400">
+              <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DisplayImage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Display/DisplayImage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="13" column="41" lean-forward="false" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,8 +107,8 @@
       <file leaf-file-name="ImageReader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-269">
-              <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+            <state relative-caret-position="3450">
+              <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -103,7 +117,7 @@
       <file leaf-file-name="AparapiTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
+            <state relative-caret-position="600">
               <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -142,8 +156,10 @@
       <find>global</find>
       <find>unpad</find>
       <find>dotproduct</find>
-      <find>&quot;hi</find>
       <find>todo</find>
+      <find>&quot;hi</find>
+      <find>println</find>
+      <find>dropou</find>
     </findStrings>
     <replaceStrings>
       <replace>localResult</replace>
@@ -184,6 +200,8 @@
         <option value="$PROJECT_DIR$/src/test/java/AparapiTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Display/DisplayImage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Printer/FullyConnectedPrinter.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
       </list>
     </option>
@@ -217,9 +235,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -251,31 +266,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ActivationFunctions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Deep-Learning-Java" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Deep-Learning-Java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Network" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Deep-Learning-Java" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Deep-Learning-Java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Run" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Deep-Learning-Java" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Deep-Learning-Java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Util" type="462c0819:PsiDirectoryNode" />
+              <item name="Printer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Deep-Learning-Java" type="b2602c69:ProjectViewProjectNode" />
@@ -294,6 +285,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -583,10 +577,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258294" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -597,17 +591,18 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819906" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10162162" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24378379" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3992891" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3992891" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258294" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -712,7 +707,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java</url>
-          <line>82</line>
+          <line>85</line>
           <properties />
           <option name="timeStamp" value="299" />
         </line-breakpoint>
@@ -826,40 +821,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6154">
-          <caret line="362" column="28" lean-forward="false" selection-start-line="362" selection-start-column="28" selection-end-line="362" selection-end-column="28" />
-          <folding>
-            <element signature="e#6767#6786#0" expanded="true" />
-            <element signature="e#6923#6931#0" expanded="true" />
-            <element signature="e#7510#7518#0" expanded="true" />
-            <element signature="e#8200#8208#0" expanded="true" />
-            <element signature="e#8647#8655#0" expanded="true" />
-            <element signature="e#11043#11062#0" expanded="true" />
-            <element signature="e#12235#12265#0" expanded="true" />
-            <element signature="e#19429#19437#0" expanded="true" />
-            <element signature="e#19745#19764#0" expanded="true" />
-            <element signature="e#19882#19901#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -900,18 +861,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6052">
           <caret line="362" column="28" lean-forward="false" selection-start-line="362" selection-start-column="28" selection-end-line="362" selection-end-column="28" />
-          <folding>
-            <element signature="e#6767#6786#0" expanded="true" />
-            <element signature="e#6923#6931#0" expanded="true" />
-            <element signature="e#7510#7518#0" expanded="true" />
-            <element signature="e#8200#8208#0" expanded="true" />
-            <element signature="e#8647#8655#0" expanded="true" />
-            <element signature="e#11043#11062#0" expanded="true" />
-            <element signature="e#12235#12265#0" expanded="true" />
-            <element signature="e#19429#19437#0" expanded="true" />
-            <element signature="e#19745#19764#0" expanded="true" />
-            <element signature="e#19882#19901#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -954,18 +904,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8177">
           <caret line="487" column="0" lean-forward="false" selection-start-line="487" selection-start-column="0" selection-end-line="487" selection-end-column="0" />
-          <folding>
-            <element signature="e#6767#6786#0" expanded="true" />
-            <element signature="e#6923#6931#0" expanded="true" />
-            <element signature="e#7510#7518#0" expanded="true" />
-            <element signature="e#8200#8208#0" expanded="true" />
-            <element signature="e#8647#8655#0" expanded="true" />
-            <element signature="e#11043#11062#0" expanded="true" />
-            <element signature="e#12235#12265#0" expanded="true" />
-            <element signature="e#19429#19437#0" expanded="true" />
-            <element signature="e#19745#19764#0" expanded="true" />
-            <element signature="e#19882#19901#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1125,7 +1064,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/AparapiTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
+        <state relative-caret-position="600">
           <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1141,26 +1080,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/ImageReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
-          <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+        <state relative-caret-position="3450">
+          <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="336" column="63" lean-forward="false" selection-start-line="336" selection-start-column="58" selection-end-line="336" selection-end-column="63" />
+        <state relative-caret-position="7775">
+          <caret line="335" column="0" lean-forward="false" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5509#5510#0" expanded="true" />
@@ -1171,29 +1102,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Display/DisplayImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="13" column="41" lean-forward="false" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvolutionalNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3025">
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Printer/ConvolutionalPrinter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Network/FullyConnectedNetwork.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="466" column="0" lean-forward="false" selection-start-line="466" selection-start-column="0" selection-end-line="466" selection-end-column="0" />
-          <folding>
-            <element signature="e#6767#6786#0" expanded="true" />
-            <element signature="e#6923#6931#0" expanded="true" />
-            <element signature="e#7510#7518#0" expanded="true" />
-            <element signature="e#8200#8208#0" expanded="true" />
-            <element signature="e#8647#8655#0" expanded="true" />
-            <element signature="e#11043#11062#0" expanded="true" />
-            <element signature="e#12235#12265#0" expanded="true" />
-            <element signature="e#19429#19437#0" expanded="true" />
-            <element signature="e#19745#19764#0" expanded="true" />
-            <element signature="e#19882#19901#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="625">
+          <caret line="31" column="62" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Printer/FullyConnectedPrinter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1900">
-          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+        <state relative-caret-position="400">
+          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
           <folding />
         </state>
       </provider>
