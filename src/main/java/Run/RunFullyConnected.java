@@ -27,19 +27,19 @@ public class RunFullyConnected {
         ArrayList<ArrayList<Double>> trainingDataOutputs = reader.oneHotOutputs;
 
 
-        FullyConnectedNetwork network = new FullyConnectedNetwork(3, 200 , 10, 10, .1, .9);
+        FullyConnectedNetwork network = new FullyConnectedNetwork(3, 200 , 1932, 10, .02, .9);
         network.printStats();
         network.classNames = reader.classes;
         System.out.println("Percentage accurate before training: " + network.test(trainingData, trainingDataOutputs));
 
         double time = System.currentTimeMillis();
 
-        //right now stochastic training
+        int batchSize = 1;
         for (int p = 0; p < 1; p++) {
-            for (int i = 0; i < trainingData.size(); i += 4) {
+            for (int i = 0; i < trainingData.size(); i += batchSize) {
                 ArrayList<ArrayList<Double>> tempIn = new ArrayList<ArrayList<Double>>();
                 ArrayList<ArrayList<Double>> tempOut = new ArrayList<ArrayList<Double>>();
-                for (int a = 0; a < 4; a++) {
+                for (int a = 0; a < batchSize; a++) {
                     tempIn.add(trainingData.get(i));
                     tempOut.add(trainingDataOutputs.get(i));
                 }
@@ -68,8 +68,8 @@ public class RunFullyConnected {
         System.out.println("Percentage accurate after training on testing data: " + network.test(testingData, testingOutputs));
 
         //dreaming
-        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData.get(0), 1000);
-        for (int i = 0; i < 1000; i++) {
+        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData.get(0), 100);
+        for (int i = 0; i < 100; i++) {
             dream.updateImage(2);
         }
 

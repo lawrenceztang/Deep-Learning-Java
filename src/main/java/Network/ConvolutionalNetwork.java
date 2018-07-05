@@ -76,16 +76,16 @@ public class ConvolutionalNetwork {
         for (int a = numLayers - 1; a <= 0; a--) {
 
 
-            derivativeErrorWithRespectToInputToActivation.add(initializeOutputs(numberOfFilters.get(a - 1), (outputsInLayers.get(a).size() - filterSizes.get(a)) / strideSizes.get(a), (outputsInLayers.get(a).size() - filterSizes.get(a) / strideSizes.get(a))));
+            derivativeErrorWithRespectToInputToActivation.set(a, initializeOutputs(numberOfFilters.get(a - 1), (outputsInLayers.get(a).size() - filterSizes.get(a)) / strideSizes.get(a), ((outputsInLayers.get(a).size() - filterSizes.get(a)) / strideSizes.get(a))));
             for (int b = 0; b < numberOfFilters.get(a); b++) {
                 for (int x = 0; x < numberOfFilters.get(a - 1); x++) {
-                    for (int h = 0; h < outputsInLayers.get(a).size() - filterSizes.get(a); h += strideSizes.get(a)) {
-                        for (int q = 0; q < outputsInLayers.get(a).get(h).size() - filterSizes.get(a); q += strideSizes.get(a)) {
+                    for (int h = 0; h < outputsInLayers.get(a).size() - filterSizes.get(a); h += strideSizes.get(a + 1)) {
+                        for (int q = 0; q < outputsInLayers.get(a).get(h).size() - filterSizes.get(a); q += strideSizes.get(a + 1)) {
 
 
                             for (int w = 0; w < filterSizes.get(a); w++) {
                                 for (int y = 0; y < filterSizes.get(a); y++) {
-                                    derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).set(q + y, derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).get(q + y) + derivativeErrorWithRespectToInputToActivation.get(a + 1).get(b).get(h / strideSizes.get(a)).get(q / strideSizes.get(a)) * weights.get(a).get(b).get(x).get(w).get(y));
+                                    derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).set(q + y, derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).get(q + y) + derivativeErrorWithRespectToInputToActivation.get(a + 1).get(b).get(h / strideSizes.get(a + 1)).get(q / strideSizes.get(a + 1)) * weights.get(a + 1).get(b).get(x).get(w).get(y));
                                 }
                             }
 
@@ -106,16 +106,18 @@ public class ConvolutionalNetwork {
                 }
             }
 
+            ArrayList<ArrayList<ArrayList<Double>>> outputAfterPooling = maxPooling(outputsInLayers.get(a - 1), poolingStride.get(a - 1));
+            derivativeErrorWithRespectToInputToActivation.set(a, Util.unpad(derivativeErrorWithRespectToInputToActivation.get(a), padding.get(a)));
+//TODO
+            for (int b = 0; b < numberOfFilters.get(a); b++) {
+                for (int h = 0; h < derivativeErrorWithRespectToInputToActivation.get(a).get(b).size(); h ++) {
+                    for (int q = 0; q < derivativeErrorWithRespectToInputToActivation.get(a).get(b).size(); q ++) {
 
-            for (int b = 0; b < numberOfFilters.get(a - 1); b++) {
-                for (int h = 0; h < outputsInLayers.get(a).size() - filterSizes.get(a); h += strideSizes.get(a - 1)) {
-                    for (int q = 0; q < outputsInLayers.get(a).get(h).size() - filterSizes.get(a); q += strideSizes.get(a - 1)) {
-
-                        for (int x = 0; x < numberOfFilters.get(a - 2); x++) {
+                        for (int x = 0; x < numberOfFilters.get(a - 1); x++) {
                             for (int w = 0; w < filterSizes.get(a); w++) {
                                 for (int y = 0; y < filterSizes.get(a); y++) {
                                     //inputtoactivation
-                                    derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).set(y, derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).get(y) + derivativeErrorWithRespectToInputToActivation.get(a).get(b).get(h / strideSizes.get(a - 1)).get(q / strideSizes.get(a - 1)) * outputsInLayers.get(a - 1).get(b).get(h + w).get(q + y));
+                                    derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).set(y, derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).get(y) + derivativeErrorWithRespectToInputToActivation.get(a).get(b).get(h).get(q) * outputsInLayers.get(a - 1).get(b).get(h + w).get(q + y));
                                 }
                             }
                         }
@@ -124,8 +126,6 @@ public class ConvolutionalNetwork {
                     }
                 }
             }
-
-            Util.unpad(derivativeErrorWithRespectToInputToActivation.get(a), padding.get(a));
 
         }
     }
@@ -165,7 +165,7 @@ public class ConvolutionalNetwork {
         return fullyConnectedNetwork.predictOutput(inputToFullyConnected);
     }
 
-    //input layer is counted as a layer
+    //input layer is counted as layer 0
     public void forwardPass(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception{
         outputsInLayers = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
         ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
@@ -292,7 +292,7 @@ public class ConvolutionalNetwork {
                         derivativeErrorWithRespectToInputToPooling.get(i).add(new ArrayList<Double>());
                         for (int q = 0; q < stride; q++) {
                             if (max == poolingInput.get(i).get(y + a * stride).get(o * stride + q)) {
-                                derivativeErrorWithRespectToInputToPooling.get(i).get(y + a * stride).add(max);
+                                derivativeErrorWithRespectToInputToPooling.get(i).get(y + a * stride).add(derivativeErrorWithRespectToPoolingOutput.get(i).get(a).get(o));
                             } else {
                                 derivativeErrorWithRespectToInputToPooling.get(i).get(y + a * stride).add(0d);
                             }

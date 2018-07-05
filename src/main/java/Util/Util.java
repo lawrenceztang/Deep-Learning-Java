@@ -176,6 +176,18 @@ public class Util {
         return out;
     }
 
+    public static double matrixProductSum(double[][][] in, double[][][] in2) {
+        double out = 0;
+        for (int i = 0; i < in.length; i++) {
+            for (int u = 0; u < in[i].length; u++) {
+                for(int a = 0; a < in[i][u].length; a++) {
+                    out += in[i][u][a] * in2[i][u][a];
+                }
+            }
+        }
+        return out;
+    }
+
     public static ArrayList<ArrayList<Double>> matrixScalarProduct(ArrayList<ArrayList<Double>> matrix, double scalar) {
         ArrayList<ArrayList<Double>> out = new ArrayList<ArrayList<Double>>();
         for (int i = 0; i < matrix.size(); i++) {
@@ -192,6 +204,14 @@ public class Util {
         ArrayList<Double> output = new ArrayList<Double>();
         for (int i = 0; i < vector.size(); i++) {
             output.add(vector.get(i) * scalar);
+        }
+        return output;
+    }
+
+    public static double[] vectorScalarProduct(double[] vector, double scalar) {
+        double[] output = new double[vector.length];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = vector[i] * scalar;
         }
         return output;
     }

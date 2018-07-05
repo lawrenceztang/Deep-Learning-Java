@@ -140,7 +140,7 @@ public class FullyConnectedNetwork implements Serializable {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProduct(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u));
+                    temp.add(Util.dotProductNoGPU(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u));
                 }
                 temp = Util.softmax(temp);
                 outputsInHiddenLayersTemp.add(temp);
@@ -151,7 +151,7 @@ public class FullyConnectedNetwork implements Serializable {
             } else {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < nodesPerLayer; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProduct(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u)));
+                    temp.add(Util.sigmoidFunction(Util.dotProductNoGPU(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u)));
                 }
                 outputsInHiddenLayersTemp.add(temp);
                 in = temp;
@@ -170,7 +170,7 @@ public class FullyConnectedNetwork implements Serializable {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u));
+                    temp.add(Util.dotProductNoGPU(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u));
                 }
                 in = Util.softmax(temp);
             } else if (i == 0) {
@@ -178,7 +178,7 @@ public class FullyConnectedNetwork implements Serializable {
             } else {
                 ArrayList<Double> temp = new ArrayList<Double>();
                 for (int u = 0; u < nodesPerLayer; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProduct(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u)));
+                    temp.add(Util.sigmoidFunction(Util.dotProductNoGPU(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u)));
                 }
                 in = temp;
             }
@@ -464,13 +464,12 @@ public class FullyConnectedNetwork implements Serializable {
 
             network.getDerivativeOfErrorWithRespectToWeights(inputsToNetwork, outputsOfNetwork);
 
-            for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation.size(); i++) {
+            for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation.get(1).size(); i++) {
                 for (int u = 0; u < network.numInputs; u++) {
                     derivativeErrorWithRespectToInputs.set(u, derivativeErrorWithRespectToInputs.get(u) + network.derivativesErrorWithRespectToInputsToActivation.get(1).get(i) * network.weights.get(1).get(i).get(u));
                 }
             }
 
-            System.out.println("hi");
             for(int i = 0; i < derivativeErrorWithRespectToInputs.size(); i++) {
                 image.set(i, image.get(i) - derivativeErrorWithRespectToInputs.get(i) * learningRate);
                 if(image.get(i) < min) {

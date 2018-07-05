@@ -1,8 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
-import Util.Util;
+import Util.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class AparapiTest {
@@ -12,7 +13,22 @@ public class AparapiTest {
     }
 
     @Test
+    public void arrayVsArrayList () throws Exception {
+        Random rand = new Random();
+        int arrSize = 9;
+        ArrayList<Double> arList = new ArrayList<Double>();
+        double[] arr = new double[arrSize];
+        for(int i = 0; i < arr.length; i++) {
+            double num = rand.nextInt(1000);
+            arr[i] = num;
+        }
+        double[] out = Sorter.mergeSort(arr);
+        System.out.println("hi");
+    }
+
+    @Test
     public void testDotProduct () throws Exception {
+
 
         //test dot product
         ArrayList<Double> vector1 = new ArrayList<Double>();
