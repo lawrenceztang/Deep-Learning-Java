@@ -233,6 +233,20 @@ public class Util {
         return out;
     }
 
+    public static ArrayList<ArrayList<ArrayList<Double>>> getDerivativeFromSigmoid3d(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> y) {
+        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
+        for(int i = 0; i < in.size(); i++) {
+            out.add(new ArrayList<ArrayList<Double>>());
+            for(int u = 0; u < in.get(i).size(); u++) {
+                out.get(i).add(new ArrayList<Double>());
+                for(int a = 0; a < in.get(i).get(u).size(); a++) {
+                    out.get(i).get(u).add((y.get(i).get(u).get(a) + 1) * (1 - y.get(i).get(u).get(a)) / 2);
+                }
+            }
+        }
+        return out;
+    }
+
     public static double meanSquaredError(ArrayList<Double> prediction, ArrayList<Double> trueClass) {
         double sum = 0;
         for (int i = 0; i < prediction.size(); i++) {
@@ -284,8 +298,15 @@ public class Util {
         return out;
     }
 
+    //TODO: keeps parameters to use for 1Dto3D
+    static int width;
+    static int length;
+    static int depth;
 
     public static ArrayList<Double> convert3Dto1D(ArrayList<ArrayList<ArrayList<Double>>> in) {
+        width = in.size();
+        length = in.get(0).size();
+        depth = in.get(0).get(0).size();
         ArrayList<Double> out = new ArrayList<Double>();
         for (int i = 0; i < in.size(); i++) {
             for (int y = 0; y < in.get(i).size(); y++) {
@@ -298,6 +319,21 @@ public class Util {
     }
 
     public static ArrayList<ArrayList<ArrayList<Double>>> convert1Dto3D(ArrayList<Double> in, int width, int length, int depth) {
+        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
+        for (int i = 0; i < width; i++) {
+            out.add(new ArrayList<ArrayList<Double>>());
+            for (int u = 0; u < length; u++) {
+                out.get(i).add(new ArrayList<Double>());
+                for (int a = 0; a < depth; a++) {
+                    out.get(i).get(u).add(in.get(i * length * depth + u * depth + a));
+                }
+            }
+        }
+        return out;
+    }
+
+
+    public static ArrayList<ArrayList<ArrayList<Double>>> convert1Dto3D(ArrayList<Double> in) {
         ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
         for (int i = 0; i < width; i++) {
             out.add(new ArrayList<ArrayList<Double>>());

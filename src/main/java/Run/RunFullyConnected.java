@@ -22,13 +22,13 @@ public class RunFullyConnected {
         ImageReader reader = new ImageReader(trainingDataPath);
   //      BufferedImage imaged = Util.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
 
-        trainingData = reader.get1dColorMatricesFromImages(8000, 28);
+        trainingData = reader.get1dColorMatricesFromImages(2000, 28);
         reader.setPreprocessParameters(trainingData);
         trainingData = reader.preprocessTrainingSet(trainingData);
         ArrayList<ArrayList<Double>> trainingDataOutputs = reader.oneHotOutputs;
 
 
-        FullyConnectedNetwork network = new FullyConnectedNetwork(4, 200 , 1932, 10, .05, .9);
+        FullyConnectedNetwork network = new FullyConnectedNetwork(new int[]{2352, 200, 200, 10}, new double[]{0, .05, 0.05, .05}, .9);
         network.printStats();
         network.classNames = reader.classes;
         System.out.println("Percentage accurate before training: " + network.test(trainingData, trainingDataOutputs));
@@ -36,6 +36,8 @@ public class RunFullyConnected {
         double time = System.currentTimeMillis();
 
         int batchSize = 1;
+        double averageFirstLayerDerivatives = 0;
+        double averageSecondLayerDerivatives = 0;
         for (int p = 0; p < 1; p++) {
             for (int i = 0; i < trainingData.size(); i += batchSize) {
                 ArrayList<ArrayList<Double>> tempIn = new ArrayList<ArrayList<Double>>();
@@ -45,17 +47,24 @@ public class RunFullyConnected {
                     tempOut.add(trainingDataOutputs.get(i));
                 }
 
-                network.setDropout(.8);
+                network.setDropout(1);
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
 
                 //test derivative to see if theyre accurate
 //                System.out.println(network.derivativesErrorWithRespectToWeights.get(1).get(190).get(1900));
 //                System.out.println(network.derivativeOfWeightCheck(tempIn.get(0), tempOut.get(0), 1, 190, 1900));
+//                averageFirstLayerDerivatives += Math.abs(network.derivativesErrorWithRespectToWeights.get(1).get(190).get(1900));
+//
+//                System.out.println("second layer");
+//                System.out.println(network.derivativesErrorWithRespectToWeights.get(2).get(190).get(190));
+//                System.out.println(network.derivativeOfWeightCheck(tempIn.get(0), tempOut.get(0), 2, 190, 190));
+//                averageSecondLayerDerivatives += Math.abs(network.derivativesErrorWithRespectToWeights.get(2).get(190).get(190));
 
                 network.gradientDescent();
 
 
             }
+            System.out.println(averageFirstLayerDerivatives + "," + averageSecondLayerDerivatives);
         }
 
         System.out.println("It took " + (System.currentTimeMillis() - time) / (1000) + " seconds to train");

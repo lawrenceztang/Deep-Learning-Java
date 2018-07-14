@@ -57,7 +57,6 @@ public class ImageReader implements Serializable{
     }
 
 
-
     public ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> get2dColorMatrices (int batchSize) throws Exception{
         ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> imagesAsMatrices = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
         oneHotOutputs = new ArrayList<ArrayList<Double>>();
@@ -124,14 +123,23 @@ public class ImageReader implements Serializable{
     public ArrayList<ArrayList<ArrayList<Double>>> getImageAs2DMatrix(String filePath) throws Exception {
         BufferedImage image = ImageIO.read(new File(filePath));
         ArrayList<ArrayList<ArrayList<Double>>> matrix = new ArrayList<ArrayList<ArrayList<Double>>>();
-        for (int x = 0; x < image.getWidth(); x++) {
+        for(int i = 0; i < 3; i++) {
             matrix.add(new ArrayList<ArrayList<Double>>());
-            for (int y = 0; y < image.getHeight(); y++) {
-                Color color = new Color(image.getRGB(x, y));
-                matrix.get(x).add(new ArrayList<Double>());
-                matrix.get(x).get(y).add((double)color.getRed());
-                matrix.get(x).get(y).add((double)color.getGreen());
-                matrix.get(x).get(y).add((double)color.getBlue());
+            for (int x = 0; x < image.getWidth(); x++) {
+                matrix.get(i).add(new ArrayList<Double>());
+                for (int y = 0; y < image.getHeight(); y++) {
+
+                    Color color = new Color(image.getRGB(x, y));
+                    if(i == 0) {
+                        matrix.get(i).get(x).add((double) color.getRed());
+                    }
+                    else if(i == 1) {
+                        matrix.get(i).get(x).add((double) color.getGreen());
+                    }
+                    else {
+                        matrix.get(i).get(x).add((double) color.getBlue());
+                    }
+                }
             }
         }
         return matrix;
