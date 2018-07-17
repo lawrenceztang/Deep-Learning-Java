@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class Util {
+public class arrListOperations {
 
     static double e = 2.71828;
 
@@ -35,132 +35,7 @@ public class Util {
         return sum;
     }
 
-    public static double dotProductNoGPU(double[] in1, double[] in2) {
-        double sum = 0;
-        for (int i = 0; i < in1.length; i++) {
-            sum += in1[i] * in2[i];
-        }
-        return sum;
-    }
 
-    public static double[] matrixVectorProduct (double[] vector, double[][] matrix) {
-
-        int groupSize = 2;
-        int chunkSize = (int) Math.ceil((double) vector.length / groupSize);
-
-//        KernelManager.setKernelManager(new JTPKernelManager());
-//        Device device = KernelManager.instance().bestDevice();
-//        MatrixVectorKernel kernel = new MatrixVectorKernel(matrix, vector, chunkSize);
-//        kernel.execute(device.createRange(groupSize * matrix.length, groupSize));
-
-
-
-        MatrixVectorKernel kernel = new MatrixVectorKernel(matrix, vector, chunkSize);
-        kernel.execute(Range.create(groupSize * matrix.length, groupSize));
-
-        double[] out = new double[matrix.length];
-        for(int i = 0; i < out.length; i++) {
-            out[i] = kernel.in1[i][0];
-        }
-
-        return out;
-    }
-
-
-    public static double dotProduct(ArrayList<Double> in1, ArrayList<Double> in2) throws Exception {
-
-        final double[] in1Copy = new double[in1.size()];
-        final double[] in2Copy = new double[in1.size()];
-        for (int i = 0; i < in1.size(); i++) {
-            in1Copy[i] = in1.get(i);
-            in2Copy[i] = in2.get(i);
-        }
-
-        //for running in Java mode:
-//       KernelManager.setKernelManager(new JTPKernelManager());
-
-        OpenCLDevice device = (OpenCLDevice) KernelManager.instance().bestDevice();
-        device.setSharedMemory(false);
-
-        //max 4000 doubles / 2 arrays = 2000 doubles per array - 200 for extra space
-        final int maxDoubles = (int) device.getLocalMemSize() / 16 - 200;
-        int chunkSize = (int) Math.ceil((double) maxDoubles / (double) device.getMaxWorkGroupSize());
-        if(chunkSize == 1) {
-            chunkSize = 2;
-        }
-        int numIterations = (int) Math.ceil((double) in1Copy.length / (double) maxDoubles);
-        CountDownLatch latch = new CountDownLatch(numIterations);
-        double[] out = new double[numIterations];
-
-        for (int u = 0; u < numIterations; u++) {
-
-            //create subarrays that are less than max local size
-            //todo: don't use copy just pass bounds as parameter
-            double[] subarray1;
-            double[] subarray2;
-            if (u < numIterations - 1) {
-                subarray1 = Arrays.copyOfRange(in1Copy, u * maxDoubles, (u + 1) * maxDoubles);
-                subarray2 = Arrays.copyOfRange(in2Copy, u * maxDoubles, (u + 1) * maxDoubles);
-            } else {
-                subarray1 = Arrays.copyOfRange(in1Copy, u * maxDoubles, in1Copy.length);
-                subarray2 = Arrays.copyOfRange(in2Copy, u * maxDoubles, in1Copy.length);
-            }
-
-            RunKernelThread thread = new RunKernelThread(subarray1, subarray2, chunkSize, device, out, u, latch);
-            thread.start();
-        }
-
-        //wait until all threads complete
-        latch.await();
-
-        //now safe to retrieve output
-        for (int i = 1; i < out.length; i++) {
-            out[0] += out[i];
-        }
-        return out[0];
-    }
-
-    public static class RunKernelThread extends Thread {
-        double[] in1;
-        double[] in2;
-        int chunkSize;
-        Device device;
-        int iteration;
-        public final double[] out;
-        CountDownLatch latch;
-
-        public RunKernelThread(double[] in1, double[] in2, int chunkSize, Device device, double[] out, int iteration, CountDownLatch latch) {
-            this.in1 = in1;
-            this.in2 = in2;
-            this.chunkSize = chunkSize;
-            this.device = device;
-            this.out = out;
-            this.iteration = iteration;
-            this.latch = latch;
-        }
-
-        @Override
-        public synchronized void run() {
-            super.run();
-            DotProductKernel kernel = new DotProductKernel(in1, in2, chunkSize);
-            kernel.execute(device.createRange(kernel.getRange(), kernel.getRange()));
-            out[iteration] += kernel.getResult();
-            latch.countDown();
-        }
-    }
-
-    public static class JTPKernelManager extends KernelManager {
-        public JTPKernelManager() {
-            LinkedHashSet<Device> preferredDevices = new LinkedHashSet<Device>(1);
-            preferredDevices.add(JavaDevice.THREAD_POOL);
-            setDefaultPreferredDevices(preferredDevices);
-        }
-
-        @Override
-        protected List<Device.TYPE> getPreferredDeviceTypes() {
-            return Arrays.asList(Device.TYPE.JTP);
-        }
-    }
 
     public static double matrixProductSum(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> anotherIn) {
 
@@ -176,17 +51,7 @@ public class Util {
         return out;
     }
 
-    public static double matrixProductSum(double[][][] in, double[][][] in2) {
-        double out = 0;
-        for (int i = 0; i < in.length; i++) {
-            for (int u = 0; u < in[i].length; u++) {
-                for(int a = 0; a < in[i][u].length; a++) {
-                    out += in[i][u][a] * in2[i][u][a];
-                }
-            }
-        }
-        return out;
-    }
+
 
     public static ArrayList<ArrayList<Double>> matrixScalarProduct(ArrayList<ArrayList<Double>> matrix, double scalar) {
         ArrayList<ArrayList<Double>> out = new ArrayList<ArrayList<Double>>();
@@ -208,13 +73,6 @@ public class Util {
         return output;
     }
 
-    public static double[] vectorScalarProduct(double[] vector, double scalar) {
-        double[] output = new double[vector.length];
-        for (int i = 0; i < output.length; i++) {
-            output[i] = vector[i] * scalar;
-        }
-        return output;
-    }
 
     public static double sigmoidFunction(double in) {
         return 2 / (1 + Math.pow(e, -in)) - 1;

@@ -1,6 +1,5 @@
 package Run;
 
-import Display.DisplayImage;
 import Network.FullyConnectedNetwork;
 import Util.*;
 
@@ -18,14 +17,14 @@ public class RunFullyConnected {
 
         //get training data
         String trainingDataPath = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
-        ArrayList<ArrayList<Double>> trainingData = new ArrayList<ArrayList<Double>>();
-        ImageReader reader = new ImageReader(trainingDataPath);
-  //      BufferedImage imaged = Util.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
 
-        trainingData = reader.get1dColorMatricesFromImages(2000, 28);
+        ImageReader reader = new ImageReader(trainingDataPath);
+  //      BufferedImage imaged = arrOperations.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
+
+        double[][] trainingData = reader.get1dColorMatricesFromImages(2000, 28);
         reader.setPreprocessParameters(trainingData);
         trainingData = reader.preprocessTrainingSet(trainingData);
-        ArrayList<ArrayList<Double>> trainingDataOutputs = reader.oneHotOutputs;
+        double[][] trainingDataOutputs = reader.oneHotOutputs;
 
 
         FullyConnectedNetwork network = new FullyConnectedNetwork(new int[]{2352, 200, 200, 10}, new double[]{0, .05, 0.05, .05}, .9);
@@ -39,12 +38,12 @@ public class RunFullyConnected {
         double averageFirstLayerDerivatives = 0;
         double averageSecondLayerDerivatives = 0;
         for (int p = 0; p < 1; p++) {
-            for (int i = 0; i < trainingData.size(); i += batchSize) {
-                ArrayList<ArrayList<Double>> tempIn = new ArrayList<ArrayList<Double>>();
-                ArrayList<ArrayList<Double>> tempOut = new ArrayList<ArrayList<Double>>();
+            for (int i = 0; i < trainingData.length; i += batchSize) {
+                double[][] tempIn = new double[batchSize][];
+                double[][] tempOut = new double[batchSize][];
                 for (int a = 0; a < batchSize; a++) {
-                    tempIn.add(trainingData.get(i));
-                    tempOut.add(trainingDataOutputs.get(i));
+                    tempIn[a] = trainingData[i];
+                    tempOut[a] = trainingDataOutputs[i];
                 }
 
                 network.setDropout(1);
@@ -71,20 +70,20 @@ public class RunFullyConnected {
 
         //testing
         Scanner scan = new Scanner(System.in);
-        ArrayList<ArrayList<Double>> testingData = reader.get1dColorMatricesFromImages(20, 28);
+        double[][] testingData = reader.get1dColorMatricesFromImages(20, 28);
         testingData = reader.preprocessTrainingSet(testingData);
-        ArrayList<ArrayList<Double>> testingOutputs = reader.oneHotOutputs;
+        double[][] testingOutputs = reader.oneHotOutputs;
         System.out.println("Percentage accurate after training on training data: " + network.test(trainingData, trainingDataOutputs));
         System.out.println("Percentage accurate after training on testing data: " + network.test(testingData, testingOutputs));
 
         //dreaming
-        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData.get(0), 1000);
+        FullyConnectedNetwork.DeepDream dream = network.new DeepDream(network, trainingData[0], 1000);
         for (int i = 0; i < 100; i++) {
             dream.updateImage(2);
         }
 
-        BufferedImage dreamedImage = Util.convert1dArrayToImage(reader.unpreprocessExample(dream.image), 28, 28);
-        BufferedImage previousImage = Util.convert1dArrayToImage(reader.unpreprocessExample(trainingData.get(0)), 28, 28);
+        BufferedImage dreamedImage = arrOperations.convert1dArrayToImage(reader.unpreprocessExample(dream.image), 28, 28);
+        BufferedImage previousImage = arrOperations.convert1dArrayToImage(reader.unpreprocessExample(trainingData[0]), 28, 28);
         System.out.println(network.predictOutput(dream.image));
 //        new DisplayImage(dreamedImage);
 //        new DisplayImage(previousImage);

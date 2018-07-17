@@ -12,9 +12,9 @@ import java.util.Random;
 public class ImageReader implements Serializable{
 
     String path;
-    public ArrayList<String> classes;
+    public String[] classes;
     File file;
-    public ArrayList<ArrayList<Double>> oneHotOutputs;
+    public double[][] oneHotOutputs;
     Random rand;
     ArrayList<Integer> newImageReferenceForEachClass;
     File[][] allFiles;
@@ -22,13 +22,12 @@ public class ImageReader implements Serializable{
     double standardDeviation;
 
     public ImageReader(String path) throws Exception{
-        this.path = path;
-        classes = new ArrayList<String>();
+        this.path = path;;
         file = new File(path);
-        oneHotOutputs = new ArrayList<ArrayList<Double>>();
         rand = new Random();
 
         File[] files = file.listFiles();
+        classes = new String[files.length];
 
 
         for (int i = 0; i < files.length; i++) {
@@ -37,7 +36,7 @@ public class ImageReader implements Serializable{
             String temp = files[i].toString();
             for (int u = 0; u < temp.length(); u++) {
                 if (temp.charAt(temp.length() - 1 - u) == '\\') {
-                    classes.add(temp.substring(temp.length() - u, temp.length()));
+                    classes[u] = temp.substring(temp.length() - u, temp.length());
                     break;
                 }
             }
@@ -57,9 +56,9 @@ public class ImageReader implements Serializable{
     }
 
 
-    public ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> get2dColorMatrices (int batchSize) throws Exception{
+    public ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> get3dColorMatrices (int batchSize) throws Exception{
         ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> imagesAsMatrices = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
-        oneHotOutputs = new ArrayList<ArrayList<Double>>();
+        oneHotOutputs = new double[batchSize][];
 
         //get images and save as matrix
 
@@ -72,14 +71,14 @@ public class ImageReader implements Serializable{
             imagesAsMatrices.add(getImageAs2DMatrix(allFiles[random][i].getPath()));
             newImageReferenceForEachClass.set(random, newImageReferenceForEachClass.get(random) + 1);
 
-            oneHotOutputs.add(new ArrayList<Double>());
+            oneHotOutputs[i] = new double[classes.length];
 
-            for(int t = 0; t < classes.size(); t++) {
+            for(int t = 0; t < classes.length; t++) {
                 if(t == i) {
-                    oneHotOutputs.get(oneHotOutputs.size() - 1).add(0d);
+                    oneHotOutputs[oneHotOutputs.length - 1][t] = 1d;
                 }
                 else {
-                    oneHotOutputs.get(oneHotOutputs.size() - 1).add(1d);
+                    oneHotOutputs[oneHotOutputs.length - 1][t] = 0d;
                 }
             }
         }
@@ -87,9 +86,9 @@ public class ImageReader implements Serializable{
         return imagesAsMatrices;
     }
 
-    public ArrayList<ArrayList<Double>> get1dColorMatricesFromImages(int batchSize, int newWidth) throws Exception{
-        ArrayList<ArrayList<Double>> imagesAsMatrices = new ArrayList<ArrayList<Double>>();
-        oneHotOutputs = new ArrayList<ArrayList<Double>>();
+    public double[][] get1dColorMatricesFromImages(int batchSize, int newWidth) throws Exception{
+        double[][] imagesAsMatrices = new double[batchSize][];
+        oneHotOutputs = new double[batchSize][];
 
         //get images and save as matrix
         //random chance for each class to be picked, evenly distributed
@@ -102,16 +101,16 @@ public class ImageReader implements Serializable{
                 break;
             }
 
-            imagesAsMatrices.add(getImageAs1DMatrix(allFiles[random][newImageReferenceForEachClass.get(random)].getPath(), newWidth));
+            imagesAsMatrices[i] = getImageAs1DMatrix(allFiles[random][newImageReferenceForEachClass.get(random)].getPath(), newWidth);
             newImageReferenceForEachClass.set(random, newImageReferenceForEachClass.get(random) + 1);
 
-            oneHotOutputs.add(new ArrayList<Double>());
+            oneHotOutputs[i] = new double[classes.length];
 
-            for(int t = 0; t < classes.size(); t++) {
+            for(int t = 0; t < classes.length; t++) {
                 if (t == random) {
-                    oneHotOutputs.get(oneHotOutputs.size() - 1).add(1d);
+                    oneHotOutputs[i][t] = 1d;
                 } else {
-                    oneHotOutputs.get(oneHotOutputs.size() - 1).add(0d);
+                    oneHotOutputs[i][t] = 0d;
                 }
             }
 
@@ -146,9 +145,9 @@ public class ImageReader implements Serializable{
     }
 
     //return image as 1d matrix with color
-    public ArrayList<Double> getImageAs1DMatrix(String filePath, int newWidth) throws Exception {
+    public double[] getImageAs1DMatrix(String filePath, int newWidth) throws Exception {
         BufferedImage image = ImageIO.read(new File(filePath));
-        ArrayList<Double> matrix = new ArrayList<Double>();
+        double[] matrix = new double[image.getWidth() * image.getHeight() * 3];
         int chunkSize = image.getWidth() / newWidth;
 
         for (int x = 0; x < image.getWidth(); x += chunkSize) {
@@ -172,61 +171,61 @@ public class ImageReader implements Serializable{
                         averageR += color.getRed();
                     }
                 }
-                matrix.add((double)(averageR / chunkSize / chunkSize));
-                matrix.add((double)(averageG / chunkSize / chunkSize));
-                matrix.add((double)(averageB / chunkSize / chunkSize));
+                matrix[x * y + y] = (double)(averageR / chunkSize / chunkSize);
+                matrix[x * y + y + 1] =(double)(averageG / chunkSize / chunkSize);
+                matrix[x * y + y + 2] =(double)(averageB / chunkSize / chunkSize);
             }
         }
         return matrix;
     }
 
     //some preprocessing saved in reader object
-    public ArrayList<Double> preprocessExample (ArrayList<Double> in) {
-        ArrayList<Double> out = new ArrayList<Double>();
-        for(int i = 0; i < in.size(); i++) {
-            out.add((in.get(i) - mean) / standardDeviation);
+    public double[] preprocessExample (double[] in) {
+        double[] out = new double[in.length];
+        for(int i = 0; i < in.length; i++) {
+            out[i] = (in[i] - mean) / standardDeviation;
         }
         return out;
     }
 
-    public ArrayList<ArrayList<Double>> preprocessTrainingSet(ArrayList<ArrayList<Double>> in) {
-        ArrayList<ArrayList<Double>> out = new ArrayList<ArrayList<Double>>();
-        for(int p = 0; p < in.size(); p++) {
-            out.add(new ArrayList<Double>());
-            for (int u = 0; u < in.get(p).size(); u++) {
-                out.get(p).add((in.get(p).get(u) - mean) / standardDeviation);
+    public double[][] preprocessTrainingSet(double[][] in) {
+        double[][] out = new double[in.length][];
+        for(int p = 0; p < in.length; p++) {
+            out[p] = new double[in[p].length];
+            for (int u = 0; u < in[p].length; u++) {
+                out[p][u] = (in[p][u] - mean) / standardDeviation;
             }
         }
         return out;
     }
 
-    public ArrayList<Double> unpreprocessExample (ArrayList<Double> in) {
-        ArrayList<Double> out = new ArrayList<Double>();
-        for(int i = 0; i < in.size(); i++) {
-            out.add(in.get(i) * standardDeviation + mean);
+    public double[] unpreprocessExample (double[] in) {
+        double[] out = new double[in.length];
+        for(int i = 0; i < in.length; i++) {
+            out[i] = in[i] * standardDeviation + mean;
         }
         return out;
     }
 
-    public void setPreprocessParameters (ArrayList<ArrayList<Double>> in) {
+    public void setPreprocessParameters (double[][] in) {
         mean = 0;
-        for(int i = 0; i < in.size(); i++) {
-            for(int u = 0; u < in.get(i).size(); u++) {
-                mean += in.get(i).get(u);
+        for(int i = 0; i < in.length; i++) {
+            for(int u = 0; u < in[i].length; u++) {
+                mean += in[i][u];
             }
         }
-        mean = mean / in.size() / in.get(0).size();
+        mean = mean / in.length / in[0].length;
 
         double variance = 0;
 
         //calculate variance
-        for(int i = 0; i < in.size(); i++) {
-            for (int u = 0; u < in.get(i).size(); u++) {
-                variance += Math.pow(in.get(i).get(u) - mean, 2);
+        for(int i = 0; i < in.length; i++) {
+            for (int u = 0; u < in[i].length; u++) {
+                variance += Math.pow(in[i][u] - mean, 2);
             }
         }
 
-        variance = variance / in.size() / in.get(0).size();
+        variance = variance / in.length / in[0].length;
         standardDeviation = Math.sqrt(variance);
     }
 

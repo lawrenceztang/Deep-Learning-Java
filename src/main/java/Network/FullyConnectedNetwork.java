@@ -1,10 +1,8 @@
 package Network;
 
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
 import Util.*;
 
@@ -21,20 +19,20 @@ public class FullyConnectedNetwork implements Serializable {
     double probabilityNeuronRetained = 1;
 
 
-    ArrayList<ArrayList<ArrayList<Double>>> weights;
-    ArrayList<ArrayList<Double>> biases;
-    ArrayList<ArrayList<Double>> derivativesErrorWithRespectToBiases;
-    public ArrayList<ArrayList<ArrayList<Double>>> derivativesErrorWithRespectToWeights;
-    ArrayList<ArrayList<Double>> outputsInAllLayers;
-    ArrayList<ArrayList<ArrayList<Double>>> weightMomentumUpdate;
-    ArrayList<ArrayList<Double>> derivativesErrorWithRespectToInputsToActivation;
-    public ArrayList<String> classNames;
-    ArrayList<ArrayList<ArrayList<Double>>> weightsAfterDropout;
+    double[][][] weights;
+    double[][] biases;
+    double[][] derivativesErrorWithRespectToBiases;
+    public double[][][] derivativesErrorWithRespectToWeights;
+    double[][] outputsInAllLayers;
+    double[][][] weightMomentumUpdate;
+    double[][] derivativesErrorWithRespectToInputsToActivation;
+    public String[] classNames;
+    double[][][] weightsAfterDropout;
 
     public FullyConnectedNetwork(int[] nodesPerLayer, double[] learningRate, double momentum) {
         rand = new Random();
-        outputsInAllLayers = new ArrayList<ArrayList<Double>>();
-        weightsAfterDropout = new ArrayList<ArrayList<ArrayList<Double>>>();
+        outputsInAllLayers = new double[nodesPerLayer.length][];
+        weightsAfterDropout = new double[nodesPerLayer.length][][];
 
         //layers includes output and input layer
         this.layers = nodesPerLayer.length;
@@ -55,11 +53,11 @@ public class FullyConnectedNetwork implements Serializable {
 
             for (int t = 0; t < nodesThisLayer; t++) {
                 for (int y = 0; y < nodesPreviousLayer; y++) {
-                    if(weightsAfterDropout.get(i).get(t).get(y) != 0) {
-                        weights.get(i).get(t).set(y, weights.get(i).get(t).get(y) - weightMomentumUpdate.get(i).get(t).get(y) * learningRate[i]);
+                    if(weightsAfterDropout[i][t][y] != 0) {
+                        weights[i][t][y] = weights[i][t][y] - weightMomentumUpdate[i][t][y] * learningRate[i];
                     }
 
-                    biases.get(i).set(t, biases.get(i).get(t) - derivativesErrorWithRespectToBiases.get(i).get(t) * learningRate[i] * .01);
+                    biases[i][t] = biases[i][t] - derivativesErrorWithRespectToBiases[i][t] * learningRate[i] * .01;
                 }
             }
         }
@@ -69,43 +67,43 @@ public class FullyConnectedNetwork implements Serializable {
     }
 
     //todo: gradients are 10 times larger than actually in last layer
-    public void getDerivativeOfErrorWithRespectToWeights(ArrayList<ArrayList<Double>> inputs, ArrayList<ArrayList<Double>> outputs) throws Exception{
+    public void getDerivativeOfErrorWithRespectToWeights(double[][] inputs, double[][] outputs) throws Exception{
         //no need to worry about dropped out weights because they automatically have 0 derivative so they arent updated in gradient descent
         //try mean squared error
         derivativesErrorWithRespectToWeights = getNewDerivativeWeights();
         derivativesErrorWithRespectToBiases = getNewDerivativeBiasesAndOutputs();
-        for (int w = 0; w < inputs.size(); w++) {
+        for (int w = 0; w < inputs.length; w++) {
             derivativesErrorWithRespectToInputsToActivation = getNewDerivativeBiasesAndOutputs();
-            forwardPass(inputs.get(w));
+            forwardPass(inputs[w]);
             for (int p = layers - 1; p > 0; p--) {
                 if (p == layers - 1) {
-                    derivativesErrorWithRespectToInputsToActivation.set(p, Util.getDerivativeFromSoftmax(outputsInAllLayers.get(p), Util.getDerivativeFromMSE(outputs.get(w), outputsInAllLayers.get(layers - 1))));
+                    derivativesErrorWithRespectToInputsToActivation[p] = arrOperations.getDerivativeFromSoftmax(outputsInAllLayers[p], arrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1]));
                     for (int i = 0; i < numOutputs; i++) {
                         for (int u = 0; u < nodesPerLayer[p]; u++) {
-                            derivativesErrorWithRespectToWeights.get(p).get(i).set(u, derivativesErrorWithRespectToWeights.get(p).get(i).get(u) + derivativesErrorWithRespectToInputsToActivation.get(p).get(i) * outputsInAllLayers.get(p - 1).get(u) / inputs.size());
+                            derivativesErrorWithRespectToWeights[p][i][u] = derivativesErrorWithRespectToWeights[p][i][u] + derivativesErrorWithRespectToInputsToActivation[p][i] * outputsInAllLayers[p - 1][u] / inputs.length;
                         }
-                        derivativesErrorWithRespectToBiases.get(p).set(i, derivativesErrorWithRespectToBiases.get(p).get(i) + derivativesErrorWithRespectToInputsToActivation.get(p).get(i) / inputs.size());
+                        derivativesErrorWithRespectToBiases[p][i] = derivativesErrorWithRespectToBiases[p][i] + derivativesErrorWithRespectToInputsToActivation[p][i] / inputs.length;
                     }
                 } else {
                     for (int i = 0; i < nodesPerLayer[p]; i++) {
 
                         for (int nextLayerNode = 0; nextLayerNode < nodesPerLayer[p + 1]; nextLayerNode++) {
-                            derivativesErrorWithRespectToInputsToActivation.get(p).set(i, derivativesErrorWithRespectToInputsToActivation.get(p).get(i) + derivativesErrorWithRespectToInputsToActivation.get(p + 1).get(nextLayerNode) * weights.get(p + 1).get(nextLayerNode).get(i) * (Util.getDerivativeFromSigmoid(outputsInAllLayers.get(p).get(i))));
+                            derivativesErrorWithRespectToInputsToActivation[p][i] = derivativesErrorWithRespectToInputsToActivation[p][i] + derivativesErrorWithRespectToInputsToActivation[p + 1][nextLayerNode] * weights[p + 1][nextLayerNode][i] * (arrOperations.getDerivativeFromSigmoid(outputsInAllLayers[p][i]));
                         }
                         for (int u = 0; u < nodesPerLayer[p - 1]; u++) {
-                            derivativesErrorWithRespectToWeights.get(p).get(i).set(u, derivativesErrorWithRespectToWeights.get(p).get(i).get(u) + derivativesErrorWithRespectToInputsToActivation.get(p).get(i) * outputsInAllLayers.get(p - 1).get(u) / inputs.size());
+                            derivativesErrorWithRespectToWeights[p][i][u] = derivativesErrorWithRespectToWeights[p][i][u] + derivativesErrorWithRespectToInputsToActivation[p][i] * outputsInAllLayers[p - 1][u] / inputs.length;
                         }
-                        derivativesErrorWithRespectToBiases.get(p).set(i, derivativesErrorWithRespectToBiases.get(p).get(i) + derivativesErrorWithRespectToInputsToActivation.get(p).get(i) / inputs.size());
+                        derivativesErrorWithRespectToBiases[p][i] = derivativesErrorWithRespectToBiases[p][i] + derivativesErrorWithRespectToInputsToActivation[p][i] / inputs.length;
                     }
                 }
 
             }
         }
 
-        for(int i = 0; i < derivativesErrorWithRespectToWeights.size(); i++) {
-            for(int u = 0; u < derivativesErrorWithRespectToWeights.get(i).size(); u++) {
-                for(int g = 0; g < derivativesErrorWithRespectToWeights.get(i).get(u).size(); g++) {
-                    weightMomentumUpdate.get(i).get(u).set(g, weightMomentumUpdate.get(i).get(u).get(g) * momentum + (1 - momentum) * derivativesErrorWithRespectToWeights.get(i).get(u).get(g));
+        for(int i = 1; i < derivativesErrorWithRespectToWeights.length; i++) {
+            for(int u = 0; u < derivativesErrorWithRespectToWeights[i].length; u++) {
+                for(int g = 0; g < derivativesErrorWithRespectToWeights[i][u].length; g++) {
+                    weightMomentumUpdate[i][u][g] = weightMomentumUpdate[i][u][g] * momentum + (1 - momentum) * derivativesErrorWithRespectToWeights[i][u][g];
                 }
             }
         }
@@ -115,29 +113,29 @@ public class FullyConnectedNetwork implements Serializable {
 
     //forward pass - first thing
     //stores outputs of each neuron in hidden layers
-    public void forwardPass(ArrayList<Double> inputs) throws Exception{
-        ArrayList<Double> in = inputs;
-        ArrayList<ArrayList<Double>> outputsInHiddenLayersTemp = new ArrayList<ArrayList<Double>>();
+    public void forwardPass(double[] inputs) throws Exception{
+        double[] in = inputs;
+        double[][] outputsInHiddenLayersTemp = new double[layers][];
 
         for (int i = 0; i < layers; i++) {
             if (i == layers - 1) {
-                ArrayList<Double> temp = new ArrayList<Double>();
+                double[] temp = new double[numOutputs];
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProductNoGPU(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u));
+                    temp[u] = arrOperations.dotProductNoGPU(weightsAfterDropout[i][u], in) + biases[i][u];
                 }
-                temp = Util.softmax(temp);
-                outputsInHiddenLayersTemp.add(temp);
+                temp = arrOperations.softmax(temp);
+                outputsInHiddenLayersTemp[i] = temp;
                 in = temp;
             } else if (i == 0) {
                 //output is input in first layer
-                outputsInHiddenLayersTemp.add(in);
+                outputsInHiddenLayersTemp[i] = in;
             } else {
-                ArrayList<Double> temp = new ArrayList<Double>();
+                double[] temp = new double[nodesPerLayer[i]];
                 for (int u = 0; u < nodesPerLayer[i]; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProductNoGPU(weightsAfterDropout.get(i).get(u), in) + biases.get(i).get(u)));
+                    temp[u] = arrOperations.sigmoidFunction(arrOperations.dotProductNoGPU(weightsAfterDropout[i][u], in) + biases[i][u]);
                 }
-                outputsInHiddenLayersTemp.add(temp);
+                outputsInHiddenLayersTemp[i] = temp;
                 in = temp;
             }
         }
@@ -146,23 +144,23 @@ public class FullyConnectedNetwork implements Serializable {
     }
 
     //output as array of probabililities
-    public ArrayList<Double> predictOutput(ArrayList<Double> array) throws Exception{
-        ArrayList<Double> in = array;
+    public double[] predictOutput(double[] array) throws Exception{
+        double[] in = array;
 
         for (int i = 0; i < layers; i++) {
             if (i == layers - 1) {
-                ArrayList<Double> temp = new ArrayList<Double>();
+                double[] temp = new double[numOutputs];
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
-                    temp.add(Util.dotProductNoGPU(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u));
+                    temp[u] = arrOperations.dotProductNoGPU(arrOperations.vectorScalarProduct(weights[i][u], probabilityNeuronRetained), in) + biases[i][u];
                 }
-                in = Util.softmax(temp);
+                in = arrOperations.softmax(temp);
             } else if (i == 0) {
 
             } else {
-                ArrayList<Double> temp = new ArrayList<Double>();
+                double[] temp = new double[nodesPerLayer[i]];
                 for (int u = 0; u < nodesPerLayer[i]; u++) {
-                    temp.add(Util.sigmoidFunction(Util.dotProductNoGPU(Util.vectorScalarProduct(weights.get(i).get(u), probabilityNeuronRetained), in) + biases.get(i).get(u)));
+                    temp[u] = arrOperations.sigmoidFunction(arrOperations.dotProductNoGPU(arrOperations.vectorScalarProduct(weights[i][u], probabilityNeuronRetained), in) + biases[i][u]);
                 }
                 in = temp;
             }
@@ -173,11 +171,11 @@ public class FullyConnectedNetwork implements Serializable {
     //weight initialization can be improved
     //intialize weights at very beginning
     public void setWeights() {
-        weights = new ArrayList<ArrayList<ArrayList<Double>>>();
-        biases = new ArrayList<ArrayList<Double>>();
+        weights = new double[layers][][];
+        biases = new double[layers][];
         for (int i = 0; i < layers; i++) {
-            weights.add(new ArrayList<ArrayList<Double>>());
-            biases.add(new ArrayList<Double>());
+            weights[i] = new double[nodesPerLayer[i]][];
+            biases[i] = new double[nodesPerLayer[i]];
             //last layer - numOutputs outputs
 
             if (i == 0) {
@@ -186,47 +184,47 @@ public class FullyConnectedNetwork implements Serializable {
 
             else {
                 for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    weights.get(i).add(new ArrayList<Double>());
-                    biases.get(i).add(0d);
+                    weights[i][a] = new double[nodesPerLayer[i - 1]];
+                    biases[i][a] = 0d;
                     for (int u = 0; u < nodesPerLayer[i - 1]; u++) {
-                        weights.get(i).get(a).add(rand.nextDouble() * .1 - .05);
+                        weights[i][a][u] = rand.nextDouble() * .1 - .05;
                     }
                 }
             }
         }
-        weightMomentumUpdate = new ArrayList<ArrayList<ArrayList<Double>>>(getNewDerivativeWeights());
+        weightMomentumUpdate = getNewDerivativeWeights();
         weightsAfterDropout = weights;
     }
 
-    public ArrayList<ArrayList<Double>> getNewDerivativeBiasesAndOutputs() {
-        ArrayList<ArrayList<Double>> derivativesErrorWithRespectToBiasesCopy = new ArrayList<ArrayList<Double>>();
+    public double[][] getNewDerivativeBiasesAndOutputs() {
+        double[][] derivativesErrorWithRespectToBiasesCopy = new double[layers][];
         for (int i = 0; i < layers; i++) {
-            derivativesErrorWithRespectToBiasesCopy.add(new ArrayList<Double>());
+            derivativesErrorWithRespectToBiasesCopy[i] = new double[nodesPerLayer[i]];
             if (i == 0) {
                 //no weights first layer or input layer
             }
             else {
                 for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    derivativesErrorWithRespectToBiasesCopy.get(i).add(0d);
+                    derivativesErrorWithRespectToBiasesCopy[i][a] = 0d;
                 }
             }
         }
         return derivativesErrorWithRespectToBiasesCopy;
     }
 
-    public ArrayList<ArrayList<ArrayList<Double>>> getNewDerivativeWeights() {
-        ArrayList<ArrayList<ArrayList<Double>>> derivativesErrorWithRespectToWeightsCopy = new ArrayList<ArrayList<ArrayList<Double>>>();
+    public double[][][] getNewDerivativeWeights() {
+        double[][][] derivativesErrorWithRespectToWeightsCopy = new double[layers][][];
         for (int i = 0; i < layers; i++) {
-            derivativesErrorWithRespectToWeightsCopy.add(new ArrayList<ArrayList<Double>>());
+            derivativesErrorWithRespectToWeightsCopy[i] = new double[nodesPerLayer[i]][];
 
             if (i == 0) {
                 //no weights first layer or input layer
             }
             else {
                 for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    derivativesErrorWithRespectToWeightsCopy.get(i).add(new ArrayList<Double>());
+                    derivativesErrorWithRespectToWeightsCopy[i][a] = new double[nodesPerLayer[i - 1]];
                     for (int u = 0; u < nodesPerLayer[i - 1]; u++) {
-                        derivativesErrorWithRespectToWeightsCopy.get(i).get(a).add(0d);
+                        derivativesErrorWithRespectToWeightsCopy[i][a][u] = 0d;
                     }
                 }
             }
@@ -237,36 +235,35 @@ public class FullyConnectedNetwork implements Serializable {
     public void setDropout (double probability) {
         probabilityNeuronRetained = probability;
         weightsAfterDropout = getNewDerivativeWeights();
-        for(int i = 0; i < weights.size(); i++) {
-            for(int a = 0; a < weights.get(i).size(); a++) {
-                for(int q = 0; q < weights.get(i).get(a).size(); q++) {
-                    if(rand.nextDouble() < probability) {
-                        weightsAfterDropout.get(i).get(a).set(q, weights.get(i).get(a).get(q));
+        for(int i = 1; i < weights.length; i++) {
+            for(int a = 0; a < weights[i].length; a++) {
+                    for (int q = 0; q < weights[i][a].length; q++) {
+                        if (rand.nextDouble() < probability) {
+                            weightsAfterDropout[i][a][q] = weights[i][a][q];
+                        } else {
+                            weightsAfterDropout[i][a][q] = 0d;
+                        }
                     }
-                    else {
-                        weightsAfterDropout.get(i).get(a).set(q, 0d);
-                    }
-                }
             }
         }
     }
 
     //tests on dataset, returns percentage accurate
-    public double test(ArrayList<ArrayList<Double>> in, ArrayList<ArrayList<Double>> out) throws Exception{
+    public double test(double[][] in, double[][] out) throws Exception{
         int numCorrect = 0;
-        for (int i = 0; i < in.size(); i++) {
-            ArrayList<Double> array = predictOutput(in.get(i));
+        for (int i = 0; i < in.length; i++) {
+            double[] array = predictOutput(in[i]);
             int prediction = 0;
 
-            for (int p = 0; p < array.size(); p++) {
-                if (array.get(p) > array.get(prediction)) {
+            for (int p = 0; p < array.length; p++) {
+                if (array[p] > array[prediction]) {
                     prediction = p;
                 }
             }
 
             int output = 0;
-            for (int p = 0; p < array.size(); p++) {
-                if (out.get(i).get(p) > out.get(i).get(output)) {
+            for (int p = 0; p < array.length; p++) {
+                if (out[i][p] > out[i][output]) {
                     output = p;
                 }
             }
@@ -275,7 +272,7 @@ public class FullyConnectedNetwork implements Serializable {
                 numCorrect++;
             }
         }
-        return numCorrect / (double) in.size();
+        return numCorrect / (double) in.length;
     }
 
 
@@ -283,16 +280,16 @@ public class FullyConnectedNetwork implements Serializable {
 
 
     //output as highest probability classname
-    public String getPredictionClass(ArrayList<Double> in) throws Exception{
-        ArrayList<Double> out = predictOutput(in);
+    public String getPredictionClass(double[] in) throws Exception{
+        double[] out = predictOutput(in);
 
         int maxOutput = 0;
-        for (int i = 0; i < out.size(); i++) {
-            if (out.get(i) > out.get(maxOutput)) {
+        for (int i = 0; i < out.length; i++) {
+            if (out[i] > out[maxOutput]) {
                 maxOutput = i;
             }
         }
-        return classNames.get(maxOutput);
+        return classNames[maxOutput];
     }
 
 
@@ -315,15 +312,15 @@ public class FullyConnectedNetwork implements Serializable {
     }
 
     //not working
-    public void setLearningRateAutomatically(ArrayList<ArrayList<Double>> trainingDataOutputs) {
+    public void setLearningRateAutomatically(double[][] trainingDataOutputs) {
         double maxOutput = -9999;
         double minOutput = 9999;
         for (int i = 0; i < 100; i++) {
-            for (int p = 0; p < trainingDataOutputs.get(i).size(); p++) {
-                if (trainingDataOutputs.get(i).get(p) > maxOutput) {
-                    maxOutput = trainingDataOutputs.get(i).get(p);
-                } else if (trainingDataOutputs.get(i).get(p) < minOutput) {
-                    minOutput = trainingDataOutputs.get(i).get(p);
+            for (int p = 0; p < trainingDataOutputs[i].length; p++) {
+                if (trainingDataOutputs[i][p] > maxOutput) {
+                    maxOutput = trainingDataOutputs[i][p];
+                } else if (trainingDataOutputs[i][p] < minOutput) {
+                    minOutput = trainingDataOutputs[i][p];
                 }
             }
         }
@@ -333,13 +330,13 @@ public class FullyConnectedNetwork implements Serializable {
     }
 
     //doesnt work if dropout is used
-    public double derivativeOfWeightCheck(ArrayList<Double> in, ArrayList<Double> out, int layer, int node, int previousLayerNode) throws Exception{
+    public double derivativeOfWeightCheck(double[] in, double[] out, int layer, int node, int previousLayerNode) throws Exception{
         double interval = .000001;
-        weights.get(layer).get(node).set(previousLayerNode, weights.get(layer).get(node).get(previousLayerNode) - interval);
-        double loss = Util.meanSquaredError(predictOutput(in), out);
-        weights.get(layer).get(node).set(previousLayerNode, weights.get(layer).get(node).get(previousLayerNode) + interval * 2);
-        double output = (Util.meanSquaredError(predictOutput(in), out) - loss) / interval / 2;
-        weights.get(layer).get(node).set(previousLayerNode, weights.get(layer).get(node).get(previousLayerNode) - interval);
+        weights[layer][node][previousLayerNode] -= interval;
+        double loss = arrOperations.meanSquaredError(predictOutput(in), out);
+        weights[layer][node][previousLayerNode] += interval * 2;
+        double output = (arrOperations.meanSquaredError(predictOutput(in), out) - loss) / interval / 2;
+        weights[layer][node][previousLayerNode] -= interval;
         return output;
     }
 
@@ -357,66 +354,66 @@ public class FullyConnectedNetwork implements Serializable {
 
     public class DeepDream {
         FullyConnectedNetwork network;
-        public ArrayList<Double> image;
-        ArrayList<Double> derivativeErrorWithRespectToInputs;
+        public double[] image;
+        double[] derivativeErrorWithRespectToInputs;
 
         double learningRate = 1;
         double max = -9999;
         double min = 9999;
 
-        public DeepDream(FullyConnectedNetwork network, ArrayList<Double> image, double learningRate) {
+        public DeepDream(FullyConnectedNetwork network, double[] image, double learningRate) {
             this.network = network;
-            this.image = Util.makeCopy1D(image);
+            this.image = arrOperations.makeCopy(image);
             this.learningRate = learningRate;
 
 
-            for(int i = 0; i < image.size(); i++) {
-                if(image.get(i) > max) {
-                    max = image.get(i);
+            for(int i = 0; i < image.length; i++) {
+                if(image[i] > max) {
+                    max = image[i];
                 }
-                if(image.get(i) < min) {
-                    min = image.get(i);
+                if(image[i] < min) {
+                    min = image[i];
                 }
             }
         }
 
         public void updateImage(int desiredOutput) throws  Exception{
 
-            derivativeErrorWithRespectToInputs = new ArrayList<Double>();
-            for(int i = 0; i < image.size(); i++) {
-                derivativeErrorWithRespectToInputs.add(0d);
+            derivativeErrorWithRespectToInputs = new double[image.length];
+            for(int i = 0; i < image.length; i++) {
+                derivativeErrorWithRespectToInputs[i] = 0d;
             }
 
-            ArrayList<Double> outputs = new ArrayList<Double>();
+            double[] outputs = new double[network.numOutputs];
             for (int i = 0; i < network.numOutputs; i++) {
                 if (i == desiredOutput) {
-                    outputs.add(1d);
+                    outputs[i] = 0d;
                 } else {
-                    outputs.add(0d);
+                    outputs[i] = 0d;
                 }
             }
-            ArrayList<ArrayList<Double>> inputsToNetwork = new ArrayList<ArrayList<Double>>();
-            inputsToNetwork.add(image);
+            double[][] inputsToNetwork = new double[1][];
+            inputsToNetwork[0] = image;
 
-            ArrayList<ArrayList<Double>> outputsOfNetwork = new ArrayList<ArrayList<Double>>();
-            outputsOfNetwork.add(outputs);
+            double[][] outputsOfNetwork = new double[1][];
+            outputsOfNetwork[0] = outputs;
 
 
             network.getDerivativeOfErrorWithRespectToWeights(inputsToNetwork, outputsOfNetwork);
 
-            for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation.get(1).size(); i++) {
+            for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation[1].length; i++) {
                 for (int u = 0; u < network.numInputs; u++) {
-                    derivativeErrorWithRespectToInputs.set(u, derivativeErrorWithRespectToInputs.get(u) + network.derivativesErrorWithRespectToInputsToActivation.get(1).get(i) * network.weights.get(1).get(i).get(u));
+                    derivativeErrorWithRespectToInputs[u] = derivativeErrorWithRespectToInputs[u] + network.derivativesErrorWithRespectToInputsToActivation[1][i] * network.weights[1][i][u];
                 }
             }
 
-            for(int i = 0; i < derivativeErrorWithRespectToInputs.size(); i++) {
-                image.set(i, image.get(i) - derivativeErrorWithRespectToInputs.get(i) * learningRate);
-                if(image.get(i) < min) {
-                    image.set(i, min);
+            for(int i = 0; i < derivativeErrorWithRespectToInputs.length; i++) {
+                image[i] = image[i] - derivativeErrorWithRespectToInputs[i] * learningRate;
+                if(image[i] < min) {
+                    image[i] = min;
                 }
-                if(image.get(i) > max) {
-                    image.set(i, max);
+                if(image[i] > max) {
+                    image[i] = max;
                 }
             }
         }
