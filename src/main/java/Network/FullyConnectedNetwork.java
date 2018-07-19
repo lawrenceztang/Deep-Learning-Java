@@ -79,7 +79,7 @@ public class FullyConnectedNetwork implements Serializable {
                 if (p == layers - 1) {
                     derivativesErrorWithRespectToInputsToActivation[p] = arrOperations.getDerivativeFromSoftmax(outputsInAllLayers[p], arrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1]));
                     for (int i = 0; i < numOutputs; i++) {
-                        for (int u = 0; u < nodesPerLayer[p]; u++) {
+                        for (int u = 0; u < nodesPerLayer[p - 1]; u++) {
                             derivativesErrorWithRespectToWeights[p][i][u] = derivativesErrorWithRespectToWeights[p][i][u] + derivativesErrorWithRespectToInputsToActivation[p][i] * outputsInAllLayers[p - 1][u] / inputs.length;
                         }
                         derivativesErrorWithRespectToBiases[p][i] = derivativesErrorWithRespectToBiases[p][i] + derivativesErrorWithRespectToInputsToActivation[p][i] / inputs.length;
@@ -185,9 +185,9 @@ public class FullyConnectedNetwork implements Serializable {
             else {
                 for (int a = 0; a < nodesPerLayer[i]; a++) {
                     weights[i][a] = new double[nodesPerLayer[i - 1]];
-                    biases[i][a] = 0d;
+                    biases[i][a] = arrOperations.gaussianRandomVariable(.01, 0);
                     for (int u = 0; u < nodesPerLayer[i - 1]; u++) {
-                        weights[i][a][u] = rand.nextDouble() * .1 - .05;
+                        weights[i][a][u] = arrOperations.gaussianRandomVariable(Math.sqrt(2 / ((double) nodesPerLayer[i - 1] + (double)nodesPerLayer[i])), 0);
                     }
                 }
             }
@@ -232,6 +232,7 @@ public class FullyConnectedNetwork implements Serializable {
         return derivativesErrorWithRespectToWeightsCopy;
     }
 
+    //not done correctly because 0s still have derivatives
     public void setDropout (double probability) {
         probabilityNeuronRetained = probability;
         weightsAfterDropout = getNewDerivativeWeights();

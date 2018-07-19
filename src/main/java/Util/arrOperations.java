@@ -6,11 +6,12 @@ import com.aparapi.Range;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class arrOperations {
 
-
-    static double e = 2.71828;
+    static double e = Math.E;
+    static double pi = Math.PI;
 
 
     public static double[] matrixVectorProduct(double[] vector, double[][] matrix) {
@@ -316,5 +317,10 @@ public class arrOperations {
             }
         }
         return out;
+    }
+
+    public static double gaussianRandomVariable (double standardDeviation, double center) {
+        Random rand = new Random();
+        return  standardDeviation * Math.sqrt(-2 * Math.log(rand.nextDouble())) * Math.cos(2 * pi * rand.nextDouble()) + center;
     }
 }
