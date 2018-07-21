@@ -5,6 +5,7 @@ import Util.*;
 
 
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,13 +14,15 @@ public class RunFullyConnected {
 
     public static void main(String[] args) throws Exception {
 
+        DecimalFormat df = new DecimalFormat("#.####");
+
         System.out.println(System.getenv());
 
         //get training data
         String trainingDataPath = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
+        //"C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg"
 
         ImageReader reader = new ImageReader(trainingDataPath);
-  //      BufferedImage imaged = arrOperations.convert1dArrayToImage(reader.getImageAs1DMatrix("C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg", 100), 100, 100);
 
         double[][] trainingData = reader.get1dColorMatricesFromImages(4000, 28);
         reader.setPreprocessParameters(trainingData);
@@ -49,18 +52,22 @@ public class RunFullyConnected {
                 network.setDropout(1);
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
 
-                //test derivative to see if theyre accurate
-//                System.out.println(network.derivativesErrorWithRespectToWeights[1][190][1900]);
-//                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 1, 190, 1900));
+                //difference in derivatives of different layers
                 averageFirstLayerDerivatives += Math.abs(network.derivativesErrorWithRespectToWeights[1][190][1900]);
-
-//                System.out.println("second layer");
-//                System.out.println(network.derivativesErrorWithRespectToWeights[2][7][100]);
-//                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 2, 7, 100));
                 averageSecondLayerDerivatives += Math.abs(network.derivativesErrorWithRespectToWeights[2][7][100]);
 
+                //test derivative to see if theyre accurate
+                for(int a = 1; a < network.derivativesErrorWithRespectToWeights.length; a++) {
+                    for(int q = 0; q < network.derivativesErrorWithRespectToWeights[a].length; q++) {
+                        for(int v = 0; v < network.derivativesErrorWithRespectToWeights[a][q].length; v++) {
+                            if(Double.parseDouble(df.format(new Double(network.derivativesErrorWithRespectToWeights[a][q][v] / 10))) != Double.parseDouble(df.format(new Double(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], a, q, v))))) {
+                                System.out.println(network.derivativesErrorWithRespectToWeights[a][q][v] + ", " + network.derivativeOfWeightCheck(tempIn[0], tempOut[0], a, q, v));
+                            }
+                        }
+                    }
+                }
+                System.out.print(".");
                 network.gradientDescent();
-
             }
             System.out.println(averageFirstLayerDerivatives + ", " + averageSecondLayerDerivatives);
         }

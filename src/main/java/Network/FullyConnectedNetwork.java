@@ -54,7 +54,7 @@ public class FullyConnectedNetwork implements Serializable {
             for (int t = 0; t < nodesThisLayer; t++) {
                 for (int y = 0; y < nodesPreviousLayer; y++) {
                     if(weightsAfterDropout[i][t][y] != 0) {
-                        weights[i][t][y] = weights[i][t][y] - weightMomentumUpdate[i][t][y] * learningRate[i];
+                        weights[i][t][y] = weights[i][t][y] - weightMomentumUpdate[i][t][y];
                     }
 
                     biases[i][t] = biases[i][t] - derivativesErrorWithRespectToBiases[i][t] * learningRate[i] * .01;
@@ -103,7 +103,7 @@ public class FullyConnectedNetwork implements Serializable {
         for(int i = 1; i < derivativesErrorWithRespectToWeights.length; i++) {
             for(int u = 0; u < derivativesErrorWithRespectToWeights[i].length; u++) {
                 for(int g = 0; g < derivativesErrorWithRespectToWeights[i][u].length; g++) {
-                    weightMomentumUpdate[i][u][g] = weightMomentumUpdate[i][u][g] * momentum + (1 - momentum) * derivativesErrorWithRespectToWeights[i][u][g];
+                    weightMomentumUpdate[i][u][g] = weightMomentumUpdate[i][u][g] * momentum + learningRate[i] * derivativesErrorWithRespectToWeights[i][u][g];
                 }
             }
         }
