@@ -26,9 +26,7 @@ public class FullyConnectedTest {
         trainingDataOutputs = reader.oneHotOutputs;
 
 
-        network = new DenseNetwork(new int[]{2352, 20, 10}, new float[]{0, .05f, .0025f}, .9f);
-
-        network.classNames = reader.classes;
+        network = new DenseNetwork(new int[]{2352, 20, 10}, new float[]{0, .05f, .0025f}, DenseNetwork.UPDATE_NESTEROV, .9f, 1);
 
         int batchSize = 1;
         for (int p = 0; p < 1; p++) {
@@ -41,7 +39,6 @@ public class FullyConnectedTest {
                     tempOut[a] = trainingDataOutputs[i];
                 }
 
-                network.setDropout(1);
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
 
                 boolean pass = true;

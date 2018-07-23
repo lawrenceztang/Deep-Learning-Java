@@ -18,8 +18,8 @@ public class ImageReader implements Serializable{
     Random rand;
     ArrayList<Integer> newImageReferenceForEachClass;
     public File[][] allFiles;
-    float mean;
-    float standardDeviation;
+    public float mean;
+    public float standardDeviation;
 
     public ImageReader(String path) throws Exception{
         this.path = path;;
@@ -55,10 +55,10 @@ public class ImageReader implements Serializable{
 
     }
 
-    public ImageReader(ImageReader reader, float mean, float standardDeviation) throws Exception{
-        this(reader.path);
-        this.mean = mean;
-        this.standardDeviation = standardDeviation;
+    public ImageReader(String path, ImageReader reader) throws Exception{
+        this(path);
+        this.mean = reader.mean;
+        this.standardDeviation = reader.standardDeviation;
     }
 
 

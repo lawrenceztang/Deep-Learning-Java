@@ -3,6 +3,7 @@ package Util;
 import Network.DenseNetwork;
 
 import java.io.*;
+import Reader.ImageReader;
 
 public class NetworkSaver {
 
@@ -47,9 +48,9 @@ public class NetworkSaver {
 
 
 
-    public Reader.ImageReader deserializeReader(String filename) {
+    public ImageReader deserializeReader(String filename) {
 
-        Reader.ImageReader address = null;
+        ImageReader address = null;
 
         FileInputStream fin = null;
         ObjectInputStream ois = null;
@@ -58,7 +59,7 @@ public class NetworkSaver {
 
             fin = new FileInputStream(filename);
             ois = new ObjectInputStream(fin);
-            address = (Reader.ImageReader) ois.readObject();
+            address = (ImageReader) ois.readObject();
 
         } catch (Exception ex) {
             ex.printStackTrace();
