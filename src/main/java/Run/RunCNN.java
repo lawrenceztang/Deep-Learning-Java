@@ -1,8 +1,8 @@
 package Run;
 
 import Network.ConvNetwork;
-import Network.FullyConnectedNetwork;
-import Util.ImageReader;
+import Network.DenseNetwork;
+import Reader.ImageReader;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class RunCNN {
         //must implement auto input size calculation, right now user has to calculate it out
         int[] nodesPerLayer = new int[]{200, 200, 10};
         double[] learningRate = new double[]{.05, .05};
-        FullyConnectedNetwork fNetwork = new FullyConnectedNetwork(nodesPerLayer, learningRate, .9);
+        DenseNetwork fNetwork = new DenseNetwork(nodesPerLayer, learningRate, .9);
 
         ConvNetwork network = new ConvNetwork(new int[]{3, 28, 28}, new double[]{.05, .05}, filterSizes, strideSizes, numFilters, padding, poolingStride, fNetwork);
         network.initializeWeights();

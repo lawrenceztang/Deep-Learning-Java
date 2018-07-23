@@ -1,42 +1,75 @@
-package Run;
+package Runner;
 
+import Display.DisplayImage;
 import Network.DenseNetwork;
+import Util.ArrOperations;
 import Reader.ImageReader;
-import Util.*;
+import Util.NetworkSaver;
 
-
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
+public class DenseRunner {
+    public int batchSize = 1;
+    public float[] learningRate;
+    public int epochs = 10;
+    public int iterations = 1000;
+    public int[] layers;
 
-public class RunFullyConnected {
+    public int testingIterations = 1000;
 
-    public static void main(String[] args) throws Exception {
+    public String trainingDataPath;
+    public String testingDataPath;
+    public boolean isImage;
+    public int imageWidth;
+    public int imageHeight;
 
+    DenseNetwork network;
+    float[][] trainingData;
+    float[][] trainingDataOutputs;
+    ImageReader reader;
 
+    Scanner scan;
 
-        DecimalFormat df = new DecimalFormat("#.####");
+    public DenseRunner() {
+        scan = new Scanner(System.in);
+    }
 
+    public void printStats() {
+        System.out.println("Neural Network Parameters:");
+        System.out.println("Layers: " + layers);
+        System.out.println("Nodes in each layer: ");
+        for(int i = 0; i < network.nodesPerLayer.length; i++) {
+            System.out.print(network.nodesPerLayer[i] + ", ");
+        }
+        System.out.println("Learning rate: " + network.learningRate);
+        System.out.println("Momentum: " + network.momentum);
+    }
+
+    public void train() throws Exception {
         System.out.println(System.getenv());
 
-        //get training data
-        String trainingDataPath = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
-        //"C:\\Users\\Anonymous\\Pictures\\Fortnite\\1\\0.jpg"
+        reader = new ImageReader(trainingDataPath);
+        if (isImage) {
+            trainingData = reader.get1dColorMatricesFromImages(batchSize, 28);
+            reader.setPreprocessParameters(trainingData);
+            trainingData = reader.preprocessTrainingSet(trainingData);
+            trainingDataOutputs = reader.oneHotOutputs;
+        } else {
+            //it is a csv file
+            trainingData = new float[2][];
+            trainingDataOutputs = new float[2][];
+        }
 
-        ImageReader reader = new ImageReader(trainingDataPath);
 
-        float[][] trainingData = reader.get1dColorMatricesFromImages(8000, 28);
-        reader.setPreprocessParameters(trainingData);
-        trainingData = reader.preprocessTrainingSet(trainingData);
-        float[][] trainingDataOutputs = reader.oneHotOutputs;
+        network = new DenseNetwork(layers, learningRate, .9f);
 
-
-        DenseNetwork network = new DenseNetwork(new int[]{2352, 200, 10}, new float[]{0, 0.05f, .0025f}, .9f);
-        network.printStats();
         network.classNames = reader.classes;
-        System.out.println("Percentage accurate before training: " + network.test(trainingData, trainingDataOutputs));
 
         float time = System.currentTimeMillis();
+
+        printStats();
 
         int batchSize = 1;
         float[] averageDerivatives = new float[network.layers];
@@ -81,40 +114,34 @@ public class RunFullyConnected {
             System.out.println("Average derivatives of layer " + i + ": " + averageDerivatives[i]);
         }
 
-        System.out.println("It took " + (System.currentTimeMillis() - time) / (1000f) + " seconds to train");
+        System.out.println("It took " + ((float) (System.currentTimeMillis() - time)) / 1000f + " seconds to train");
+    }
 
-        //testing
-        Scanner scan = new Scanner(System.in);
-        float[][] testingData = reader.get1dColorMatricesFromImages(200, 28);
-        testingData = reader.preprocessTrainingSet(testingData);
-        float[][] testingOutputs = reader.oneHotOutputs;
-        System.out.println("Percentage accurate after training on training data: " + network.test(trainingData, trainingDataOutputs));
-        System.out.println("Percentage accurate after training on testing data: " + network.test(testingData, testingOutputs));
-
-        //dreaming
+    public void deepDream() throws Exception{
         DenseNetwork.DeepDream dream = network.new DeepDream(network, trainingData[0], 1000);
         for (int i = 0; i < 100; i++) {
             dream.updateImage(2);
         }
 
-//        BufferedImage dreamedImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(dream.image), 28, 28);
-//        BufferedImage previousImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(trainingData[0]), 28, 28);
-//        System.out.println(network.predictOutput(dream.image));
-//        new DisplayImage(dreamedImage);
-//        new DisplayImage(previousImage);
+        BufferedImage dreamedImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(dream.image), imageWidth, imageHeight);
+        BufferedImage previousImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(trainingData[0]), imageWidth, imageHeight);
+        System.out.println(network.predictOutput(dream.image));
+        new DisplayImage(dreamedImage);
+        new DisplayImage(previousImage);
+    }
 
+    public void test() throws Exception{
+        //testing
+        Scanner scan = new Scanner(System.in);
+        ImageReader testingReader = new ImageReader();
+        float[][] testingData = reader.get1dColorMatricesFromImages(testingIterations, imageWidth);
+        testingData = reader.preprocessTrainingSet(testingData);
+        float[][] testingOutputs = reader.oneHotOutputs;
+        System.out.println("Accuracy on training data: " + network.test(trainingData, trainingDataOutputs));
+        System.out.println("Accuracy on testing data: " + network.test(testingData, testingOutputs));
+    }
 
-        //specific example
-        while (true) {
-            System.out.println("Test?");
-            if (!scan.nextLine().equals("y")) {
-                break;
-            }
-
-            System.out.println("Prediction: " + network.test(reader));
-        }
-
-
+    public void saveNetwork() throws Exception{
         String saveLocation = "C:\\Users\\Anonymous\\Documents\\DeepLearningSaves\\";
         //saving network
         System.out.println("Would you like to save the network? (y / n)");
@@ -124,6 +151,14 @@ public class RunFullyConnected {
             (new NetworkSaver()).saveObject(reader, saveLocation + "reader");
             System.out.println("Done saving");
         }
+    }
+
+    public static void main(String[] args) throws Exception {
 
     }
+
+
+
+
+
 }

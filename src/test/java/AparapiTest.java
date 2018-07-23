@@ -16,13 +16,13 @@ public class AparapiTest {
     public void arrayVsArrayList () throws Exception {
         Random rand = new Random();
         int arrSize = 9;
-        ArrayList<Double> arList = new ArrayList<Double>();
-        double[] arr = new double[arrSize];
+        ArrayList<Float> arList = new ArrayList<Float>();
+        float[] arr = new float[arrSize];
         for(int i = 0; i < arr.length; i++) {
-            double num = rand.nextInt(1000);
+            float num = rand.nextInt(1000);
             arr[i] = num;
         }
-        double[] out = Sorter.mergeSort(arr);
+        float[] out = Sorter.mergeSort(arr);
         System.out.println("hi");
     }
 
@@ -31,23 +31,23 @@ public class AparapiTest {
 
 
         //test dot product
-        double[] vector1 = new double[60000];
-        double[] vector2 = new double[60000];
+        float[] vector1 = new float[60000];
+        float[] vector2 = new float[60000];
         for(int i = 0; i < 60000; i++) {
-            vector1[i] = 3d;
-            vector2[i] = 5d;
+            vector1[i] = 3f;
+            vector2[i] = 5f;
         }
 
-        double startTime3 = System.currentTimeMillis();
-        double dotProduct3 = arrOperations.dotProductNoGPU(vector1, vector2);
+        float startTime3 = System.currentTimeMillis();
+        float dotProduct3 = ArrOperations.dotProductNoGPU(vector1, vector2);
         System.out.println("Without GPU: " + (System.currentTimeMillis() - startTime3));
 
-        double startTime = System.currentTimeMillis();
-        double dotProduct = gpuOperations.dotProduct(vector1, vector2);
+        float startTime = System.currentTimeMillis();
+        float dotProduct = GPUOperations.dotProduct(vector1, vector2);
         System.out.println("With GPU: " + (System.currentTimeMillis() - startTime));
 
-        double startTime2 = System.currentTimeMillis();
-        double dotProduct2 = gpuOperations.dotProduct(vector1, vector2);
+        float startTime2 = System.currentTimeMillis();
+        float dotProduct2 = GPUOperations.dotProduct(vector1, vector2);
         System.out.println("With GPU second time: " + (System.currentTimeMillis() - startTime2));
 
         Assert.assertEquals(dotProduct3, dotProduct, .02);
@@ -55,8 +55,8 @@ public class AparapiTest {
         //test matrix vector
         int vectorSize = 1000;
         int numberVectors = 1;
-        double[][] matrix = new double[numberVectors][vectorSize];
-        double[] vector = new double[vectorSize];
+        float[][] matrix = new float[numberVectors][vectorSize];
+        float[] vector = new float[vectorSize];
         for(int i = 0; i < vector.length; i++) {
             for(int u = 0; u < matrix.length; u++) {
                 matrix[u][i] = 5;
@@ -65,15 +65,15 @@ public class AparapiTest {
         }
 
 
-        double[] out = new double[numberVectors];
+        float[] out = new float[numberVectors];
         startTime = System.currentTimeMillis();
         for(int i = 0; i < numberVectors; i++) {
-            out[i] = arrOperations.dotProductNoGPU(vector, matrix[i]);
+            out[i] = ArrOperations.dotProductNoGPU(vector, matrix[i]);
         }
         System.out.println("Without GPU: " + (System.currentTimeMillis() - startTime));
 
         startTime = System.currentTimeMillis();
-        double[] out2 = arrOperations.matrixVectorProduct(vector, matrix);
+        float[] out2 = ArrOperations.matrixVectorProduct(vector, matrix);
         System.out.println("With GPU: " + (System.currentTimeMillis() - startTime));
 
         Assert.assertEquals(out[0], out2[0], .02);

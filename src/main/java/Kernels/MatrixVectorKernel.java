@@ -6,9 +6,9 @@ import com.aparapi.Kernel;
 //one local group for each vector because they dont have dependency on each other
 public class MatrixVectorKernel extends Kernel {
 
-    public double[] in2;
+    public float[] in2;
     final int chunkSize;
-    public double[][] in1;
+    public float[][] in1;
 
     @Local
     int[] arraySize;
@@ -18,11 +18,11 @@ public class MatrixVectorKernel extends Kernel {
     int[] gap;
 
     @Local
-    double[] localResult;
+    float[] localResult;
     @Local
-    double[] localIn2;
+    float[] localIn2;
 
-    public MatrixVectorKernel(double[][] in1, double[] in2, int chunkSize) {
+    public MatrixVectorKernel(float[][] in1, float[] in2, int chunkSize) {
 
         this.in1 = in1;
         this.in2 = in2;
@@ -32,8 +32,8 @@ public class MatrixVectorKernel extends Kernel {
         numPasses = new int[1];
         gap = new int[1];
 
-        localResult = new double[in1[0].length];
-        localIn2 = new double[in2.length];
+        localResult = new float[in1[0].length];
+        localIn2 = new float[in2.length];
     }
 
     @Override

@@ -1,14 +1,14 @@
 package Util;
 
-import Network.FullyConnectedNetwork;
+import Network.DenseNetwork;
 
 import java.io.*;
 
 public class NetworkSaver {
 
-    public FullyConnectedNetwork deserializeNetwork(String filename) {
+    public DenseNetwork deserializeNetwork(String filename) {
 
-        FullyConnectedNetwork address = null;
+        DenseNetwork address = null;
 
         FileInputStream fin = null;
         ObjectInputStream ois = null;
@@ -17,7 +17,7 @@ public class NetworkSaver {
 
             fin = new FileInputStream(filename);
             ois = new ObjectInputStream(fin);
-            address = (FullyConnectedNetwork) ois.readObject();
+            address = (DenseNetwork) ois.readObject();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -47,9 +47,9 @@ public class NetworkSaver {
 
 
 
-    public ImageReader deserializeReader(String filename) {
+    public Reader.ImageReader deserializeReader(String filename) {
 
-        ImageReader address = null;
+        Reader.ImageReader address = null;
 
         FileInputStream fin = null;
         ObjectInputStream ois = null;
@@ -58,7 +58,7 @@ public class NetworkSaver {
 
             fin = new FileInputStream(filename);
             ois = new ObjectInputStream(fin);
-            address = (ImageReader) ois.readObject();
+            address = (Reader.ImageReader) ois.readObject();
 
         } catch (Exception ex) {
             ex.printStackTrace();

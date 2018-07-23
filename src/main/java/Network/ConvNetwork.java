@@ -3,7 +3,7 @@ package Network;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Util.arrListOperations;
+import Util.ArrListOperations;
 
 public class ConvNetwork {
 
@@ -31,9 +31,9 @@ public class ConvNetwork {
     ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>> derivativeErrorWithRespectToWeight;
 
 
-    FullyConnectedNetwork fullyConnectedNetwork;
+    DenseNetwork denseNetwork;
 
-    public ConvNetwork(int[] inputSize, double[] convLearningRates, ArrayList<Integer> filterSizes, ArrayList<Integer> strideSizes, ArrayList<Integer> numberOfFilters, ArrayList<Integer> padding, ArrayList<Integer> poolingStride, FullyConnectedNetwork fullyConnectedNetwork) {
+    public ConvNetwork(int[] inputSize, double[] convLearningRates, ArrayList<Integer> filterSizes, ArrayList<Integer> strideSizes, ArrayList<Integer> numberOfFilters, ArrayList<Integer> padding, ArrayList<Integer> poolingStride, DenseNetwork denseNetwork) {
 
         rand = new Random();
 
@@ -48,7 +48,7 @@ public class ConvNetwork {
         this.padding = padding;
         this.poolingStride = poolingStride;
 
-        this.fullyConnectedNetwork = fullyConnectedNetwork;
+        this.denseNetwork = denseNetwork;
 
         initializeWeights();
         derivativeErrorWithRespectToWeight = new ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>>();
@@ -80,21 +80,21 @@ public class ConvNetwork {
         derivativeErrorWithRespectToInputToActivation = initializeActivationInputs();
 
         ArrayList<ArrayList<Double>> inputToFullyConnected = new ArrayList<ArrayList<Double>>();
-        inputToFullyConnected.add(arrListOperations.convert3Dto1D(outputsInLayers.get(outputsInLayers.size() - 1)));
+        inputToFullyConnected.add(ArrListOperations.convert3Dto1D(outputsInLayers.get(outputsInLayers.size() - 1)));
 
-        fullyConnectedNetwork.getDerivativeOfErrorWithRespectToWeights(inputToFullyConnected, outputs);
+        denseNetwork.getDerivativeOfErrorWithRespectToWeights(inputToFullyConnected, outputs);
 
         ArrayList<Double> derivativeErrorWithRespectToInputsToFullyConnected = new ArrayList<Double>();
 
 
-        for (int u = 0; u < fullyConnectedNetwork.numInputs; u++) {
+        for (int u = 0; u < denseNetwork.numInputs; u++) {
             derivativeErrorWithRespectToInputsToFullyConnected.add(0d);
-            for (int i = 0; i < fullyConnectedNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).size(); i++) {
-                derivativeErrorWithRespectToInputsToFullyConnected.set(u, derivativeErrorWithRespectToInputsToFullyConnected.get(u) + fullyConnectedNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).get(i) * fullyConnectedNetwork.weights.get(1).get(i).get(u));
+            for (int i = 0; i < denseNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).size(); i++) {
+                derivativeErrorWithRespectToInputsToFullyConnected.set(u, derivativeErrorWithRespectToInputsToFullyConnected.get(u) + denseNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).get(i) * denseNetwork.weights.get(1).get(i).get(u));
             }
         }
         //must be put through activation
-        derivativeErrorWithRespectToInputToActivation.set(derivativeErrorWithRespectToInputToActivation.size() - 1, arrListOperations.getDerivativeFromSigmoid3d(arrListOperations.convert1Dto3D(derivativeErrorWithRespectToInputsToFullyConnected), outputsInLayers.get(outputsInLayers.size() - 1)));
+        derivativeErrorWithRespectToInputToActivation.set(derivativeErrorWithRespectToInputToActivation.size() - 1, ArrListOperations.getDerivativeFromSigmoid3d(ArrListOperations.convert1Dto3D(derivativeErrorWithRespectToInputsToFullyConnected), outputsInLayers.get(outputsInLayers.size() - 1)));
 
 
         for (int a = numLayers - 2; a > 0; a--) {
@@ -124,13 +124,13 @@ public class ConvNetwork {
             for (int u = 0; u < derivativeErrorWithRespectToInputToActivation.get(a).size(); u++) {
                 for (int m = 0; m < derivativeErrorWithRespectToInputToActivation.get(a).get(u).size(); m++) {
                     for (int p = 0; p < derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).size(); p++) {
-                        derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).set(p, derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).get(p) * arrListOperations.getDerivativeFromSigmoid(outputsInLayers.get(a).get(u).get(m).get(p)));
+                        derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).set(p, derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).get(p) * ArrListOperations.getDerivativeFromSigmoid(outputsInLayers.get(a).get(u).get(m).get(p)));
                     }
                 }
             }
 
             ArrayList<ArrayList<ArrayList<Double>>> outputAfterPooling = maxPooling(outputsInLayers.get(a - 1), poolingStride.get(a - 1));
-            derivativeErrorWithRespectToInputToActivation.set(a, arrListOperations.unpad(derivativeErrorWithRespectToInputToActivation.get(a), padding.get(a)));
+            derivativeErrorWithRespectToInputToActivation.set(a, ArrListOperations.unpad(derivativeErrorWithRespectToInputToActivation.get(a), padding.get(a)));
 
             for (int b = 0; b < derivativeErrorWithRespectToInputToActivation.get(a).size(); b++) {
                 for (int h = 0; h < derivativeErrorWithRespectToInputToActivation.get(a).get(b).size(); h++) {
@@ -161,7 +161,7 @@ public class ConvNetwork {
     public ArrayList<Double> predictOutput(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception {
         ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
         for (int e = 1; e < numLayers; e++) {
-            layerInputs = arrListOperations.pad(layerInputs, padding.get(e));
+            layerInputs = ArrListOperations.pad(layerInputs, padding.get(e));
             ArrayList<ArrayList<ArrayList<Double>>> layerOutputs = initializeOutputs(numberOfFilters.get(e), (layerInputs.get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1, (layerInputs.get(0).get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1);
             for (int i = 0; i <= layerInputs.get(0).size() - filterSizes.get(e); i += strideSizes.get(e)) {
                 for (int b = 0; b <= layerInputs.get(0).get(i).size() - filterSizes.get(e); b += strideSizes.get(e)) {
@@ -180,7 +180,7 @@ public class ConvNetwork {
                         }
                     }
                     for (int l = 0; l < numberOfFilters.get(e); l++) {
-                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), arrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
+                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), ArrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
                     }
                 }
             }
@@ -188,8 +188,8 @@ public class ConvNetwork {
             layerInputs = maxPooling(layerOutputs, poolingStride.get(e));
         }
 
-        ArrayList<Double> inputToFullyConnected = arrListOperations.convert3Dto1D(layerInputs);
-        return fullyConnectedNetwork.predictOutput(inputToFullyConnected);
+        ArrayList<Double> inputToFullyConnected = ArrListOperations.convert3Dto1D(layerInputs);
+        return denseNetwork.predictOutput(inputToFullyConnected);
     }
 
     //input layer is counted as layer 0
@@ -199,7 +199,7 @@ public class ConvNetwork {
         ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
         outputsInLayers.add(layerInputs);
         for (int e = 1; e < numLayers; e++) {
-            layerInputs = arrListOperations.pad(layerInputs, padding.get(e));
+            layerInputs = ArrListOperations.pad(layerInputs, padding.get(e));
             ArrayList<ArrayList<ArrayList<Double>>> layerOutputs = initializeOutputs(numberOfFilters.get(e), (layerInputs.get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1, (layerInputs.get(0).get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1);
             for (int i = 0; i <= layerInputs.get(0).size() - filterSizes.get(e); i += strideSizes.get(e)) {
                 for (int b = 0; b <= layerInputs.get(0).get(i).size() - filterSizes.get(e); b += strideSizes.get(e)) {
@@ -218,7 +218,7 @@ public class ConvNetwork {
                         }
                     }
                     for (int l = 0; l < numberOfFilters.get(e); l++) {
-                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), arrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
+                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), ArrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
                     }
                 }
             }

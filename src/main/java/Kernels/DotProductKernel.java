@@ -5,19 +5,19 @@ import com.aparapi.Kernel;
 public class DotProductKernel extends Kernel {
 
 
-    double[] in2;
+    float[] in2;
     final int chunkSize;
-    double[] in1;
+    float[] in1;
     int[] arraySize;
     int[] numPasses;
     int[] gap;
 
     @Local
-    double[] localResult;
+    float[] localResult;
     @Local
-    double[] localIn2;
+    float[] localIn2;
 
-    public DotProductKernel(double[] in1, double[] in2, int chunkSize) {
+    public DotProductKernel(float[] in1, float[] in2, int chunkSize) {
 
         this.in1 = in1;
         this.in2 = in2;
@@ -31,8 +31,8 @@ public class DotProductKernel extends Kernel {
         gap = new int[1];
         gap[0] = 1;
 
-        localIn2 = new double[in2.length];
-        localResult = new double[in2.length];
+        localIn2 = new float[in2.length];
+        localResult = new float[in2.length];
     }
 
     @Override
@@ -117,7 +117,7 @@ public class DotProductKernel extends Kernel {
             globalBarrier();
             if (getGlobalId() == 0) {
                 numPasses[0]++;
-                arraySize[0] = (int) Math.ceil((double) arraySize[0] / (double) chunkSize);
+                arraySize[0] = (int) Math.ceil((float) arraySize[0] / (float) chunkSize);
                 gap[0] = (int) Math.pow(chunkSize, numPasses[0]);
             }
             globalBarrier();
@@ -125,12 +125,12 @@ public class DotProductKernel extends Kernel {
 
     }
 
-    public double getResult() {
+    public float getResult() {
         return in1[0];
     }
 
     public int getRange() {
-        return (int) Math.ceil((double) in1.length / (double) chunkSize);
+        return (int) Math.ceil((float) in1.length / (float) chunkSize);
     }
 
 }

@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class Sorter {
 
-    public static double[] mergeSort (double[] in) {
+    public static float[] mergeSort (float[] in) {
         int groupSize = 1;
         while (true) {
             if (groupSize > in.length) {
                 break;
             }
             for (int i = 0; i < in.length; i += groupSize * 2) {
-                double[] array;
+                float[] array;
                 if (i + groupSize > in.length) {
 
                 }
@@ -34,8 +34,8 @@ public class Sorter {
         return in;
     }
 
-    public static double[] merge (double[] in, double[] in2) {
-        double[] out = new double[in.length + in2.length];
+    public static float[] merge (float[] in, float[] in2) {
+        float[] out = new float[in.length + in2.length];
         int inIndex = 0;
         int in2Index = 0;
         for (int i = 0; i < out.length; i++) {

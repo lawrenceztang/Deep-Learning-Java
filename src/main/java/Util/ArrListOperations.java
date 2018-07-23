@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class arrListOperations {
+public class ArrListOperations {
 
-    static double e = 2.71828;
+    static float e = (float) 2.71828;
 
 
-    public static double dotProductNoGPU(ArrayList<Double> in1, ArrayList<Double> in2) {
-        double sum = 0;
+    public static float dotProductNoGPU(ArrayList<Float> in1, ArrayList<Float> in2) {
+        float sum = 0;
         for (int i = 0; i < in1.size(); i++) {
             sum += in1.get(i) * in2.get(i);
         }
@@ -37,9 +37,9 @@ public class arrListOperations {
 
 
 
-    public static double matrixProductSum(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> anotherIn) {
+    public static float matrixProductSum(ArrayList<ArrayList<ArrayList<Float>>> in, ArrayList<ArrayList<ArrayList<Float>>> anotherIn) {
 
-        double out = 0;
+        float out = 0;
         for (int i = 0; i < in.size(); i++) {
 
             for (int n = 0; n < in.get(i).size(); n++) {
@@ -53,10 +53,10 @@ public class arrListOperations {
 
 
 
-    public static ArrayList<ArrayList<Double>> matrixScalarProduct(ArrayList<ArrayList<Double>> matrix, double scalar) {
-        ArrayList<ArrayList<Double>> out = new ArrayList<ArrayList<Double>>();
+    public static ArrayList<ArrayList<Float>> matrixScalarProduct(ArrayList<ArrayList<Float>> matrix, float scalar) {
+        ArrayList<ArrayList<Float>> out = new ArrayList<ArrayList<Float>>();
         for (int i = 0; i < matrix.size(); i++) {
-            out.add(new ArrayList<Double>());
+            out.add(new ArrayList<Float>());
             for (int p = 0; p < matrix.get(i).size(); p++) {
                 out.get(i).add(matrix.get(i).get(p) * scalar);
             }
@@ -65,8 +65,8 @@ public class arrListOperations {
     }
 
 
-    public static ArrayList<Double> vectorScalarProduct(ArrayList<Double> vector, double scalar) {
-        ArrayList<Double> output = new ArrayList<Double>();
+    public static ArrayList<Float> vectorScalarProduct(ArrayList<Float> vector, float scalar) {
+        ArrayList<Float> output = new ArrayList<Float>();
         for (int i = 0; i < vector.size(); i++) {
             output.add(vector.get(i) * scalar);
         }
@@ -74,29 +74,29 @@ public class arrListOperations {
     }
 
 
-    public static double sigmoidFunction(double in) {
-        return 2 / (1 + Math.pow(e, -in)) - 1;
+    public static float sigmoidFunction(float in) {
+        return (float) (2 / (1 + Math.pow(e, -in)) - 1);
     }
 
-    public static double getDerivativeFromSigmoid(double y) {
-        double out = (y + 1) * (1 - y) / 2;
+    public static float getDerivativeFromSigmoid(float y) {
+        float out = (y + 1) * (1 - y) / 2;
         return out;
     }
 
-    public static ArrayList<Double> getDerivativeFromSigmoid(ArrayList<Double> y) {
-        ArrayList<Double> out = new ArrayList<Double>();
+    public static ArrayList<Float> getDerivativeFromSigmoid(ArrayList<Float> y) {
+        ArrayList<Float> out = new ArrayList<Float>();
         for (int i = 0; i < y.size(); i++) {
             out.add((y.get(i) + 1) * (1 - y.get(i)) / 2);
         }
         return out;
     }
 
-    public static ArrayList<ArrayList<ArrayList<Double>>> getDerivativeFromSigmoid3d(ArrayList<ArrayList<ArrayList<Double>>> in, ArrayList<ArrayList<ArrayList<Double>>> y) {
-        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
+    public static ArrayList<ArrayList<ArrayList<Float>>> getDerivativeFromSigmoid3d(ArrayList<ArrayList<ArrayList<Float>>> in, ArrayList<ArrayList<ArrayList<Float>>> y) {
+        ArrayList<ArrayList<ArrayList<Float>>> out = new ArrayList<ArrayList<ArrayList<Float>>>();
         for(int i = 0; i < in.size(); i++) {
-            out.add(new ArrayList<ArrayList<Double>>());
+            out.add(new ArrayList<ArrayList<Float>>());
             for(int u = 0; u < in.get(i).size(); u++) {
-                out.get(i).add(new ArrayList<Double>());
+                out.get(i).add(new ArrayList<Float>());
                 for(int a = 0; a < in.get(i).get(u).size(); a++) {
                     out.get(i).get(u).add((y.get(i).get(u).get(a) + 1) * (1 - y.get(i).get(u).get(a)) / 2);
                 }
@@ -105,8 +105,8 @@ public class arrListOperations {
         return out;
     }
 
-    public static double meanSquaredError(ArrayList<Double> prediction, ArrayList<Double> trueClass) {
-        double sum = 0;
+    public static float meanSquaredError(ArrayList<Float> prediction, ArrayList<Float> trueClass) {
+        float sum = 0;
         for (int i = 0; i < prediction.size(); i++) {
             sum += Math.pow(prediction.get(i) - trueClass.get(i), 2);
         }
@@ -114,34 +114,34 @@ public class arrListOperations {
     }
 
     //mean squared error derivative
-    public static double getDerivativeFromMSE(double trueOutput, double predictedOutput) {
+    public static float getDerivativeFromMSE(float trueOutput, float predictedOutput) {
         return (predictedOutput - trueOutput) * 2;
     }
 
-    public static ArrayList<Double> getDerivativeFromMSE(ArrayList<Double> trueOutput, ArrayList<Double> predictedOutput) {
-        ArrayList<Double> derivatives = new ArrayList<Double>();
+    public static ArrayList<Float> getDerivativeFromMSE(ArrayList<Float> trueOutput, ArrayList<Float> predictedOutput) {
+        ArrayList<Float> derivatives = new ArrayList<Float>();
         for (int i = 0; i < trueOutput.size(); i++) {
             derivatives.add((predictedOutput.get(i) - trueOutput.get(i)) * 2);
         }
         return derivatives;
     }
 
-    public static ArrayList<Double> softmax(ArrayList<Double> in) {
-        double sum = 0;
+    public static ArrayList<Float> softmax(ArrayList<Float> in) {
+        float sum = 0;
         for (int i = 0; i < in.size(); i++) {
             sum += Math.pow(e, in.get(i));
         }
-        ArrayList<Double> out = new ArrayList<Double>();
+        ArrayList<Float> out = new ArrayList<Float>();
         for (int i = 0; i < in.size(); i++) {
-            out.add(Math.pow(e, in.get(i)) / sum);
+            out.add((float) Math.pow(e, in.get(i)) / sum);
         }
         return out;
     }
 
-    public static ArrayList<Double> getDerivativeFromSoftmax(ArrayList<Double> outputsOfSoftmax, ArrayList<Double> derivativeErrorWithRespectToOutputsOfSoftmax) {
-        ArrayList<Double> out = new ArrayList<Double>();
+    public static ArrayList<Float> getDerivativeFromSoftmax(ArrayList<Float> outputsOfSoftmax, ArrayList<Float> derivativeErrorWithRespectToOutputsOfSoftmax) {
+        ArrayList<Float> out = new ArrayList<Float>();
         for (int i = 0; i < outputsOfSoftmax.size(); i++) {
-            out.add(0d);
+            out.add(0f);
         }
 
         for (int i = 0; i < outputsOfSoftmax.size(); i++) {
@@ -161,11 +161,11 @@ public class arrListOperations {
     static int length;
     static int depth;
 
-    public static ArrayList<Double> convert3Dto1D(ArrayList<ArrayList<ArrayList<Double>>> in) {
+    public static ArrayList<Float> convert3Dto1D(ArrayList<ArrayList<ArrayList<Float>>> in) {
         width = in.size();
         length = in.get(0).size();
         depth = in.get(0).get(0).size();
-        ArrayList<Double> out = new ArrayList<Double>();
+        ArrayList<Float> out = new ArrayList<Float>();
         for (int i = 0; i < in.size(); i++) {
             for (int y = 0; y < in.get(i).size(); y++) {
                 for (int b = 0; b < in.get(i).get(y).size(); b++) {
@@ -176,12 +176,12 @@ public class arrListOperations {
         return out;
     }
 
-    public static ArrayList<ArrayList<ArrayList<Double>>> convert1Dto3D(ArrayList<Double> in, int width, int length, int depth) {
-        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
+    public static ArrayList<ArrayList<ArrayList<Float>>> convert1Dto3D(ArrayList<Float> in, int width, int length, int depth) {
+        ArrayList<ArrayList<ArrayList<Float>>> out = new ArrayList<ArrayList<ArrayList<Float>>>();
         for (int i = 0; i < width; i++) {
-            out.add(new ArrayList<ArrayList<Double>>());
+            out.add(new ArrayList<ArrayList<Float>>());
             for (int u = 0; u < length; u++) {
-                out.get(i).add(new ArrayList<Double>());
+                out.get(i).add(new ArrayList<Float>());
                 for (int a = 0; a < depth; a++) {
                     out.get(i).get(u).add(in.get(i * length * depth + u * depth + a));
                 }
@@ -191,12 +191,12 @@ public class arrListOperations {
     }
 
 
-    public static ArrayList<ArrayList<ArrayList<Double>>> convert1Dto3D(ArrayList<Double> in) {
-        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
+    public static ArrayList<ArrayList<ArrayList<Float>>> convert1Dto3D(ArrayList<Float> in) {
+        ArrayList<ArrayList<ArrayList<Float>>> out = new ArrayList<ArrayList<ArrayList<Float>>>();
         for (int i = 0; i < width; i++) {
-            out.add(new ArrayList<ArrayList<Double>>());
+            out.add(new ArrayList<ArrayList<Float>>());
             for (int u = 0; u < length; u++) {
-                out.get(i).add(new ArrayList<Double>());
+                out.get(i).add(new ArrayList<Float>());
                 for (int a = 0; a < depth; a++) {
                     out.get(i).get(u).add(in.get(i * length * depth + u * depth + a));
                 }
@@ -205,20 +205,20 @@ public class arrListOperations {
         return out;
     }
 
-    public static ArrayList<ArrayList<ArrayList<Double>>> pad(ArrayList<ArrayList<ArrayList<Double>>> in, double padding) {
+    public static ArrayList<ArrayList<ArrayList<Float>>> pad(ArrayList<ArrayList<ArrayList<Float>>> in, float padding) {
         for (int i = 0; i < in.size(); i++) {
             for (int u = 0; u < padding; u++) {
                 for (int a = 0; a < in.get(i).size(); a++) {
 
-                    in.get(i).get(a).add(0d);
-                    in.get(i).get(a).add(0, 0d);
+                    in.get(i).get(a).add(0f);
+                    in.get(i).get(a).add(0, 0f);
                 }
             }
-            ArrayList<Double> zeroes = new ArrayList<Double>();
+            ArrayList<Float> zeroes = new ArrayList<Float>();
             for (int t = 0; t < padding; t++) {
 
                 for (int z = 0; z < in.get(i).get(1).size(); z++) {
-                    zeroes.add(0d);
+                    zeroes.add(0f);
                 }
                 in.get(i).add(zeroes);
                 in.get(i).add(0, zeroes);
@@ -228,7 +228,7 @@ public class arrListOperations {
         return in;
     }
 
-    public static ArrayList<ArrayList<ArrayList<Double>>> unpad(ArrayList<ArrayList<ArrayList<Double>>> in, int padding) {
+    public static ArrayList<ArrayList<ArrayList<Float>>> unpad(ArrayList<ArrayList<ArrayList<Float>>> in, int padding) {
         for (int i = 0; i < in.size(); i++) {
             for (int e = 0; e < padding; e++) {
                 in.get(i).remove(0);
@@ -246,8 +246,8 @@ public class arrListOperations {
     }
 
 
-    public static double returnMax(ArrayList<ArrayList<Double>> in) {
-        double max = -9999;
+    public static float returnMax(ArrayList<ArrayList<Float>> in) {
+        float max = -9999;
         for (int i = 0; i < in.size(); i++) {
             for (int r = 0; r < in.get(i).size(); r++) {
                 if (in.get(i).get(r) > max) {
@@ -259,7 +259,7 @@ public class arrListOperations {
     }
 
     //doesnt work
-    public static BufferedImage convert1dArrayToImage(ArrayList<Double> in, int width, int height) {
+    public static BufferedImage convert1dArrayToImage(ArrayList<Float> in, int width, int height) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < width; i++) {
@@ -277,8 +277,8 @@ public class arrListOperations {
         return out;
     }
 
-    public static ArrayList<ArrayList<Double>> makeCopy3D(ArrayList<ArrayList<Double>> in) {
-        ArrayList<ArrayList<Double>> out = new ArrayList<ArrayList<Double>>();
+    public static ArrayList<ArrayList<Float>> makeCopy3D(ArrayList<ArrayList<Float>> in) {
+        ArrayList<ArrayList<Float>> out = new ArrayList<ArrayList<Float>>();
         for (int i = 0; i < in.size(); i++) {
             for (int p = 0; p < in.get(i).size(); p++) {
                 out.get(i).add((in.get(i).get(p)));
@@ -287,8 +287,8 @@ public class arrListOperations {
         return out;
     }
 
-    public static ArrayList<Double> makeCopy1D(ArrayList<Double> in) {
-        ArrayList<Double> out = new ArrayList<Double>();
+    public static ArrayList<Float> makeCopy1D(ArrayList<Float> in) {
+        ArrayList<Float> out = new ArrayList<Float>();
         for (int i = 0; i < in.size(); i++) {
             out.add(in.get(i));
         }

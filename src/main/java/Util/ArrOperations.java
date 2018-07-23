@@ -8,16 +8,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class arrOperations {
+public class ArrOperations {
 
-    static double e = Math.E;
-    static double pi = Math.PI;
+    static float e = (float) Math.E;
+    static float pi = (float) Math.PI;
 
 
-    public static double[] matrixVectorProduct(double[] vector, double[][] matrix) {
+    public static float[] matrixVectorProduct(float[] vector, float[][] matrix) {
 
         int groupSize = 2;
-        int chunkSize = (int) Math.ceil((double) vector.length / groupSize);
+        int chunkSize = (int) Math.ceil((float) vector.length / groupSize);
 
 //        KernelManager.setKernelManager(new JTPKernelManager());
 //        Device device = KernelManager.instance().bestDevice();
@@ -28,7 +28,7 @@ public class arrOperations {
         MatrixVectorKernel kernel = new MatrixVectorKernel(matrix, vector, chunkSize);
         kernel.execute(Range.create(groupSize * matrix.length, groupSize));
 
-        double[] out = new double[matrix.length];
+        float[] out = new float[matrix.length];
         for (int i = 0; i < out.length; i++) {
             out[i] = kernel.in1[i][0];
         }
@@ -37,8 +37,8 @@ public class arrOperations {
     }
 
 
-    public static double dotProductNoGPU(double[] in1, double[] in2) {
-        double sum = 0;
+    public static float dotProductNoGPU(float[] in1, float[] in2) {
+        float sum = 0;
         for (int i = 0; i < in1.length; i++) {
             sum += in1[i] * in2[i];
         }
@@ -46,9 +46,9 @@ public class arrOperations {
     }
 
 
-    public static double matrixProductSum(double[][][] in, double[][][] anotherIn) {
+    public static float matrixProductSum(float[][][] in, float[][][] anotherIn) {
 
-        double out = 0;
+        float out = 0;
         for (int i = 0; i < in.length; i++) {
 
             for (int n = 0; n < in[i].length; n++) {
@@ -61,10 +61,10 @@ public class arrOperations {
     }
 
 
-    public static double[][] matrixScalarProduct(double[][] matrix, double scalar) {
-        double[][] out = new double[matrix.length][];
+    public static float[][] matrixScalarProduct(float[][] matrix, float scalar) {
+        float[][] out = new float[matrix.length][];
         for (int i = 0; i < matrix.length; i++) {
-            out[i] = new double[matrix[i].length];
+            out[i] = new float[matrix[i].length];
             for (int p = 0; p < matrix[i].length; p++) {
                 out[i][p] = matrix[i][p] * scalar;
             }
@@ -73,8 +73,8 @@ public class arrOperations {
     }
 
 
-    public static double[] vectorScalarProduct(double[] vector, double scalar) {
-        double[] output = new double[vector.length];
+    public static float[] vectorScalarProduct(float[] vector, float scalar) {
+        float[] output = new float[vector.length];
         for (int i = 0; i < vector.length; i++) {
             output[i] = vector[i] * scalar;
         }
@@ -82,29 +82,29 @@ public class arrOperations {
     }
 
 
-    public static double sigmoidFunction(double in) {
-        return 2 / (1 + Math.pow(e, -in)) - 1;
+    public static float sigmoidFunction(float in) {
+        return 2 / (float) (1 + Math.pow(e, -in)) - 1;
     }
 
-    public static double getDerivativeFromSigmoid(double y) {
-        double out = (y + 1) * (1 - y) / 2;
+    public static float getDerivativeFromSigmoid(float y) {
+        float out = (y + 1) * (1 - y) / 2;
         return out;
     }
 
-    public static double[] getDerivativeFromSigmoid(double[] y) {
-        double[] out = new double[y.length];
+    public static float[] getDerivativeFromSigmoid(float[] y) {
+        float[] out = new float[y.length];
         for (int i = 0; i < y.length; i++) {
             out[i] = ((y[i] + 1) * (1 - y[i]) / 2);
         }
         return out;
     }
 
-    public static double[][][] getDerivativeFromSigmoid3d(double[][][] in, double[][][] y) {
-        double[][][] out = new double[in.length][][];
+    public static float[][][] getDerivativeFromSigmoid3d(float[][][] in, float[][][] y) {
+        float[][][] out = new float[in.length][][];
         for (int i = 0; i < in.length; i++) {
-            out[i] = new double[in[i].length][];
+            out[i] = new float[in[i].length][];
             for (int u = 0; u < in[i].length; u++) {
-                out[i][u] = new double[in[i][u].length];
+                out[i][u] = new float[in[i][u].length];
                 for (int a = 0; a < in[i][u].length; a++) {
                     out[i][u][a] = (y[i][u][a] + 1) * (1 - y[i][u][a]) / 2;
                 }
@@ -113,8 +113,8 @@ public class arrOperations {
         return out;
     }
 
-    public static double meanSquaredError(double[] prediction, double[] trueClass) {
-        double sum = 0;
+    public static float meanSquaredError(float[] prediction, float[] trueClass) {
+        float sum = 0;
         for (int i = 0; i < prediction.length; i++) {
             sum += Math.pow(prediction[i] - trueClass[i], 2);
         }
@@ -122,34 +122,34 @@ public class arrOperations {
     }
 
     //mean squared error derivative
-    public static double getDerivativeFromMSE(double trueOutput, double predictedOutput) {
+    public static float getDerivativeFromMSE(float trueOutput, float predictedOutput) {
         return (predictedOutput - trueOutput) * 2;
     }
 
-    public static double[] getDerivativeFromMSE(double[] trueOutput, double[] predictedOutput) {
-        double[] derivatives = new double[trueOutput.length];
+    public static float[] getDerivativeFromMSE(float[] trueOutput, float[] predictedOutput) {
+        float[] derivatives = new float[trueOutput.length];
         for (int i = 0; i < trueOutput.length; i++) {
             derivatives[i] = (predictedOutput[i] - trueOutput[i]) * 2;
         }
         return derivatives;
     }
 
-    public static double[] softmax(double[] in) {
-        double sum = 0;
+    public static float[] softmax(float[] in) {
+        float sum = 0;
         for (int i = 0; i < in.length; i++) {
             sum += Math.pow(e, in[i]);
         }
-        double[] out = new double[in.length];
+        float[] out = new float[in.length];
         for (int i = 0; i < in.length; i++) {
-            out[i] = Math.pow(e, in[i]) / sum;
+            out[i] = (float) Math.pow(e, in[i]) / sum;
         }
         return out;
     }
 
-    public static double[] getDerivativeFromSoftmax(double[] outputsOfSoftmax, double[] derivativeErrorWithRespectToOutputsOfSoftmax) {
-        double[] out = new double[outputsOfSoftmax.length];
+    public static float[] getDerivativeFromSoftmax(float[] outputsOfSoftmax, float[] derivativeErrorWithRespectToOutputsOfSoftmax) {
+        float[] out = new float[outputsOfSoftmax.length];
         for (int i = 0; i < outputsOfSoftmax.length; i++) {
-            out[i] = 0d;
+            out[i] = 0f;
         }
 
         for (int i = 0; i < outputsOfSoftmax.length; i++) {
@@ -169,11 +169,11 @@ public class arrOperations {
     static int length;
     static int depth;
 
-    public static double[] convert3Dto1D(double[][][] in) {
+    public static float[] convert3Dto1D(float[][][] in) {
         width = in.length;
         length = in[0].length;
         depth = in[0][0].length;
-        double[] out = new double[in.length * in[0].length * in[0][0].length];
+        float[] out = new float[in.length * in[0].length * in[0][0].length];
         for (int i = 0; i < in.length; i++) {
             for (int y = 0; y < in[i].length; y++) {
                 for (int b = 0; b < in[i][y].length; b++) {
@@ -184,12 +184,12 @@ public class arrOperations {
         return out;
     }
 
-    public static double[][][] convert1Dto3D(double[] in, int width, int length, int depth) {
-        double[][][] out = new double[width][][];
+    public static float[][][] convert1Dto3D(float[] in, int width, int length, int depth) {
+        float[][][] out = new float[width][][];
         for (int i = 0; i < width; i++) {
-            out[i] = new double[length][];
+            out[i] = new float[length][];
             for (int u = 0; u < length; u++) {
-                out[i][u] = new double[depth];
+                out[i][u] = new float[depth];
                 for (int a = 0; a < depth; a++) {
                     out[i][u][a] = in[i * length * depth + u * depth + a];
                 }
@@ -199,12 +199,12 @@ public class arrOperations {
     }
 
 
-    public static double[][][] convert1Dto3D(double[] in) {
-        double[][][] out = new double[width][][];
+    public static float[][][] convert1Dto3D(float[] in) {
+        float[][][] out = new float[width][][];
         for (int i = 0; i < width; i++) {
-            out[i] = new double[length][];
+            out[i] = new float[length][];
             for (int u = 0; u < length; u++) {
-                out[i][u] = new double[depth];
+                out[i][u] = new float[depth];
                 for (int a = 0; a < depth; a++) {
                     out[i][u][a] = in[i * length * depth + u * depth + a];
                 }
@@ -214,8 +214,8 @@ public class arrOperations {
     }
 
     //padding is on both sides - final dimension = initial + padding * 2
-    public static double[][][] pad(double[][][] in, int padding) {
-        double[][][] out = new double[in.length + padding * 2][][];
+    public static float[][][] pad(float[][][] in, int padding) {
+        float[][][] out = new float[in.length + padding * 2][][];
         for (int i = 0; i < in.length; i++) {
             for (int a = 0; a < in[i].length; a++) {
                 for (int p = 0; p < in[i][a].length; p++) {
@@ -226,12 +226,12 @@ public class arrOperations {
         return in;
     }
 
-    public static double[][][] unpad(double[][][] in, int padding) {
-        double[][][] out = new double[in.length - 2 * padding][][];
+    public static float[][][] unpad(float[][][] in, int padding) {
+        float[][][] out = new float[in.length - 2 * padding][][];
 
         for (int i = 0; i < in.length; i++) {
             for (int e = 0; e < in[i].length; e++) {
-                for(int u = 0; u < in[i][e].length; u++) {
+                for (int u = 0; u < in[i][e].length; u++) {
 
                 }
             }
@@ -240,8 +240,8 @@ public class arrOperations {
     }
 
 
-    public static double returnMax(double[][] in) {
-        double max = -9999;
+    public static float returnMax(float[][] in) {
+        float max = -9999;
         for (int i = 0; i < in.length; i++) {
             for (int r = 0; r < in[i].length; r++) {
                 if (in[i][r] > max) {
@@ -252,27 +252,22 @@ public class arrOperations {
         return max;
     }
 
-    //doesnt work
-    public static BufferedImage convert1dArrayToImage(double[] in, int width, int height) {
+    public static BufferedImage convert1dArrayToImage(float[] in, int width, int height) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < width; i++) {
             for (int u = 0; u < height; u++) {
-                try {
-                    Color color = new Color((int) in[i * height * 3 + u * 3], (int) in[i * height * 3 + u * 3 + 1], (int) in[i * height * 3 + u * 3 + 2]);
-                    out.setRGB(i, u, color.getRGB());
-                } catch (Exception e) {
 
-                }
-
+                Color color = new Color((int) in[i * height * 3 + u * 3], (int) in[i * height * 3 + u * 3 + 1], (int) in[i * height * 3 + u * 3 + 2]);
+                out.setRGB(i, u, color.getRGB());
             }
         }
 
         return out;
     }
 
-    public static double[][] makeCopy(double[][] in) {
-        double[][] out = new double[in.length][];
+    public static float[][] makeCopy(float[][] in) {
+        float[][] out = new float[in.length][];
         for (int i = 0; i < in.length; i++) {
             for (int p = 0; p < in[i].length; p++) {
                 out[i][p] = in[i][p];
@@ -281,8 +276,8 @@ public class arrOperations {
         return out;
     }
 
-    public static double[] makeCopy(double[] in) {
-        double[] out = new double[in.length];
+    public static float[] makeCopy(float[] in) {
+        float[] out = new float[in.length];
         for (int i = 0; i < in.length; i++) {
             out[i] = in[i];
         }
@@ -319,8 +314,8 @@ public class arrOperations {
         return out;
     }
 
-    public static double gaussianRandomVariable (double standardDeviation, double center) {
+    public static float gaussianRandomVariable(float standardDeviation, float center) {
         Random rand = new Random();
-        return  standardDeviation * Math.sqrt(-2 * Math.log(rand.nextDouble())) * Math.cos(2 * pi * rand.nextDouble()) + center;
+        return standardDeviation * (float) (Math.sqrt(-2 * Math.log(rand.nextFloat())) * Math.cos(2 * pi * rand.nextFloat())) + center;
     }
 }
