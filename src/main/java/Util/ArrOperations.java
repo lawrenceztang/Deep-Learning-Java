@@ -36,6 +36,21 @@ public class ArrOperations {
         return out;
     }
 
+    //elementwise product
+    public static float[][][] matrixMatrixProduct (float[][][] matrix, float matrix1[][][]) {
+        float[][][] out = new float[matrix.length][][];
+        for(int i = 0; i < out.length; i++) {
+            out[i] = new float[matrix[i].length][];
+            for(int u = 0; u < out[i].length; u++) {
+                out[i][u] = new float[matrix[i][u].length];
+                for(int e = 0; e < out[i][u].length; e++) {
+                    out[i][u][e] = matrix[i][u][e] * matrix1[i][u][e];
+                }
+            }
+        }
+        return out;
+    }
+
 
     public static float dotProductNoGPU(float[] in1, float[] in2) {
         float sum = 0;
@@ -99,13 +114,13 @@ public class ArrOperations {
         return out;
     }
 
-    public static float[][][] getDerivativeFromSigmoid3d(float[][][] in, float[][][] y) {
-        float[][][] out = new float[in.length][][];
-        for (int i = 0; i < in.length; i++) {
-            out[i] = new float[in[i].length][];
-            for (int u = 0; u < in[i].length; u++) {
-                out[i][u] = new float[in[i][u].length];
-                for (int a = 0; a < in[i][u].length; a++) {
+    public static float[][][] getDerivativeFromSigmoid(float[][][] y) {
+        float[][][] out = new float[y.length][][];
+        for (int i = 0; i < y.length; i++) {
+            out[i] = new float[y[i].length][];
+            for (int u = 0; u < y[i].length; u++) {
+                out[i][u] = new float[y[i][u].length];
+                for (int a = 0; a < y[i][u].length; a++) {
                     out[i][u][a] = (y[i][u][a] + 1) * (1 - y[i][u][a]) / 2;
                 }
             }
@@ -213,26 +228,36 @@ public class ArrOperations {
         return out;
     }
 
-    //padding is on both sides - final dimension = initial + padding * 2
-    public static float[][][] pad(float[][][] in, int padding) {
-        float[][][] out = new float[in.length + padding * 2][][];
+    //padding is on both sides - final dimension = initial + padding
+    //priority is on the left and top sides
+    public static float[][][] pad(float[][][] in, int[] padding) {
+        float[][][] out = new float[in.length][][];
         for (int i = 0; i < in.length; i++) {
+            out[i] = new float[in[i].length + padding[0]][];
+            for (int a = 0; a < out[i].length; a++) {
+                out[i][a] = new float[in[i][0].length + padding[1]];
+            }
+        }
+
+        for (int i = 0; i < out.length; i++) {
             for (int a = 0; a < in[i].length; a++) {
                 for (int p = 0; p < in[i][a].length; p++) {
-                    out[i][a + padding][p + padding] = in[i][a][p];
+                    out[i][a + (int) Math.ceil((double) padding[0] / 2d)][p + (int) Math.ceil((double) padding[1] / 2d)] = in[i][a][p];
                 }
             }
         }
         return in;
     }
 
-    public static float[][][] unpad(float[][][] in, int padding) {
-        float[][][] out = new float[in.length - 2 * padding][][];
+    public static float[][][] unpad(float[][][] in, int[] padding) {
+        float[][][] out = new float[in.length][][];
 
         for (int i = 0; i < in.length; i++) {
-            for (int e = 0; e < in[i].length; e++) {
-                for (int u = 0; u < in[i][e].length; u++) {
-
+            out[i] = new float[in[i].length - padding[0]][];
+            for (int e = 0; e < out[i].length; e++) {
+                out[i][e] = new float[in[i][e].length - padding[1]];
+                for (int u = 0; u < out[i][e].length; u++) {
+                    out[i][e][u] = in[i][e + (int) Math.ceil((double) padding[0] / 2d)][u + (int) Math.ceil((double) padding[1] / 2d)];
                 }
             }
         }

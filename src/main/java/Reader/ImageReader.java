@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 //reads images in folders with name of class, like MNIST
-public class ImageReader implements Serializable{
+public class ImageReader implements Serializable {
 
     String path;
     public String[] classes;
@@ -21,8 +21,9 @@ public class ImageReader implements Serializable{
     public float mean;
     public float standardDeviation;
 
-    public ImageReader(String path) throws Exception{
-        this.path = path;;
+    public ImageReader(String path) throws Exception {
+        this.path = path;
+        ;
         file = new File(path);
         rand = new Random();
 
@@ -36,7 +37,7 @@ public class ImageReader implements Serializable{
             String temp = files[i].toString();
             for (int u = 0; u < temp.length(); u++) {
                 if (temp.charAt(temp.length() - 1 - u) == '\\') {
-                    classes[u] = temp.substring(temp.length() - u, temp.length());
+                    classes[i] = temp.substring(temp.length() - u, temp.length());
                     break;
                 }
             }
@@ -45,46 +46,45 @@ public class ImageReader implements Serializable{
         allFiles = new File[files.length][];
         newImageReferenceForEachClass = new ArrayList<Integer>();
 
-        for(int i = 0; i < files.length; i++) {
+        for (int i = 0; i < files.length; i++) {
             allFiles[i] = files[i].listFiles();
             newImageReferenceForEachClass.add(0);
         }
     }
 
-    public ImageReader () {
+    public ImageReader() {
 
     }
 
-    public ImageReader(String path, ImageReader reader) throws Exception{
+    public ImageReader(String path, ImageReader reader) throws Exception {
         this(path);
         this.mean = reader.mean;
         this.standardDeviation = reader.standardDeviation;
     }
 
 
-    public ArrayList<ArrayList<ArrayList<ArrayList<Float>>>> get3dColorMatrices (int batchSize) throws Exception{
-        ArrayList<ArrayList<ArrayList<ArrayList<Float>>>> imagesAsMatrices = new ArrayList<ArrayList<ArrayList<ArrayList<Float>>>>();
+    public float[][][][] get3dColorMatrices(int batchSize) throws Exception {
+        float[][][][] imagesAsMatrices = new float[batchSize][][][];
         oneHotOutputs = new float[batchSize][];
 
         //get images and save as matrix
 
-        for(int i = 0; i < batchSize; i++) {
+        for (int i = 0; i < batchSize; i++) {
             int random = rand.nextInt(allFiles.length);
 
-            if(newImageReferenceForEachClass.get(random) > allFiles[random].length - 1) {
+            if (newImageReferenceForEachClass.get(random) > allFiles[random].length - 1) {
                 break;
             }
-            imagesAsMatrices.add(getImageAs2DMatrix(allFiles[random][i].getPath()));
+            imagesAsMatrices[i] = getImageAs3DMatrix(allFiles[random][i].getPath());
             newImageReferenceForEachClass.set(random, newImageReferenceForEachClass.get(random) + 1);
 
             oneHotOutputs[i] = new float[classes.length];
 
-            for(int t = 0; t < classes.length; t++) {
-                if(t == i) {
-                    oneHotOutputs[oneHotOutputs.length - 1][t] = 1f;
-                }
-                else {
-                    oneHotOutputs[oneHotOutputs.length - 1][t] = 0f;
+            for (int t = 0; t < classes.length; t++) {
+                if (t == random) {
+                    oneHotOutputs[i][t] = 1f;
+                } else {
+                    oneHotOutputs[i][t] = 0f;
                 }
             }
         }
@@ -92,18 +92,18 @@ public class ImageReader implements Serializable{
         return imagesAsMatrices;
     }
 
-    public float[][] get1dColorMatricesFromImages(int batchSize, int newWidth) throws Exception{
+    public float[][] get1dColorMatricesFromImages(int batchSize, int newWidth) throws Exception {
         float[][] imagesAsMatrices = new float[batchSize][];
         oneHotOutputs = new float[batchSize][];
 
         //get images and save as matrix
         //random chance for each class to be picked, evenly distributed
-        for(int i = 0; i < batchSize; i++) {
+        for (int i = 0; i < batchSize; i++) {
 
             int random = rand.nextInt(allFiles.length);
 
             //if reference is over number of images in class, exit out of loop
-            if(newImageReferenceForEachClass.get(random) > allFiles[random].length - 1) {
+            if (newImageReferenceForEachClass.get(random) > allFiles[random].length - 1) {
                 break;
             }
 
@@ -112,7 +112,7 @@ public class ImageReader implements Serializable{
 
             oneHotOutputs[i] = new float[classes.length];
 
-            for(int t = 0; t < classes.length; t++) {
+            for (int t = 0; t < classes.length; t++) {
                 if (t == random) {
                     oneHotOutputs[i][t] = 1f;
                 } else {
@@ -125,24 +125,22 @@ public class ImageReader implements Serializable{
     }
 
     //return image as 2d matrix with color
-    public ArrayList<ArrayList<ArrayList<Float>>> getImageAs2DMatrix(String filePath) throws Exception {
+    public float[][][] getImageAs3DMatrix(String filePath) throws Exception {
         BufferedImage image = ImageIO.read(new File(filePath));
-        ArrayList<ArrayList<ArrayList<Float>>> matrix = new ArrayList<ArrayList<ArrayList<Float>>>();
-        for(int i = 0; i < 3; i++) {
-            matrix.add(new ArrayList<ArrayList<Float>>());
+        float[][][] matrix = new float[3][][];
+        for (int i = 0; i < 3; i++) {
+            matrix[i] = new float[image.getWidth()][];
             for (int x = 0; x < image.getWidth(); x++) {
-                matrix.get(i).add(new ArrayList<Float>());
+                matrix[i][x] = new float[image.getHeight()];
                 for (int y = 0; y < image.getHeight(); y++) {
 
                     Color color = new Color(image.getRGB(x, y));
-                    if(i == 0) {
-                        matrix.get(i).get(x).add((float) color.getRed());
-                    }
-                    else if(i == 1) {
-                        matrix.get(i).get(x).add((float) color.getGreen());
-                    }
-                    else {
-                        matrix.get(i).get(x).add((float) color.getBlue());
+                    if (i == 0) {
+                        matrix[i][x][y] = (float) color.getRed();
+                    } else if (i == 1) {
+                        matrix[i][x][y] = (float) color.getGreen();
+                    } else {
+                        matrix[i][x][y] = (float) color.getBlue();
                     }
                 }
             }
@@ -159,36 +157,35 @@ public class ImageReader implements Serializable{
         for (int x = 0; x < image.getWidth(); x += chunkSize) {
 
             for (int y = 0; y < image.getHeight(); y += chunkSize) {
-                if(x + chunkSize > image.getWidth()) {
+                if (x + chunkSize > image.getWidth()) {
                     return matrix;
-                }
-                else if(y + chunkSize > image.getHeight()) {
+                } else if (y + chunkSize > image.getHeight()) {
                     break;
                 }
 
                 int averageR = 0;
                 int averageG = 0;
                 int averageB = 0;
-                for(int p = 0; p < chunkSize; p++) {
-                    for(int u = 0; u < chunkSize; u++) {
+                for (int p = 0; p < chunkSize; p++) {
+                    for (int u = 0; u < chunkSize; u++) {
                         Color color = new Color(image.getRGB(x + p, y + u));
                         averageB += color.getBlue();
                         averageG += color.getGreen();
                         averageR += color.getRed();
                     }
                 }
-                matrix[x * image.getHeight() * 3 + y * 3] = (float)(averageR / chunkSize / chunkSize);
-                matrix[x * image.getHeight() * 3 + y * 3 + 1] =(float)(averageG / chunkSize / chunkSize);
-                matrix[x * image.getHeight() * 3 + y * 3 + 2] =(float)(averageB / chunkSize / chunkSize);
+                matrix[x / chunkSize * image.getHeight() * 3 + y / chunkSize * 3] = (float) (averageR / chunkSize / chunkSize);
+                matrix[x / chunkSize * image.getHeight() * 3 + y / chunkSize * 3 + 1] = (float) (averageG / chunkSize / chunkSize);
+                matrix[x / chunkSize * image.getHeight() * 3 + y / chunkSize * 3 + 2] = (float) (averageB / chunkSize / chunkSize);
             }
         }
         return matrix;
     }
 
     //some preprocessing saved in reader object
-    public float[] preprocessExample (float[] in) {
+    public float[] preprocessExample(float[] in) {
         float[] out = new float[in.length];
-        for(int i = 0; i < in.length; i++) {
+        for (int i = 0; i < in.length; i++) {
             out[i] = (in[i] - mean) / standardDeviation;
         }
         return out;
@@ -196,7 +193,7 @@ public class ImageReader implements Serializable{
 
     public float[][] preprocessTrainingSet(float[][] in) {
         float[][] out = new float[in.length][];
-        for(int p = 0; p < in.length; p++) {
+        for (int p = 0; p < in.length; p++) {
             out[p] = new float[in[p].length];
             for (int u = 0; u < in[p].length; u++) {
                 out[p][u] = (in[p][u] - mean) / standardDeviation;
@@ -205,18 +202,30 @@ public class ImageReader implements Serializable{
         return out;
     }
 
-    public float[] unpreprocessExample (float[] in) {
-        float[] out = new float[in.length];
+    public void preprocessTrainingSet(float[][][][] in) {
         for(int i = 0; i < in.length; i++) {
+            for(int a = 0; a < in[i].length; a++) {
+                for(int z = 0; z < in[i][a].length; z++) {
+                    for(int u = 0; u < in[i][a][z].length; u++) {
+                        in[i][a][z][u] = (in[i][a][u][z] - mean) / standardDeviation;
+                    }
+                }
+            }
+        }
+    }
+
+    public float[] unpreprocessExample(float[] in) {
+        float[] out = new float[in.length];
+        for (int i = 0; i < in.length; i++) {
             out[i] = in[i] * standardDeviation + mean;
         }
         return out;
     }
 
-    public void setPreprocessParameters (float[][] in) {
+    public void setPreprocessParameters(float[][] in) {
         mean = 0;
-        for(int i = 0; i < in.length; i++) {
-            for(int u = 0; u < in[i].length; u++) {
+        for (int i = 0; i < in.length; i++) {
+            for (int u = 0; u < in[i].length; u++) {
                 mean += in[i][u];
             }
         }
@@ -225,13 +234,42 @@ public class ImageReader implements Serializable{
         float variance = 0;
 
         //calculate variance
-        for(int i = 0; i < in.length; i++) {
+        for (int i = 0; i < in.length; i++) {
             for (int u = 0; u < in[i].length; u++) {
                 variance += Math.pow(in[i][u] - mean, 2);
             }
         }
 
         variance = variance / in.length / in[0].length;
+        standardDeviation = (float) Math.sqrt(variance);
+    }
+
+    public void setPreprocessParameters(float[][][][] in) {
+        mean = 0;
+        for (int i = 0; i < in.length; i++) {
+            for(int u = 0; u < in[i].length; u++) {
+                for(int p = 0; p < in[i][u].length; p++) {
+                    for(int a = 0; a < in[i][u][p].length; a++) {
+                        mean += in[i][u][p][a];
+                    }
+                }
+            }
+        }
+        mean = mean / in.length / in[0].length / in[0][0].length / in[0][0][0].length;
+
+        float variance = 0;
+
+        for (int i = 0; i < in.length; i++) {
+            for(int u = 0; u < in[i].length; u++) {
+                for(int p = 0; p < in[i][u].length; p++) {
+                    for(int a = 0; a < in[i][u][p].length; a++) {
+                        variance += Math.pow(in[i][u][p][a] - mean, 2);
+                    }
+                }
+            }
+        }
+
+        variance = variance / in.length / in[0].length / in[0][0].length / in[0][0][0].length;
         standardDeviation = (float) Math.sqrt(variance);
     }
 

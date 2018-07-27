@@ -377,7 +377,7 @@ public class DenseNetwork implements Serializable {
 
             for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation[1].length; i++) {
                 for (int u = 0; u < network.numInputs; u++) {
-                    derivativeErrorWithRespectToInputs[u] = derivativeErrorWithRespectToInputs[u] + network.derivativesErrorWithRespectToInputsToActivation[1][i] * network.weights[1][i][u];
+                    derivativeErrorWithRespectToInputs[u] += network.derivativesErrorWithRespectToInputsToActivation[1][i] * network.weights[1][i][u];
                 }
             }
 

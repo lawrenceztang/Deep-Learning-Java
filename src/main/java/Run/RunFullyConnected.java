@@ -19,6 +19,7 @@ efficient GPU
 Unsupervised Preprocessing
 RNN
 LSTM
+L2 Norm
 */
 
 public class RunFullyConnected {

@@ -3,7 +3,7 @@ package Network;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Util.ArrListOperations;
+import Util.ArrOperations;
 
 public class ConvNetwork {
 
@@ -13,27 +13,28 @@ public class ConvNetwork {
     int[] inputSize;
 
     //hyperparameters
-    double[] convLearningRates;
-    ArrayList<Integer> filterSizes;
-    ArrayList<Integer> strideSizes;
-    ArrayList<Integer> numberOfFilters;
-    ArrayList<Integer> padding;
-    ArrayList<Integer> poolingStride;
+    float[] convLearningRates;
+    int[] filterSizes;
+    int[] strideSizes;
+    int[] numberOfFilters;
+    int[][] padding;
+    int[] poolingStride;
     int numLayers;
 
 
     //weights: numlayers x numberFilters x inputDepth x filtersize x filtersize
 
-    ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>> weights;
-    ArrayList<ArrayList<Double>> biases;
-    ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> outputsInLayers;
-    ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> derivativeErrorWithRespectToInputToActivation;
-    ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>> derivativeErrorWithRespectToWeight;
+    float[][][][][] weights;
+    float[][] biases;
+    float[][][][] outputsInLayers;
+    float[][][][] derivativeErrorWithRespectToInputToActivation;
+    float[][][][][] derivativeErrorWithRespectToWeight;
 
 
     DenseNetwork denseNetwork;
 
-    public ConvNetwork(int[] inputSize, double[] convLearningRates, ArrayList<Integer> filterSizes, ArrayList<Integer> strideSizes, ArrayList<Integer> numberOfFilters, ArrayList<Integer> padding, ArrayList<Integer> poolingStride, DenseNetwork denseNetwork) {
+    //no max pooling in final layer
+    public ConvNetwork(int[] inputSize, float[] convLearningRates, int[] filterSizes, int[] strideSizes, int[] numberOfFilters, int[][] padding, int[] poolingStride, DenseNetwork denseNetwork) {
 
         rand = new Random();
 
@@ -51,21 +52,19 @@ public class ConvNetwork {
         this.denseNetwork = denseNetwork;
 
         initializeWeights();
-        derivativeErrorWithRespectToWeight = new ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>>();
-        derivativeErrorWithRespectToInputToActivation = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
-        numLayers = filterSizes.size();
+        derivativeErrorWithRespectToInputToActivation = new float[filterSizes.length][][][];
+        numLayers = filterSizes.length;
 
-
-
+        numberOfFilters[0] = 3;
     }
 
     public void gradientDescent() {
-        for (int i = 0; i < derivativeErrorWithRespectToWeight.size(); i++) {
-            for (int n = 0; n < derivativeErrorWithRespectToWeight.get(i).size(); n++) {
-                for (int z = 0; z < derivativeErrorWithRespectToWeight.get(i).get(n).size(); z++) {
-                    for (int s = 0; s < derivativeErrorWithRespectToWeight.get(i).get(n).get(z).size(); s++) {
-                        for (int f = 0; f < derivativeErrorWithRespectToWeight.get(i).get(n).get(z).get(s).size(); f++) {
-                            weights.get(i).get(n).get(z).get(s).set(f, weights.get(i).get(n).get(z).get(s).get(f) - derivativeErrorWithRespectToWeight.get(i).get(n).get(z).get(s).get(f) * convLearningRates[i]);
+        for (int i = 1; i < derivativeErrorWithRespectToWeight.length; i++) {
+            for (int n = 0; n < derivativeErrorWithRespectToWeight[i].length; n++) {
+                for (int z = 0; z < derivativeErrorWithRespectToWeight[i][n].length; z++) {
+                    for (int s = 0; s < derivativeErrorWithRespectToWeight[i][n][z].length; s++) {
+                        for (int f = 0; f < derivativeErrorWithRespectToWeight[i][n][z][s].length; f++) {
+                            weights[i][n][z][s][f] -= derivativeErrorWithRespectToWeight[i][n][z][s][f] * convLearningRates[i];
                         }
                     }
                 }
@@ -74,82 +73,72 @@ public class ConvNetwork {
     }
 
     //i think backprop is correctly done
-    public void getGradientsWeightsWithRespectToError(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> inputs, ArrayList<ArrayList<Double>> outputs) throws Exception {
+    public void getGradientsWeightsWithRespectToError(float[][][][] inputs, float[][] outputs) throws Exception {
 
-        forwardPass(inputs.get(0));
+        forwardPass(inputs[0]);
         derivativeErrorWithRespectToInputToActivation = initializeActivationInputs();
 
-        ArrayList<ArrayList<Double>> inputToFullyConnected = new ArrayList<ArrayList<Double>>();
-        inputToFullyConnected.add(ArrListOperations.convert3Dto1D(outputsInLayers.get(outputsInLayers.size() - 1)));
+        float[][] inputToFullyConnected = new float[1][];
+        inputToFullyConnected[0] = averagePooling(outputsInLayers[outputsInLayers.length - 1]);
 
         denseNetwork.getDerivativeOfErrorWithRespectToWeights(inputToFullyConnected, outputs);
 
-        ArrayList<Double> derivativeErrorWithRespectToInputsToFullyConnected = new ArrayList<Double>();
-
+        float[] derivativeErrorWithRespectToInputsToFullyConnected = new float[denseNetwork.nodesPerLayer[0]];
+        initializeWeightDerivatives();
 
         for (int u = 0; u < denseNetwork.numInputs; u++) {
-            derivativeErrorWithRespectToInputsToFullyConnected.add(0d);
-            for (int i = 0; i < denseNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).size(); i++) {
-                derivativeErrorWithRespectToInputsToFullyConnected.set(u, derivativeErrorWithRespectToInputsToFullyConnected.get(u) + denseNetwork.derivativesErrorWithRespectToInputsToActivation.get(1).get(i) * denseNetwork.weights.get(1).get(i).get(u));
+            derivativeErrorWithRespectToInputsToFullyConnected[u] = 0f;
+            for (int i = 0; i < denseNetwork.derivativesErrorWithRespectToInputsToActivation[1].length; i++) {
+                derivativeErrorWithRespectToInputsToFullyConnected[u] += denseNetwork.derivativesErrorWithRespectToInputsToActivation[1][i] * denseNetwork.weights[1][i][u];
             }
         }
+
         //must be put through activation
-        derivativeErrorWithRespectToInputToActivation.set(derivativeErrorWithRespectToInputToActivation.size() - 1, ArrListOperations.getDerivativeFromSigmoid3d(ArrListOperations.convert1Dto3D(derivativeErrorWithRespectToInputsToFullyConnected), outputsInLayers.get(outputsInLayers.size() - 1)));
+        derivativeErrorWithRespectToInputToActivation[derivativeErrorWithRespectToInputToActivation.length - 1] = ArrOperations.matrixMatrixProduct(getDerivativeFromAveragePooling(derivativeErrorWithRespectToInputsToFullyConnected), ArrOperations.getDerivativeFromSigmoid(outputsInLayers[outputsInLayers.length - 1]));
 
 
         for (int a = numLayers - 2; a > 0; a--) {
 
-            derivativeErrorWithRespectToInputToActivation.set(a, initializeOutputs(numberOfFilters.get(a), outputsInLayers.get(a).get(0).size(), outputsInLayers.get(a).get(0).get(0).size()));
-            for (int b = 0; b < numberOfFilters.get(a + 1); b++) {
-                for (int x = 0; x < outputsInLayers.get(a).size(); x++) {
-                    for (int h = 0; h <= outputsInLayers.get(a).get(x).size() - filterSizes.get(a + 1); h += strideSizes.get(a + 1)) {
-                        for (int q = 0; q <= outputsInLayers.get(a).get(x).get(h).size() - filterSizes.get(a + 1); q += strideSizes.get(a + 1)) {
+            derivativeErrorWithRespectToInputToActivation[a] = initializeOutputs(numberOfFilters[a], outputsInLayers[a][0].length, outputsInLayers[a][0][0].length);
+            for (int b = 0; b < numberOfFilters[a + 1]; b++) {
+                for (int x = 0; x < outputsInLayers[a].length; x++) {
+                    for (int h = 0; h <= outputsInLayers[a][x].length - filterSizes[a + 1]; h += strideSizes[a + 1]) {
+                        for (int q = 0; q <= outputsInLayers[a][x][h].length - filterSizes[a + 1]; q += strideSizes[a + 1]) {
 
 
-                            for (int w = 0; w < filterSizes.get(a + 1); w++) {
-                                for (int y = 0; y < filterSizes.get(a + 1); y++) {
-                                        derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).set(q + y, derivativeErrorWithRespectToInputToActivation.get(a).get(x).get(h + w).get(q + y) + derivativeErrorWithRespectToInputToActivation.get(a + 1).get(b).get(h / strideSizes.get(a + 1)).get(q / strideSizes.get(a + 1)) * weights.get(a + 1).get(b).get(x).get(w).get(y));
+                            for (int w = 0; w < filterSizes[a + 1]; w++) {
+                                for (int y = 0; y < filterSizes[a + 1]; y++) {
+                                    derivativeErrorWithRespectToInputToActivation[a][x][h + w][q + y] += derivativeErrorWithRespectToInputToActivation[a + 1][b][h / strideSizes[a + 1]][q / strideSizes[a + 1]] * weights[a + 1][b][x][w][y];
                                 }
                             }
-
-
                         }
                     }
                 }
             }
 
-            derivativeErrorWithRespectToInputToActivation.set(a, getDerivativeFromMaxPooling(derivativeErrorWithRespectToInputToActivation.get(a), outputsInLayers.get(a)));
+            derivativeErrorWithRespectToInputToActivation[a] = getDerivativeFromMaxPooling(derivativeErrorWithRespectToInputToActivation[a], outputsInLayers[a]);
 
 
-            for (int u = 0; u < derivativeErrorWithRespectToInputToActivation.get(a).size(); u++) {
-                for (int m = 0; m < derivativeErrorWithRespectToInputToActivation.get(a).get(u).size(); m++) {
-                    for (int p = 0; p < derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).size(); p++) {
-                        derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).set(p, derivativeErrorWithRespectToInputToActivation.get(a).get(u).get(m).get(p) * ArrListOperations.getDerivativeFromSigmoid(outputsInLayers.get(a).get(u).get(m).get(p)));
-                    }
-                }
-            }
+            derivativeErrorWithRespectToInputToActivation[a] = ArrOperations.matrixMatrixProduct(derivativeErrorWithRespectToInputToActivation[a], ArrOperations.getDerivativeFromSigmoid(outputsInLayers[a]));
 
-            ArrayList<ArrayList<ArrayList<Double>>> outputAfterPooling = maxPooling(outputsInLayers.get(a - 1), poolingStride.get(a - 1));
-            derivativeErrorWithRespectToInputToActivation.set(a, ArrListOperations.unpad(derivativeErrorWithRespectToInputToActivation.get(a), padding.get(a)));
 
-            for (int b = 0; b < derivativeErrorWithRespectToInputToActivation.get(a).size(); b++) {
-                for (int h = 0; h < derivativeErrorWithRespectToInputToActivation.get(a).get(b).size(); h++) {
-                    for (int q = 0; q < derivativeErrorWithRespectToInputToActivation.get(a).get(b).get(h).size(); q++) {
+            float[][][] outputAfterPooling = maxPooling(outputsInLayers[a - 1], poolingStride[a - 1]);
+            derivativeErrorWithRespectToInputToActivation[a] = ArrOperations.unpad(derivativeErrorWithRespectToInputToActivation[a], padding[a]);
 
-                        for (int x = 0; x < numberOfFilters.get(a - 1); x++) {
-                            for (int w = 0; w < filterSizes.get(a); w++) {
-                                for (int y = 0; y < filterSizes.get(a); y++) {
+
+            for (int b = 0; b < derivativeErrorWithRespectToInputToActivation[a].length; b++) {
+                for (int h = 0; h < derivativeErrorWithRespectToInputToActivation[a][b].length; h++) {
+                    for (int q = 0; q < derivativeErrorWithRespectToInputToActivation[a][b][h].length; q++) {
+
+                        for (int x = 0; x < numberOfFilters[a - 1]; x++) {
+                            for (int w = 0; w < filterSizes[a]; w++) {
+                                for (int y = 0; y < filterSizes[a]; y++) {
                                     //inputtoactivation
-                                    derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).set(y, derivativeErrorWithRespectToWeight.get(a).get(b).get(x).get(w).get(y) + derivativeErrorWithRespectToInputToActivation.get(a).get(b).get(h).get(q) * outputsInLayers.get(a - 1).get(b).get(h + w).get(q + y));
+                                    derivativeErrorWithRespectToWeight[a][b][x][w][y] += derivativeErrorWithRespectToInputToActivation[a][b][h][q] * outputAfterPooling[x][h + w][q + y];
                                 }
                             }
                         }
-                        try {
-                            biases.get(a).set(b, biases.get(a).get(b) - derivativeErrorWithRespectToInputToActivation.get(a).get(b).get(h).get(q));
-                        }
-                        catch(Exception e) {
-                            break;
-                        }
+                        biases[a][b] = biases[a][b] - derivativeErrorWithRespectToInputToActivation[a][b][h][q];
                     }
                 }
             }
@@ -158,99 +147,107 @@ public class ConvNetwork {
     }
 
     //working
-    public ArrayList<Double> predictOutput(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception {
-        ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
+    public float[] predictOutput(float[][][] inputs) throws Exception {
+        float[][][] layerInputs = inputs;
         for (int e = 1; e < numLayers; e++) {
-            layerInputs = ArrListOperations.pad(layerInputs, padding.get(e));
-            ArrayList<ArrayList<ArrayList<Double>>> layerOutputs = initializeOutputs(numberOfFilters.get(e), (layerInputs.get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1, (layerInputs.get(0).get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1);
-            for (int i = 0; i <= layerInputs.get(0).size() - filterSizes.get(e); i += strideSizes.get(e)) {
-                for (int b = 0; b <= layerInputs.get(0).get(i).size() - filterSizes.get(e); b += strideSizes.get(e)) {
+            layerInputs = ArrOperations.pad(layerInputs, padding[e]);
+            float[][][] layerOutputs = initializeOutputs(numberOfFilters[e], (layerInputs[0].length - filterSizes[e]) / strideSizes[e] + 1, (layerInputs[0][0].length - filterSizes[e]) / strideSizes[e] + 1);
+            for (int i = 0; i <= layerInputs[0].length - filterSizes[e]; i += strideSizes[e]) {
+                for (int b = 0; b <= layerInputs[0][i].length - filterSizes[e]; b += strideSizes[e]) {
 
 
-                    ArrayList<ArrayList<ArrayList<Double>>> inputToNeuron = new ArrayList<ArrayList<ArrayList<Double>>>();
+                    float[][][] inputToNeuron = new float[layerInputs.length][][];
 
-                    for (int v = 0; v < layerInputs.size(); v++) {
-                        inputToNeuron.add(new ArrayList<ArrayList<Double>>());
-                        for (int u = 0; u < filterSizes.get(e); u++) {
-                            inputToNeuron.get(v).add(new ArrayList<Double>());
-                            for (int t = 0; t < filterSizes.get(e); t++) {
+                    for (int v = 0; v < layerInputs.length; v++) {
+                        inputToNeuron[v] = new float[filterSizes[e]][];
+                        for (int u = 0; u < filterSizes[e]; u++) {
+                            inputToNeuron[v][u] = new float[filterSizes[e]];
+                            for (int t = 0; t < filterSizes[e]; t++) {
 
-                                inputToNeuron.get(v).get(u).add(layerInputs.get(v).get(i + u).get(b + t));
+                                inputToNeuron[v][u][t] = layerInputs[v][i + u][b + t];
                             }
                         }
                     }
-                    for (int l = 0; l < numberOfFilters.get(e); l++) {
-                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), ArrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
+                    for (int l = 0; l < numberOfFilters[e]; l++) {
+                        layerOutputs[l][i / strideSizes[e]][b / strideSizes[e]] = ArrOperations.sigmoidFunction(ArrOperations.matrixProductSum(inputToNeuron, weights[e][l]));
                     }
                 }
             }
 
-            layerInputs = maxPooling(layerOutputs, poolingStride.get(e));
+            if (e != numLayers - 1) {
+                layerInputs = maxPooling(layerOutputs, poolingStride[e]);
+            } else {
+                layerInputs = layerOutputs;
+            }
         }
 
-        ArrayList<Double> inputToFullyConnected = ArrListOperations.convert3Dto1D(layerInputs);
+        float[] inputToFullyConnected = averagePooling(layerInputs);
         return denseNetwork.predictOutput(inputToFullyConnected);
     }
 
     //input layer is counted as layer 0
-    public void forwardPass(ArrayList<ArrayList<ArrayList<Double>>> inputs) throws Exception {
-        outputsInLayers = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
+    public void forwardPass(float[][][] inputs) throws Exception {
+        outputsInLayers = new float[numLayers][][][];
 
-        ArrayList<ArrayList<ArrayList<Double>>> layerInputs = inputs;
-        outputsInLayers.add(layerInputs);
+        float[][][] layerInputs = inputs;
+        outputsInLayers[0] = layerInputs;
         for (int e = 1; e < numLayers; e++) {
-            layerInputs = ArrListOperations.pad(layerInputs, padding.get(e));
-            ArrayList<ArrayList<ArrayList<Double>>> layerOutputs = initializeOutputs(numberOfFilters.get(e), (layerInputs.get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1, (layerInputs.get(0).get(0).size() - filterSizes.get(e)) / strideSizes.get(e) + 1);
-            for (int i = 0; i <= layerInputs.get(0).size() - filterSizes.get(e); i += strideSizes.get(e)) {
-                for (int b = 0; b <= layerInputs.get(0).get(i).size() - filterSizes.get(e); b += strideSizes.get(e)) {
+            layerInputs = ArrOperations.pad(layerInputs, padding[e]);
+            float[][][] layerOutputs = initializeOutputs(numberOfFilters[e], (layerInputs[0].length - filterSizes[e]) / strideSizes[e] + 1, (layerInputs[0][0].length - filterSizes[e]) / strideSizes[e] + 1);
+            for (int i = 0; i <= layerInputs[0].length - filterSizes[e]; i += strideSizes[e]) {
+                for (int b = 0; b <= layerInputs[0][i].length - filterSizes[e]; b += strideSizes[e]) {
 
 
-                    ArrayList<ArrayList<ArrayList<Double>>> inputToNeuron = new ArrayList<ArrayList<ArrayList<Double>>>();
+                    float[][][] inputToNeuron = new float[layerInputs.length][][];
 
-                    for (int v = 0; v < layerInputs.size(); v++) {
-                        inputToNeuron.add(new ArrayList<ArrayList<Double>>());
-                        for (int u = 0; u < filterSizes.get(e); u++) {
-                            inputToNeuron.get(v).add(new ArrayList<Double>());
-                            for (int t = 0; t < filterSizes.get(e); t++) {
-
-                                inputToNeuron.get(v).get(u).add(layerInputs.get(v).get(i + u).get(b + t));
+                    for (int v = 0; v < layerInputs.length; v++) {
+                        inputToNeuron[v] = new float[filterSizes[e]][];
+                        for (int u = 0; u < filterSizes[e]; u++) {
+                            inputToNeuron[v][u] = new float[filterSizes[e]];
+                            for (int t = 0; t < filterSizes[e]; t++) {
+                                inputToNeuron[v][u][t] = layerInputs[v][i + u][b + t];
                             }
                         }
                     }
-                    for (int l = 0; l < numberOfFilters.get(e); l++) {
-                        layerOutputs.get(l).get(i / strideSizes.get(e)).set(b / strideSizes.get(e), ArrListOperations.matrixProductSum(inputToNeuron, weights.get(e).get(l)));
+                    for (int l = 0; l < numberOfFilters[e]; l++) {
+                        layerOutputs[l][i / strideSizes[e]][b / strideSizes[e]] = ArrOperations.sigmoidFunction(ArrOperations.matrixProductSum(inputToNeuron, weights[e][l]));
                     }
                 }
             }
-            outputsInLayers.add(layerOutputs);
-            layerInputs = maxPooling(layerOutputs, poolingStride.get(e));
+            if (e != numLayers - 1) {
+                outputsInLayers[e] = maxPooling(layerOutputs, poolingStride[e]);
+            } else {
+                outputsInLayers[e] = layerOutputs;
+            }
+            layerInputs = outputsInLayers[e];
         }
 
     }
 
+
     public void initializeWeights() {
-        weights = new ArrayList<ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>>();
-        biases = new ArrayList<ArrayList<Double>>();
-        weights.add(new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>());
-        biases.add(new ArrayList<Double>());
-        for (int i = 1; i < filterSizes.size(); i++) {
-            weights.add(new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>());
-            biases.add(new ArrayList<Double>());
-            for (int u = 0; u < numberOfFilters.get(i); u++) {
-                weights.get(i).add(new ArrayList<ArrayList<ArrayList<Double>>>());
-                biases.get(i).add(0d);
+        weights = new float[filterSizes.length][][][][];
+        biases = new float[filterSizes.length][];
+
+        for (int i = 1; i < filterSizes.length; i++) {
+            weights[i] = new float[numberOfFilters[i]][][][];
+            biases[i] = new float[numberOfFilters[i]];
+            for (int u = 0; u < numberOfFilters[i]; u++) {
+
                 int inputDepth;
                 if (i == 1) {
                     inputDepth = inputSize[0];
                 } else {
-                    inputDepth = numberOfFilters.get(i - 1);
+                    inputDepth = numberOfFilters[i - 1];
                 }
+                weights[i][u] = new float[inputDepth][][];
+                biases[i][u] = ArrOperations.gaussianRandomVariable(.25f, 0);
                 for (int q = 0; q < inputDepth; q++) {
-                    weights.get(i).get(u).add(new ArrayList<ArrayList<Double>>());
-                    for (int v = 0; v < filterSizes.get(i); v++) {
-                        weights.get(i).get(u).get(q).add(new ArrayList<Double>());
-                        for (int c = 0; c < filterSizes.get(i); c++) {
-                            weights.get(i).get(u).get(q).get(v).add(rand.nextDouble() * .01 - .005);
+                    weights[i][u][q] = new float[filterSizes[i]][];
+                    for (int v = 0; v < filterSizes[i]; v++) {
+                        weights[i][u][q][v] = new float[filterSizes[i]];
+                        for (int c = 0; c < filterSizes[i]; c++) {
+                            weights[i][u][q][v][c] = ArrOperations.gaussianRandomVariable(.25f, 0);
                         }
                     }
                 }
@@ -259,31 +256,58 @@ public class ConvNetwork {
         return;
     }
 
-    public ArrayList<ArrayList<ArrayList<Double>>> initializeOutputs(int numFilters, int width, int length) {
-        ArrayList<ArrayList<ArrayList<Double>>> outputs = new ArrayList<ArrayList<ArrayList<Double>>>();
+    public void initializeWeightDerivatives() {
+        derivativeErrorWithRespectToWeight = new float[filterSizes.length][][][][];
+        for (int i = 1; i < filterSizes.length; i++) {
+            derivativeErrorWithRespectToWeight[i] = new float[numberOfFilters[i]][][][];
+            for (int u = 0; u < numberOfFilters[i]; u++) {
+
+                int inputDepth;
+                if (i == 1) {
+                    inputDepth = inputSize[0];
+                } else {
+                    inputDepth = numberOfFilters[i - 1];
+                }
+                derivativeErrorWithRespectToWeight[i][u] = new float[inputDepth][][];
+                for (int q = 0; q < inputDepth; q++) {
+                    derivativeErrorWithRespectToWeight[i][u][q] = new float[filterSizes[i]][];
+                    for (int v = 0; v < filterSizes[i]; v++) {
+                        derivativeErrorWithRespectToWeight[i][u][q][v] = new float[filterSizes[i]];
+                        for (int c = 0; c < filterSizes[i]; c++) {
+                            derivativeErrorWithRespectToWeight[i][u][q][v][c] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    public float[][][] initializeOutputs(int numFilters, int width, int length) {
+        float[][][] outputs = new float[numFilters][][];
         for (int i = 0; i < numFilters; i++) {
-            outputs.add(new ArrayList<ArrayList<Double>>());
+            outputs[i] = new float[width][];
             for (int d = 0; d < width; d++) {
-                outputs.get(i).add(new ArrayList<Double>());
+                outputs[i][d] = new float[length];
                 for (int f = 0; f < length; f++) {
-                    outputs.get(i).get(d).add(0d);
+                    outputs[i][d][f] = 0f;
                 }
             }
         }
         return outputs;
     }
 
-    public ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> initializeActivationInputs() {
+    public float[][][][] initializeActivationInputs() {
 
-        ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> out = new ArrayList<ArrayList<ArrayList<ArrayList<Double>>>>();
-        for (int i = 0; i < outputsInLayers.size(); i++) {
-            out.add(new ArrayList<ArrayList<ArrayList<Double>>>());
-            for (int u = 0; u < outputsInLayers.get(i).size(); u++) {
-                out.get(i).add(new ArrayList<ArrayList<Double>>());
-                for (int y = 0; y < outputsInLayers.get(i).get(u).size(); y++) {
-                    out.get(i).get(u).add(new ArrayList<Double>());
-                    for (int a = 0; a < outputsInLayers.get(i).get(u).get(y).size(); a++) {
-                        out.get(i).get(u).get(y).add(0d);
+        float[][][][] out = new float[outputsInLayers.length][][][];
+        for (int i = 0; i < outputsInLayers.length; i++) {
+            out[i] = new float[outputsInLayers[i].length][][];
+            for (int u = 0; u < outputsInLayers[i].length; u++) {
+                out[i][u] = new float[outputsInLayers[i][u].length][];
+                for (int y = 0; y < outputsInLayers[i][u].length; y++) {
+                    out[i][u][y] = new float[outputsInLayers[i][u][y].length];
+                    for (int a = 0; a < outputsInLayers[i][u][y].length; a++) {
+                        out[i][u][y][a] = 0f;
                     }
                 }
             }
@@ -291,28 +315,42 @@ public class ConvNetwork {
         return out;
     }
 
-    public ArrayList<ArrayList<ArrayList<Double>>> maxPooling(ArrayList<ArrayList<ArrayList<Double>>> in, int stride) {
+    public void setPadding() {
+        int[] inputSizes = new int[2];
+        inputSizes[0] = inputSize[0];
+        inputSizes[1] = inputSize[0];
+        for (int i = 1; i < filterSizes.length; i++) {
+            for (int p = 0; p < 2; p++) {
+                if ((inputSizes[p] - filterSizes[i]) % strideSizes[i] != 0) {
+                    padding[i][p] = (int) Math.ceil((double) (inputSizes[p] - filterSizes[i]) / (double) strideSizes[i]) * strideSizes[i] - (inputSizes[p] - filterSizes[i]);
+                }
+                inputSizes[p] = (inputSizes[p] - filterSizes[i]) / strideSizes[i] + 1;
+            }
+        }
+    }
+
+    public float[][][] maxPooling(float[][][] in, int stride) {
         if (stride == 0) {
             return in;
         }
-        ArrayList<ArrayList<ArrayList<Double>>> out = new ArrayList<ArrayList<ArrayList<Double>>>();
-        for (int u = 0; u < in.size(); u++) {
-            out.add(new ArrayList<ArrayList<Double>>());
+        float[][][] out = new float[in.length][][];
+        for (int u = 0; u < in.length; u++) {
+            out[u] = new float[in[u].length][];
 
-            for (int a = 0; a < in.get(u).size(); a += stride) {
-                out.get(u).add(new ArrayList<Double>());
-                for (int q = 0; q < in.get(u).get(a).size(); q += stride) {
+            for (int a = 0; a < in[u].length; a += stride) {
+                out[u][a] = new float[in[u][a].length];
+                for (int q = 0; q < in[u][a].length; q += stride) {
 
-                    double max = -9999;
+                    float max = -9999;
                     for (int p = 0; p < stride; p++) {
                         for (int y = 0; y < stride; y++) {
-                            if (in.get(u).get(a + p).get(q + y) > max) {
-                                max = in.get(u).get(a + p).get(q + y);
+                            if (in[u][a + p][q + y] > max) {
+                                max = in[u][a + p][q + y];
                             }
                         }
                     }
 
-                    out.get(u).get(a).add(max);
+                    out[u][a][q] = max;
 
                 }
             }
@@ -320,32 +358,36 @@ public class ConvNetwork {
         return out;
     }
 
-    //not working
-    public ArrayList<ArrayList<ArrayList<Double>>> getDerivativeFromMaxPooling(ArrayList<ArrayList<ArrayList<Double>>> derivativeErrorWithRespectToPoolingOutput, ArrayList<ArrayList<ArrayList<Double>>> poolingInput) {
+    //strides should not overlap
+    public float[][][] getDerivativeFromMaxPooling(float[][][] derivativeErrorWithRespectToPoolingOutput, float[][][] poolingInput) {
 
-        ArrayList<ArrayList<ArrayList<Double>>> derivativeErrorWithRespectToInputToPooling = new ArrayList<ArrayList<ArrayList<Double>>>();
-        int stride = derivativeErrorWithRespectToPoolingOutput.get(0).size() / poolingInput.get(0).size();
-        for (int i = 0; i < derivativeErrorWithRespectToPoolingOutput.size(); i++) {
-            derivativeErrorWithRespectToInputToPooling.add(new ArrayList<ArrayList<Double>>());
-            for (int a = 0; a < derivativeErrorWithRespectToPoolingOutput.get(i).size(); a++) {
-                for (int o = 0; o < derivativeErrorWithRespectToPoolingOutput.get(i).get(a).size(); o++) {
+        if (poolingInput[0].length == derivativeErrorWithRespectToPoolingOutput[0].length) {
+            return derivativeErrorWithRespectToPoolingOutput;
+        }
 
-                    double max = -99999;
+        float[][][] derivativeErrorWithRespectToInputToPooling = new float[poolingInput.length][][];
+        int stride = derivativeErrorWithRespectToPoolingOutput[0].length / poolingInput[0].length;
+        for (int i = 0; i < derivativeErrorWithRespectToPoolingOutput.length; i++) {
+            derivativeErrorWithRespectToInputToPooling[i] = new float[poolingInput[i].length][];
+            for (int a = 0; a < derivativeErrorWithRespectToPoolingOutput[i].length; a++) {
+                for (int o = 0; o < derivativeErrorWithRespectToPoolingOutput[i][a].length; o++) {
+
+                    float max = -99999;
                     for (int c = 0; c < stride; c++) {
                         for (int u = 0; u < stride; u++) {
-                            if (poolingInput.get(i).get(a * stride + c).get(o * stride + u) > max) {
-                                max = poolingInput.get(i).get(a * stride + c).get(o * stride + u);
+                            if (poolingInput[i][a * stride + c][o * stride + u] > max) {
+                                max = poolingInput[i][a * stride + c][o * stride + u];
                             }
                         }
                     }
 
                     for (int y = 0; y < stride; y++) {
-                        derivativeErrorWithRespectToInputToPooling.get(i).add(new ArrayList<Double>());
+                        derivativeErrorWithRespectToInputToPooling[i][y + a * stride] = new float[poolingInput[i][y + a * stride].length];
                         for (int q = 0; q < stride; q++) {
-                            if (max == poolingInput.get(i).get(y + a * stride).get(o * stride + q)) {
-                                derivativeErrorWithRespectToInputToPooling.get(i).get(y + a * stride).add(derivativeErrorWithRespectToPoolingOutput.get(i).get(a).get(o));
+                            if (max == poolingInput[i][y + a * stride][o * stride + q]) {
+                                derivativeErrorWithRespectToInputToPooling[i][y + a * stride][q + o * stride] = derivativeErrorWithRespectToPoolingOutput[i][a][o];
                             } else {
-                                derivativeErrorWithRespectToInputToPooling.get(i).get(y + a * stride).add(0d);
+                                derivativeErrorWithRespectToInputToPooling[i][y + a * stride][q + o * stride] = 0f;
                             }
                         }
                     }
@@ -357,21 +399,21 @@ public class ConvNetwork {
     }
 
     //tests on dataset, returns percentage accurate
-    public double test(ArrayList<ArrayList<ArrayList<ArrayList<Double>>>> in, ArrayList<ArrayList<Double>> out) throws Exception {
+    public float test(float[][][][] in, float[][] out) throws Exception {
         int numCorrect = 0;
-        for (int i = 0; i < in.size(); i++) {
-            ArrayList<Double> array = predictOutput(in.get(i));
+        for (int i = 0; i < in.length; i++) {
+            float[] array = predictOutput(in[i]);
             int prediction = 0;
 
-            for (int p = 0; p < array.size(); p++) {
-                if (array.get(p) > array.get(prediction)) {
+            for (int p = 0; p < array.length; p++) {
+                if (array[p] > array[prediction]) {
                     prediction = p;
                 }
             }
 
             int output = 0;
-            for (int p = 0; p < array.size(); p++) {
-                if (out.get(i).get(p) > out.get(i).get(output)) {
+            for (int p = 0; p < array.length; p++) {
+                if (out[i][p] > out[i][output]) {
                     output = p;
                 }
             }
@@ -380,7 +422,40 @@ public class ConvNetwork {
                 numCorrect++;
             }
         }
-        return numCorrect / (double) in.size();
+        return numCorrect / (float) in.length;
+    }
+
+    int aPoolWidth;
+    int aPoolLength;
+
+    //used for input to dense network
+    public float[] averagePooling(float[][][] in) {
+        float[] out = new float[in.length];
+        for (int p = 0; p < in.length; p++) {
+            for (int c = 0; c < in[p].length; c++) {
+                for (int d = 0; d < in[p][c].length; d++) {
+                    out[p] += in[p][c][d];
+                }
+            }
+            out[p] = out[p] / (float) in[p].length / (float) in[p][0].length;
+        }
+        aPoolWidth = in[0].length;
+        aPoolLength = in[0][0].length;
+        return out;
+    }
+
+    public float[][][] getDerivativeFromAveragePooling(float[] in) {
+        float[][][] out = new float[in.length][][];
+        for (int d = 0; d < in.length; d++) {
+            out[d] = new float[aPoolWidth][];
+            for (int i = 0; i < aPoolWidth; i++) {
+                out[d][i] = new float[aPoolLength];
+                for (int u = 0; u < aPoolLength; u++) {
+                    out[d][i][u] = in[d] / aPoolLength / aPoolWidth;
+                }
+            }
+        }
+        return out;
     }
 
 
