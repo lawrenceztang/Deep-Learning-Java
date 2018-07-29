@@ -7,7 +7,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class FullyConnectedTest {
-    String path;
+    String path = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
     float[][] trainingData;
     float[][] trainingDataOutputs;
     DenseNetwork network;
@@ -47,6 +47,9 @@ public class FullyConnectedTest {
                         for(int v = 0; v < network.derivativesErrorWithRespectToWeights[a][q].length; v++) {
                             if(Float.parseFloat(df.format(new Float(network.derivativesErrorWithRespectToWeights[a][q][v] / 10))) != Float.parseFloat(df.format(new Float(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], a, q, v))))) {
                                 pass = false;
+                                System.out.println("Test Failed!");
+                                System.out.println(network.derivativesErrorWithRespectToWeights[a][q][v] / 10);
+                                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], a, q, v));
                             }
                         }
                     }

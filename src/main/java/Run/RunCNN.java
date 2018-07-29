@@ -23,7 +23,7 @@ public class RunCNN {
         float[] learningRate = new float[]{0, .05f, .0025f};
         DenseNetwork fNetwork = new DenseNetwork(nodesPerLayer, learningRate, DenseNetwork.UPDATE_NESTEROV, .9f, 1);
 
-        ConvNetwork network = new ConvNetwork(new int[]{3, 28, 28}, new float[]{0f, .05f, .05f }, filterSizes, strideSizes, numFilters, padding, poolingStride, fNetwork);
+        ConvNetwork network = new ConvNetwork(new int[]{3, 28, 28}, new float[]{0f, .01f, .01f}, filterSizes, strideSizes, numFilters, padding, poolingStride, fNetwork);
         network.initializeWeights();
         network.setPadding();
 
@@ -48,7 +48,12 @@ public class RunCNN {
                     outputs[q] = trainingDataOutputs[i + q];
                 }
                 network.getGradientsWeightsWithRespectToError(inputs, outputs);
+
+//                System.out.println(network.derivativeCheck(inputs[0], outputs[0], 1, 0, 0, 0, 0));
+//                System.out.println(network.derivativeErrorWithRespectToWeight[1][0][0][0][0]);
+
                 network.gradientDescent();
+                network.denseNetwork.gradientDescent();
             }
         }
 

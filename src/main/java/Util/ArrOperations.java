@@ -246,7 +246,7 @@ public class ArrOperations {
                 }
             }
         }
-        return in;
+        return out;
     }
 
     public static float[][][] unpad(float[][][] in, int[] padding) {
@@ -261,7 +261,7 @@ public class ArrOperations {
                 }
             }
         }
-        return in;
+        return out;
     }
 
 

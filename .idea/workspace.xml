@@ -3,19 +3,16 @@
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/main/java/Kernels/MatrixVectorKernel.java" line="94" />
     <bookmark url="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java" line="17" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java" line="25" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8505bc8e-fdb7-46e2-96e6-9cfe50d2d317" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java" afterPath="$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Reader/ImageReader.java" afterPath="$PROJECT_DIR$/src/main/java/Reader/ImageReader.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Run/RunCNN.java" afterPath="$PROJECT_DIR$/src/main/java/Run/RunCNN.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" afterPath="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Util/ArrOperations.java" afterPath="$PROJECT_DIR$/src/main/java/Util/ArrOperations.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" afterPath="$PROJECT_DIR$/target/classes/Run/RunFullyConnected.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Util/arrOperations.class" afterPath="$PROJECT_DIR$/target/classes/Util/arrOperations.class" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FullyConnectedTest.java" afterPath="$PROJECT_DIR$/src/test/java/FullyConnectedTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -26,23 +23,28 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/machine_learning$RunCNN.coverage" NAME="RunCNN Coverage Results" MODIFIED="1532744535697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Run.*</FILTER>
+    </SUITE>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RunFullyConnected.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="187">
+              <caret line="28" column="95" lean-forward="false" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="95" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConvNetwork.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ConvNetwork.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="129" column="21" lean-forward="true" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
+            <state relative-caret-position="355">
+              <caret line="137" column="0" lean-forward="true" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -51,8 +53,8 @@
       <file leaf-file-name="RunCNN.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="550">
+              <caret line="51" column="7" lean-forward="true" selection-start-line="51" selection-start-column="7" selection-end-line="52" selection-end-column="96" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,11 +62,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="FullyConnectedTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/FullyConnectedTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="553">
+              <caret line="49" column="67" lean-forward="false" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ArrOperations.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Util/ArrOperations.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+            <state relative-caret-position="175">
+              <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -73,8 +85,8 @@
       <file leaf-file-name="DenseNetwork.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1319">
-              <caret line="163" column="0" lean-forward="true" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+            <state relative-caret-position="294">
+              <caret line="327" column="5" lean-forward="true" selection-start-line="327" selection-start-column="5" selection-end-line="327" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,10 +105,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>momentum</find>
-      <find>Double</find>
-      <find>d</find>
-      <find>toimag</find>
       <find>isimage</find>
       <find>setdrop</find>
       <find>setdr</find>
@@ -115,14 +123,18 @@
       <find>ArrayList&lt;ArrayList&lt;Float&gt;&gt;</find>
       <find>toweight = new f</find>
       <find>test</find>
-      <find>initializewei</find>
       <find>sigmoid</find>
       <find>pad</find>
-      <find>test</find>
       <find>matrix</find>
       <find>matrixmatr</find>
       <find>getder</find>
       <find>set</find>
+      <find>densenet</find>
+      <find>initializewei</find>
+      <find>initialize</find>
+      <find>unpad</find>
+      <find>predictou</find>
+      <find>check</find>
     </findStrings>
     <replaceStrings>
       <replace>localResult</replace>
@@ -177,14 +189,14 @@
         <option value="$PROJECT_DIR$/src/main/java/Util/ImageReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/LoadNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/NetworkSaver.java" />
-        <option value="$PROJECT_DIR$/src/test/java/FullyConnectedTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/Runner/DenseRunner.java" />
         <option value="$PROJECT_DIR$/src/main/java/Reader/ImageReader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util/ArrOperations.java" />
         <option value="$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java" />
         <option value="$PROJECT_DIR$/src/main/java/Run/RunCNN.java" />
+        <option value="$PROJECT_DIR$/src/test/java/FullyConnectedTest.java" />
       </list>
     </option>
   </component>
@@ -331,8 +343,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Default">
           <expand>
@@ -354,6 +364,8 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -381,32 +393,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RunCNN">
+  <component name="RunManager" selected="Application.RunFullyConnected">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <module />
-    </configuration>
-    <configuration name="MultiplicationKernel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="Kernels.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="Kernels.MultiplicationKernel" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="machine-learning" />
-      <envs />
     </configuration>
     <configuration name="RunCNN" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
@@ -500,6 +493,26 @@
       <envs />
       <patterns />
     </configuration>
+    <configuration name="FullyConnectedTest.testDerivatives" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="machine-learning" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="FullyConnectedTest" />
+      <option name="METHOD_NAME" value="testDerivatives" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -563,17 +576,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.RunFullyConnected" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.AparapiTest" />
-      <item index="2" class="java.lang.String" itemvalue="Application.MultiplicationKernel" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.AparapiTest.arrayVsArrayList" />
-      <item index="4" class="java.lang.String" itemvalue="Application.RunCNN" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AparapiTest.arrayVsArrayList" />
+      <item index="3" class="java.lang.String" itemvalue="Application.RunCNN" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.FullyConnectedTest.testDerivatives" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.RunCNN" />
-        <item index="1" class="java.lang.String" itemvalue="Application.RunFullyConnected" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AparapiTest.arrayVsArrayList" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.AparapiTest" />
-        <item index="4" class="java.lang.String" itemvalue="Application.MultiplicationKernel" />
+        <item index="0" class="java.lang.String" itemvalue="Application.RunFullyConnected" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.FullyConnectedTest.testDerivatives" />
+        <item index="2" class="java.lang.String" itemvalue="Application.RunCNN" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AparapiTest.arrayVsArrayList" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.AparapiTest" />
       </list>
     </recent_temporary>
   </component>
@@ -594,18 +607,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AparapiTest - 2018.06.20 at 15h 38m 46s.xml">
-      <configuration name="AparapiTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AparapiTest - 2018.06.20 at 16h 20m 26s.xml">
-      <configuration name="AparapiTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AparapiTest - 2018.06.20 at 16h 21m 43s.xml">
-      <configuration name="AparapiTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AparapiTest - 2018.06.20 at 16h 21m 53s.xml">
-      <configuration name="AparapiTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="AparapiTest - 2018.06.20 at 16h 25m 54s.xml">
       <configuration name="AparapiTest" configurationId="JUnit" />
     </history-entry>
@@ -623,6 +624,18 @@
     </history-entry>
     <history-entry file="AparapiTest_arrayVsArrayList - 2018.07.03 at 10h 32m 16s.xml">
       <configuration name="AparapiTest.arrayVsArrayList" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FullyConnectedTest_testDerivatives - 2018.07.29 at 11h 04m 51s.xml">
+      <configuration name="FullyConnectedTest.testDerivatives" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FullyConnectedTest_testDerivatives - 2018.07.29 at 11h 05m 27s.xml">
+      <configuration name="FullyConnectedTest.testDerivatives" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FullyConnectedTest_testDerivatives - 2018.07.29 at 11h 06m 46s.xml">
+      <configuration name="FullyConnectedTest.testDerivatives" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FullyConnectedTest_testDerivatives - 2018.07.29 at 11h 08m 09s.xml">
+      <configuration name="FullyConnectedTest.testDerivatives" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -646,24 +659,24 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5042644" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31060606" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31060606" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.104477614" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10554371" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3982684" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3982684" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -766,27 +779,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java</url>
-          <line>66</line>
+          <line>477</line>
           <properties />
-          <option name="timeStamp" value="401" />
+          <option name="timeStamp" value="480" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java</url>
-          <line>105</line>
+          <line>103</line>
           <properties />
-          <option name="timeStamp" value="405" />
+          <option name="timeStamp" value="494" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java</url>
-          <line>136</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java</url>
+          <line>24</line>
           <properties />
-          <option name="timeStamp" value="406" />
+          <option name="timeStamp" value="496" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="407" />
+      <option name="time" value="497" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -844,6 +857,21 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>inputToFullyConnected</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>derivativeErrorWithRespectToWeight[1][0][0][0][0]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>derivativeErrorWithRespectToInputToActivation[a + 1][b][h][q]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>getDerivativeFromAveragePooling(derivativeErrorWithRespectToInputsToFullyConnected)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -871,22 +899,6 @@
       <expression>
         <expression-string>in1Copy[150000]</expression-string>
         <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>in1[1000]</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>localResult[1500]</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>localResult[1500]</expression-string>
-        <language-id>JAVA</language-id>
-        <custom-info>double[],Kernels.DotProductKernel</custom-info>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
@@ -1103,14 +1115,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/FullyConnectedTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="40" column="16" lean-forward="false" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Util/NetworkSaver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1133,18 +1137,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ArrOperations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Reader/ImageReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="83" column="31" lean-forward="false" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
+        <state relative-caret-position="203">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="137" column="0" lean-forward="true" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="51" column="7" lean-forward="true" selection-start-line="51" selection-start-column="7" selection-end-line="52" selection-end-column="96" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/FullyConnectedTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="49" column="67" lean-forward="false" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Network/DenseNetwork.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1319">
-          <caret line="163" column="0" lean-forward="true" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+        <state relative-caret-position="294">
+          <caret line="327" column="5" lean-forward="true" selection-start-line="327" selection-start-column="5" selection-end-line="327" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1153,34 +1191,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunFullyConnected.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util/ArrOperations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Run/RunCNN.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Network/ConvNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="129" column="21" lean-forward="true" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
+        <state relative-caret-position="187">
+          <caret line="28" column="95" lean-forward="false" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="95" />
           <folding />
         </state>
       </provider>
