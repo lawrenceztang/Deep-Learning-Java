@@ -144,7 +144,7 @@ public class ArrOperations {
     public static float[] getDerivativeFromMSE(float[] trueOutput, float[] predictedOutput) {
         float[] derivatives = new float[trueOutput.length];
         for (int i = 0; i < trueOutput.length; i++) {
-            derivatives[i] = (predictedOutput[i] - trueOutput[i]) * 2;
+            derivatives[i] = (predictedOutput[i] - trueOutput[i]) * 2 / trueOutput.length;
         }
         return derivatives;
     }

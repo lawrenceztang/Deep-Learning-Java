@@ -7,7 +7,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class FullyConnectedTest {
-    String path = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\training";
+    String path = "C:\\Users\\Anonymous\\Pictures\\Numbers\\mnist_png\\testing";
     float[][] trainingData;
     float[][] trainingDataOutputs;
     DenseNetwork network;
@@ -26,7 +26,7 @@ public class FullyConnectedTest {
         trainingDataOutputs = reader.oneHotOutputs;
 
 
-        network = new DenseNetwork(new int[]{2352, 20, 10}, new float[]{0, .05f, .0025f}, DenseNetwork.UPDATE_NESTEROV, .9f, 1);
+        network = new DenseNetwork(new int[]{2352, 20, 10}, new float[]{0, .05f, .0025f}, DenseNetwork.UPDATE_SGD, .9f, 1);
 
         int batchSize = 1;
         for (int p = 0; p < 1; p++) {
@@ -50,6 +50,9 @@ public class FullyConnectedTest {
                                 System.out.println("Test Failed!");
                                 System.out.println(network.derivativesErrorWithRespectToWeights[a][q][v] / 10);
                                 System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], a, q, v));
+                            }
+                            else {
+                                System.out.println("Test Succeeded!");
                             }
                         }
                     }

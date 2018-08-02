@@ -79,7 +79,7 @@ public class ConvNetwork {
         derivativeErrorWithRespectToInputToActivation = initializeActivationInputs();
 
         float[][] inputToFullyConnected = new float[1][];
-        inputToFullyConnected[0] = averagePooling(outputsInLayers[outputsInLayers.length - 1]);
+        inputToFullyConnected[0] = ArrOperations.convert3Dto1D(outputsInLayers[outputsInLayers.length - 1]);
 
         denseNetwork.getDerivativeOfErrorWithRespectToWeights(inputToFullyConnected, outputs);
 
@@ -87,7 +87,6 @@ public class ConvNetwork {
         initializeWeightDerivatives();
 
         for (int u = 0; u < denseNetwork.numInputs; u++) {
-            derivativeErrorWithRespectToInputsToFullyConnected[u] = 0f;
             for (int i = 0; i < denseNetwork.derivativesErrorWithRespectToInputsToActivation[1].length; i++) {
                 derivativeErrorWithRespectToInputsToFullyConnected[u] += denseNetwork.derivativesErrorWithRespectToInputsToActivation[1][i] * denseNetwork.weights[1][i][u];
             }
@@ -96,7 +95,7 @@ public class ConvNetwork {
         int last = derivativeErrorWithRespectToInputToActivation.length - 1;
 
         //must be put through activation
-        derivativeErrorWithRespectToInputToActivation[last] = ArrOperations.matrixMatrixProduct(getDerivativeFromAveragePooling(derivativeErrorWithRespectToInputsToFullyConnected), ArrOperations.getDerivativeFromSigmoid(outputsInLayers[last]));
+        derivativeErrorWithRespectToInputToActivation[last] = ArrOperations.matrixMatrixProduct(ArrOperations.convert1Dto3D(derivativeErrorWithRespectToInputsToFullyConnected), ArrOperations.getDerivativeFromSigmoid(outputsInLayers[last]));
         float[][][] outputAfterPoolings = ArrOperations.pad(maxPooling(outputsInLayers[last - 1], poolingStride[last - 1]), padding[last]);
 
         for (int b = 0; b < derivativeErrorWithRespectToInputToActivation[last].length; b++) {
@@ -119,7 +118,6 @@ public class ConvNetwork {
         for (int a = numLayers - 2; a > 0; a--) {
 
             //undo convolution
-            derivativeErrorWithRespectToInputToActivation[a] = initializeOutputs(numberOfFilters[a], outputsInLayers[a][0].length + padding[a + 1][0], outputsInLayers[a][0][0].length + padding[a + 1][1]);
             for (int b = 0; b < numberOfFilters[a + 1]; b++) {
                 for (int x = 0; x < outputsInLayers[a].length; x++) {
                     for (int h = 0; h < derivativeErrorWithRespectToInputToActivation[a + 1][b].length; h++) {
@@ -136,8 +134,6 @@ public class ConvNetwork {
                 }
             }
 
-            float[][][] outputAfterPooling = ArrOperations.pad(maxPooling(outputsInLayers[a - 1], poolingStride[a - 1]), padding[a]);
-
             //undo padding
             derivativeErrorWithRespectToInputToActivation[a] = ArrOperations.unpad(derivativeErrorWithRespectToInputToActivation[a], padding[a + 1]);
 
@@ -146,6 +142,8 @@ public class ConvNetwork {
 
             //undo sigmoid
             derivativeErrorWithRespectToInputToActivation[a] = ArrOperations.matrixMatrixProduct(derivativeErrorWithRespectToInputToActivation[a], ArrOperations.getDerivativeFromSigmoid(outputsInLayers[a]));
+
+            float[][][] outputAfterPooling = ArrOperations.pad(maxPooling(outputsInLayers[a - 1], poolingStride[a - 1]), padding[a]);
 
             for (int b = 0; b < derivativeErrorWithRespectToInputToActivation[a].length; b++) {
                 for (int h = 0; h < derivativeErrorWithRespectToInputToActivation[a][b].length; h++) {
@@ -197,7 +195,7 @@ public class ConvNetwork {
             layerInputs = maxPooling(layerOutputs, poolingStride[e]);
         }
 
-        float[] inputToFullyConnected = averagePooling(layerInputs);
+        float[] inputToFullyConnected = ArrOperations.convert3Dto1D(layerInputs);
         return denseNetwork.predictOutput(inputToFullyConnected);
     }
 
@@ -230,12 +228,9 @@ public class ConvNetwork {
                     }
                 }
             }
-            if (e != numLayers - 1) {
-                outputsInLayers[e] = maxPooling(layerOutputs, poolingStride[e]);
-            } else {
-                outputsInLayers[e] = layerOutputs;
-            }
-            layerInputs = outputsInLayers[e];
+            outputsInLayers[e] = layerOutputs;
+
+            layerInputs = maxPooling(outputsInLayers[e], poolingStride[e]);
         }
 
     }
@@ -316,13 +311,13 @@ public class ConvNetwork {
     public float[][][][] initializeActivationInputs() {
 
         float[][][][] out = new float[outputsInLayers.length][][][];
-        for (int i = 0; i < outputsInLayers.length; i++) {
+        for (int i = 0; i < outputsInLayers.length - 1; i++) {
             out[i] = new float[outputsInLayers[i].length][][];
             for (int u = 0; u < outputsInLayers[i].length; u++) {
-                out[i][u] = new float[outputsInLayers[i][u].length][];
-                for (int y = 0; y < outputsInLayers[i][u].length; y++) {
-                    out[i][u][y] = new float[outputsInLayers[i][u][y].length];
-                    for (int a = 0; a < outputsInLayers[i][u][y].length; a++) {
+                out[i][u] = new float[outputsInLayers[i][u].length / poolingStride[i] + padding[i + 1][0]][];
+                for (int y = 0; y < out[i][u].length; y++) {
+                    out[i][u][y] = new float[outputsInLayers[i][u][0].length / poolingStride[i] + padding[i + 1][1]];
+                    for (int a = 0; a < out[i][u][y].length; a++) {
                         out[i][u][y][a] = 0f;
                     }
                 }
@@ -346,7 +341,7 @@ public class ConvNetwork {
     }
 
     public float[][][] maxPooling(float[][][] in, int stride) {
-        if (stride == 0) {
+        if (stride == 1) {
             return in;
         }
         float[][][] out = new float[in.length][][];
@@ -444,7 +439,6 @@ public class ConvNetwork {
     int aPoolWidth;
     int aPoolLength;
 
-    //used for input to dense network
     public float[] averagePooling(float[][][] in) {
         float[] out = new float[in.length];
         for (int p = 0; p < in.length; p++) {
@@ -479,18 +473,10 @@ public class ConvNetwork {
         weights[layer][filter][z][x][y] -= intervals;
         float losss = ArrOperations.meanSquaredError(predictOutput(in), out);
         weights[layer][filter][z][x][y] += intervals * 2;
-        float outputs = (ArrOperations.meanSquaredError(predictOutput(in), out) - losss) / intervals / 2;
+        float output = (ArrOperations.meanSquaredError(predictOutput(in), out) - losss) / intervals / 2;
         weights[layer][filter][z][x][y] -= intervals;
 
-        if (outputs == 0) {
-            float interval = .0001f;
-            weights[layer][filter][z][x][y] -= interval;
-            float loss = ArrOperations.meanSquaredError(predictOutput(in), out);
-            weights[layer][filter][z][x][y] += interval * 2;
-            float output = (ArrOperations.meanSquaredError(predictOutput(in), out) - loss) / interval / 2;
-            weights[layer][filter][z][x][y] -= interval;
-        }
-        return outputs;
+        return output;
     }
 
 

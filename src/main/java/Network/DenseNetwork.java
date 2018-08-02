@@ -266,6 +266,9 @@ public class DenseNetwork implements Serializable {
                 }
             }
         }
+        else {
+
+        }
     }
 
     //tests on dataset, returns percentage accurate
@@ -318,7 +321,7 @@ public class DenseNetwork implements Serializable {
 
     //doesnt work if dropout is used
     public float derivativeOfWeightCheck(float[] in, float[] out, int layer, int node, int previousLayerNode) throws Exception {
-        float interval = .000001f;
+        float interval = .0001f;
         weights[layer][node][previousLayerNode] -= interval;
         float loss = ArrOperations.meanSquaredError(predictOutput(in), out);
         weights[layer][node][previousLayerNode] += interval * 2;

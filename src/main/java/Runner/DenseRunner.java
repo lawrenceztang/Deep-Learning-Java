@@ -72,7 +72,7 @@ public class DenseRunner {
         }
 
 
-        network = new DenseNetwork(layers, learningRate, DenseNetwork.UPDATE_NESTEROV, momentum, dropoutProbability);
+        network = new DenseNetwork(layers, learningRate, DenseNetwork.UPDATE_SGD, momentum, dropoutProbability);
 
         long time = System.currentTimeMillis();
 
@@ -100,6 +100,8 @@ public class DenseRunner {
                 for (int z = 1; z < network.layers; z++) {
                     averageDerivatives[z] += Math.abs(network.derivativesErrorWithRespectToWeights[z][0][0]);
                 }
+                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 1, 0, 0));
+                System.out.println(network.derivativesErrorWithRespectToWeights[1][0][0]);
 
                 network.gradientDescent();
             }
