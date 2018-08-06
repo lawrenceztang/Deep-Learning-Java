@@ -1,5 +1,6 @@
 package Network;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -73,7 +74,7 @@ public class ConvNetwork {
     }
 
     //i think backprop is correctly done
-    public void getGradientsWeightsWithRespectToError(float[][][][] inputs, float[][] outputs) throws Exception {
+    public void getDerivativeOfWeights(float[][][][] inputs, float[][] outputs) throws Exception {
 
         forwardPass(inputs[0]);
         derivativeErrorWithRespectToInputToActivation = initializeActivationInputs();
@@ -477,6 +478,83 @@ public class ConvNetwork {
         weights[layer][filter][z][x][y] -= intervals;
 
         return output;
+    }
+
+    public BufferedImage visualizeWeights(int layer, int filterNum, int z) {
+        return ArrOperations.convertArrayToImage(weights[layer][filterNum][z]);
+    }
+
+    public class DeepDream {
+        public float[][][] image;
+        float[] derivativeErrorWithRespectToInputs;
+
+        float learningRate = 1;
+        float max = -9999;
+        float min = 9999;
+
+        public DeepDream(float[][][] image, float learningRate) {
+
+            this.image = ArrOperations.makeCopy(image);
+            this.learningRate = learningRate;
+
+
+            for (int i = 0; i < image.length; i++) {
+                for(int d = 0; d < image[i].length; d++) {
+                    for(int u = 0; u < image[i][d].length; u++) {
+                        if (image[i][d][u] > max) {
+                            max = image[i][d][u];
+                        }
+                        if (image[i][d][u] < min) {
+                            min = image[i][d][u];
+                        }
+                    }
+                }
+            }
+        }
+
+        public void updateImage(int desiredOutput) throws Exception {
+
+            derivativeErrorWithRespectToInputs = new float[image.length];
+            for (int i = 0; i < image.length; i++) {
+                derivativeErrorWithRespectToInputs[i] = 0f;
+            }
+
+            float[] outputs = new float[ConvNetwork.this.denseNetwork.numOutputs];
+            for (int i = 0; i < outputs.length; i++) {
+                if (i == desiredOutput) {
+                    outputs[i] = 1f;
+                } else {
+                    outputs[i] = 0f;
+                }
+            }
+            float[][][][] inputsToNetwork = new float[1][][][];
+            inputsToNetwork[0] = image;
+
+            float[][] outputsOfNetwork = new float[1][];
+            outputsOfNetwork[0] = outputs;
+
+
+            ConvNetwork.this.getDerivativeOfWeights(inputsToNetwork, outputsOfNetwork);
+
+            for (int b = 0; b < numberOfFilters[1]; b++) {
+                for (int x = 0; x < outputsInLayers[0].length; x++) {
+                    for (int h = 0; h < derivativeErrorWithRespectToInputToActivation[1][b].length; h++) {
+                        for (int q = 0; q < derivativeErrorWithRespectToInputToActivation[1][b][h].length; q++) {
+
+                            for (int w = 0; w < filterSizes[1]; w++) {
+                                for (int y = 0; y < filterSizes[1]; y++) {
+                                    image[x][h * strideSizes[1] + w][q * strideSizes[1] + y] -= derivativeErrorWithRespectToInputToActivation[1][b][h][q] * weights[1][b][x][w][y] * learningRate;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            image = ArrOperations.keepInRange(image, 0, 256);
+
+        }
     }
 
 

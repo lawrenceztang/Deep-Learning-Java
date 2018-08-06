@@ -5,8 +5,11 @@ import com.aparapi.Range;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
 
 public class ArrOperations {
 
@@ -37,13 +40,13 @@ public class ArrOperations {
     }
 
     //elementwise product
-    public static float[][][] matrixMatrixProduct (float[][][] matrix, float matrix1[][][]) {
+    public static float[][][] matrixMatrixProduct(float[][][] matrix, float matrix1[][][]) {
         float[][][] out = new float[matrix.length][][];
-        for(int i = 0; i < out.length; i++) {
+        for (int i = 0; i < out.length; i++) {
             out[i] = new float[matrix[i].length][];
-            for(int u = 0; u < out[i].length; u++) {
+            for (int u = 0; u < out[i].length; u++) {
                 out[i][u] = new float[matrix[i][u].length];
-                for(int e = 0; e < out[i][u].length; e++) {
+                for (int e = 0; e < out[i][u].length; e++) {
                     out[i][u][e] = matrix[i][u][e] * matrix1[i][u][e];
                 }
             }
@@ -161,6 +164,18 @@ public class ArrOperations {
         return out;
     }
 
+    public static float[] softmax(float[] in, int starting, int ending) {
+        float sum = 0;
+        for (int i = starting; i < ending; i++) {
+            sum += Math.pow(e, in[i]);
+        }
+        float[] out = new float[in.length];
+        for (int i = starting; i < ending; i++) {
+            out[i] = (float) Math.pow(e, in[i]) / sum;
+        }
+        return out;
+    }
+
     public static float[] getDerivativeFromSoftmax(float[] outputsOfSoftmax, float[] derivativeErrorWithRespectToOutputsOfSoftmax) {
         float[] out = new float[outputsOfSoftmax.length];
         for (int i = 0; i < outputsOfSoftmax.length; i++) {
@@ -169,6 +184,21 @@ public class ArrOperations {
 
         for (int i = 0; i < outputsOfSoftmax.length; i++) {
             for (int j = 0; j < outputsOfSoftmax.length; j++) {
+                if (j == i) {
+                    out[j] = out[j] + outputsOfSoftmax[i] * (1 - outputsOfSoftmax[j]) * derivativeErrorWithRespectToOutputsOfSoftmax[i];
+                } else {
+                    out[j] = out[j] - outputsOfSoftmax[i] * outputsOfSoftmax[j] * derivativeErrorWithRespectToOutputsOfSoftmax[i];
+                }
+            }
+        }
+        return out;
+    }
+
+    public static float[] getDerivativeFromSoftmax(float[] outputsOfSoftmax, float[] derivativeErrorWithRespectToOutputsOfSoftmax, int start, int end) {
+        float[] out = new float[outputsOfSoftmax.length];
+
+        for (int i = start; i < end; i++) {
+            for (int j = start; j < end; j++) {
                 if (j == i) {
                     out[j] = out[j] + outputsOfSoftmax[i] * (1 - outputsOfSoftmax[j]) * derivativeErrorWithRespectToOutputsOfSoftmax[i];
                 } else {
@@ -277,7 +307,7 @@ public class ArrOperations {
         return max;
     }
 
-    public static BufferedImage convert1dArrayToImage(float[] in, int width, int height) {
+    public static BufferedImage convertArrayToImage(float[] in, int width, int height) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < width; i++) {
@@ -288,6 +318,74 @@ public class ArrOperations {
             }
         }
 
+        return out;
+    }
+
+    public static BufferedImage convertArrayToImage(float[][][] in) {
+        BufferedImage image = new BufferedImage(in.length, in[0].length, TYPE_BYTE_GRAY);
+
+        for (int u = 0; u < in[0].length; u++) {
+            for (int a = 0; a < in[0][u].length; a++) {
+                image.setRGB(u, a, new Color(in[u][a][0], in[u][a][1], in[u][a][2]).getRGB());
+            }
+        }
+        return image;
+    }
+
+
+    public static BufferedImage convertArrayToImage(float[][] in) {
+        BufferedImage out = new BufferedImage(in.length, in[0].length, TYPE_BYTE_GRAY);
+
+
+        float min = in[0][0];
+        float max = in[0][0];
+        for (int i = 0; i < in.length; i++) {
+            for (int u = 0; u < in[i].length; u++) {
+                if (in[i][u] < min) {
+                    min = in[i][u];
+                }
+                if (in[i][u] > max) {
+                    max = in[i][u];
+                }
+            }
+        }
+
+        for (int i = 0; i < in.length; i++) {
+            for (int p = 0; p < in[i].length; p++) {
+                out.setRGB(i, p, (int) ((in[i][p] - min) * 256 / max));
+            }
+        }
+
+        return out;
+    }
+
+    public static float[][][] keepInRange(float[][][] in, int min, int max) {
+        for (int i = 0; i < in.length; i++) {
+            for (int u = 0; u < in[i].length; u++) {
+                for (int a = 0; a < in[i][u].length; a++) {
+                    if (in[i][u][a] > max) {
+                        in[i][u][a] = max;
+                    } else if (in[i][u][a] < min) {
+                        in[i][u][a] = min;
+                    }
+                }
+            }
+        }
+        return in;
+    }
+
+
+    public static float[][][] makeCopy(float[][][] in) {
+        float[][][] out = new float[in.length][][];
+        for (int i = 0; i < in.length; i++) {
+            out[i] = new float[in[i].length][];
+            for (int u = 0; u < in[i].length; u++) {
+                out[i][u] = new float[in[i][u].length];
+                for (int a = 0; a < in[i][u].length; a++) {
+                    out[i][u][a] = in[i][u][a];
+                }
+            }
+        }
         return out;
     }
 
@@ -342,5 +440,19 @@ public class ArrOperations {
     public static float gaussianRandomVariable(float standardDeviation, float center) {
         Random rand = new Random();
         return standardDeviation * (float) (Math.sqrt(-2 * Math.log(rand.nextFloat())) * Math.cos(2 * pi * rand.nextFloat())) + center;
+    }
+
+    public static float[] getValuesFromCSVString(String in, int num) {
+        int previousComma = 0;
+        float[] out = new float[num];
+        int nextReference = 0;
+        for (int i = 0; i < in.length(); i++) {
+            if (in.charAt(i) == ',' || in.charAt(i) == '-') {
+                out[nextReference] = Float.parseFloat(in.substring(previousComma, i));
+                nextReference++;
+                previousComma = i + 1;
+            }
+        }
+        return out;
     }
 }

@@ -1,6 +1,5 @@
 import Network.ConvNetwork;
 import Network.DenseNetwork;
-import Reader.ImageReader;
 
 public class CNNTest {
     public static void main(String[] args) throws Exception{
@@ -35,7 +34,7 @@ public class CNNTest {
                     inputs[q] = trainingData[i + q];
                     outputs[q] = trainingDataOutputs[i + q];
                 }
-                network.getGradientsWeightsWithRespectToError(inputs, outputs);
+                network.getDerivativeOfWeights(inputs, outputs);
 
                 System.out.println("Derivatives: ");
                 System.out.println(network.derivativeCheck(inputs[0], outputs[0], 1, 0, 0, 0, 0));

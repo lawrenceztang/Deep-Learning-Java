@@ -1,12 +1,12 @@
-package Network;
+package ClashRoyale;
+
+import Util.ArrOperations;
 
 import java.io.Serializable;
 import java.util.Random;
 
-import Util.*;
 
-
-public class DenseNetwork implements Serializable {
+public class ClashDenseNetwork implements Serializable {
     Random rand;
 
     //constants
@@ -39,7 +39,7 @@ public class DenseNetwork implements Serializable {
     float[][] derivativesErrorWithRespectToInputsToActivation;
     float[][][] weightsAfterDropout;
 
-    public DenseNetwork(int[] nodesPerLayer, float[] learningRate, int updateRule, float momentum, float dropoutProbability) {
+    public ClashDenseNetwork(int[] nodesPerLayer, float[] learningRate, int updateRule, float momentum, float dropoutProbability) {
         rand = new Random();
         outputsInAllLayers = new float[nodesPerLayer.length][];
         weightsAfterDropout = new float[nodesPerLayer.length][][];
@@ -77,6 +77,12 @@ public class DenseNetwork implements Serializable {
         weightsAfterDropout = weights;
     }
 
+      /*File name format:
+    All in the same folder
+        notClick,placeCard,selectCard,xCoord,yCoord,select1,select2,select3,select4
+        File number separated by a "-"
+     */
+
     //todo: gradients are 10 times larger than actually in last layer
     public void getDerivativeOfErrorWithRespectToWeights(float[][] inputs, float[][] outputs) throws Exception {
         //no need to worry about dropped out weights because they automatically have 0 derivative so they arent updated in gradient descent
@@ -89,9 +95,34 @@ public class DenseNetwork implements Serializable {
         for (int w = 0; w < inputs.length; w++) {
             derivativesErrorWithRespectToInputsToActivation = getNewDerivativeBiasesAndOutputs();
             forwardPass(inputs[w]);
+
+            if (outputs[0][0] == 1) {
+                for (int i = 3; i < outputs.length; i++) {
+                    outputsInAllLayers[layers - 1][i] = outputs[0][i];
+                }
+            } else if (outputs[0][1] == 1) {
+                for (int i = 5; i < outputs.length; i++) {
+                    outputsInAllLayers[layers - 1][i] = outputs[0][i];
+                }
+            } else if (outputs[0][2] == 1) {
+                outputsInAllLayers[layers - 1][3] = outputs[0][3];
+                outputsInAllLayers[layers - 1][4] = outputs[0][4];
+            }
+
             for (int p = layers - 1; p > 0; p--) {
                 if (p == layers - 1) {
-                    derivativesErrorWithRespectToInputsToActivation[p] = ArrOperations.getDerivativeFromSoftmax(outputsInAllLayers[p], ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1]));
+
+                    float[] temp1 = ArrOperations.getDerivativeFromSoftmax(outputsInAllLayers[p], ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1]), 0, 3);
+                    float[] temp2 = ArrOperations.getDerivativeFromSoftmax(outputsInAllLayers[p], ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1]), 5, outputs[0].length);
+                    for (int j = 0; j < 3; j++) {
+                        derivativesErrorWithRespectToInputsToActivation[p][j] = temp1[j];
+                    }
+                    for(int j = 5; j < outputs[0].length; j++) {
+                        derivativesErrorWithRespectToInputsToActivation[p][j] = temp2[j];
+                    }
+                    derivativesErrorWithRespectToInputsToActivation[p][3] = ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1])[3];
+                    derivativesErrorWithRespectToInputsToActivation[p][4] = ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1])[4];
+
                     for (int i = 0; i < numOutputs; i++) {
                         for (int u = 0; u < nodesPerLayer[p - 1]; u++) {
                             derivativesErrorWithRespectToWeights[p][i][u] = derivativesErrorWithRespectToWeights[p][i][u] + derivativesErrorWithRespectToInputsToActivation[p][i] * outputsInAllLayers[p - 1][u] / inputs.length;
@@ -125,12 +156,23 @@ public class DenseNetwork implements Serializable {
 
         for (int i = 0; i < layers; i++) {
             if (i == layers - 1) {
+
                 float[] temp = new float[numOutputs];
                 for (int u = 0; u < numOutputs; u++) {
                     //outputs = numOutputs in last layer
                     temp[u] = ArrOperations.dotProductNoGPU(weightsAfterDropout[i][u], in) + biases[i][u];
                 }
-                temp = ArrOperations.softmax(temp);
+
+                float[] temp1 = ArrOperations.softmax(temp, 0, 3);
+                float[] temp2 = ArrOperations.softmax(temp, 5, temp.length);
+                for (int j = 0; j < 3; j++) {
+                    temp[j] = temp1[j];
+                }
+                for (int j = 5; j < temp.length; j++) {
+                    temp[j] = temp2[j];
+                }
+
+
                 outputsInHiddenLayersTemp[i] = temp;
                 in = temp;
             } else if (i == 0) {
@@ -160,7 +202,17 @@ public class DenseNetwork implements Serializable {
                     //outputs = numOutputs in last layer
                     temp[u] = ArrOperations.dotProductNoGPU(ArrOperations.vectorScalarProduct(weights[i][u], dropoutProbability), in) + biases[i][u];
                 }
-                in = ArrOperations.softmax(temp);
+
+                float[] temp1 = ArrOperations.softmax(temp, 0, 3);
+                float[] temp2 = ArrOperations.softmax(temp, 5, temp.length);
+                for (int j = 0; j < 3; j++) {
+                    temp[j] = temp1[j];
+                }
+                for (int j = 5; j < temp.length; j++) {
+                    temp[j] = temp2[j];
+                }
+                in = temp;
+
             } else if (i == 0) {
 
             } else {
@@ -265,8 +317,7 @@ public class DenseNetwork implements Serializable {
                     }
                 }
             }
-        }
-        else {
+        } else {
 
         }
     }
@@ -331,7 +382,7 @@ public class DenseNetwork implements Serializable {
     }
 
     public class DeepDream {
-        DenseNetwork network;
+        ClashDenseNetwork network;
         public float[] image;
         float[] derivativeErrorWithRespectToInputs;
 
@@ -339,7 +390,7 @@ public class DenseNetwork implements Serializable {
         float max = -9999;
         float min = 9999;
 
-        public DeepDream(DenseNetwork network, float[] image, float learningRate) {
+        public DeepDream(ClashDenseNetwork network, float[] image, float learningRate) {
             this.network = network;
             this.image = ArrOperations.makeCopy(image);
             this.learningRate = learningRate;
@@ -365,7 +416,7 @@ public class DenseNetwork implements Serializable {
             float[] outputs = new float[network.numOutputs];
             for (int i = 0; i < network.numOutputs; i++) {
                 if (i == desiredOutput) {
-                    outputs[i] = 1f;
+                    outputs[i] = 0f;
                 } else {
                     outputs[i] = 0f;
                 }

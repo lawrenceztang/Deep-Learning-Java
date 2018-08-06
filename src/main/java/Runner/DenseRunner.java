@@ -9,7 +9,6 @@ import Util.NetworkSaver;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
 //class that integrates reader and network and runs network for user - less customization, higher level architecture
@@ -120,8 +119,8 @@ public class DenseRunner {
             dream.updateImage(2);
         }
 
-        BufferedImage dreamedImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(dream.image), imageWidth, imageHeight);
-        BufferedImage previousImage = ArrOperations.convert1dArrayToImage(reader.unpreprocessExample(trainingData[0]), imageWidth, imageHeight);
+        BufferedImage dreamedImage = ArrOperations.convertArrayToImage(reader.unpreprocessExample(dream.image), imageWidth, imageHeight);
+        BufferedImage previousImage = ArrOperations.convertArrayToImage(reader.unpreprocessExample(trainingData[0]), imageWidth, imageHeight);
         System.out.println(network.predictOutput(dream.image));
         new DisplayImage(dreamedImage);
         new DisplayImage(previousImage);
