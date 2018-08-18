@@ -17,13 +17,13 @@ public class RunClashRoyaleBot {
     static float momentum = .9f;
     static float dropoutProbability = 1;
     static int batchSize = 1;
-    static int iterations = 10;
+    static int iterations = 100;
     static int imageWidth = 50;
-    static int epochs = 3;
+    static int epochs = 10;
 
     public static void main(String[] args) throws Exception{
 
-        learningRate = new float[]{0, .000005f, .00000025f};
+        learningRate = new float[]{0, .0000000004f, .00025f};
         layers = new int[]{3450, 200, 9};
 
         ImageReader reader = new ImageReader("C:\\Users\\Anonymous\\Pictures\\Clash_Royale\\Supervised_Bot");
@@ -32,7 +32,7 @@ public class RunClashRoyaleBot {
         trainingData = reader.preprocessTrainingSet(trainingData);
         float[][] trainingDataOutputs = reader.oneHotOutputs;
 
-        ClashDenseNetwork network = new ClashDenseNetwork(layers, learningRate, ClashDenseNetwork.UPDATE_MOMENTUM, momentum, dropoutProbability);
+        ClashDenseNetwork network = new ClashDenseNetwork(layers, learningRate, .0025f, ClashDenseNetwork.UPDATE_NESTEROV, momentum, dropoutProbability);
 
         long time = System.currentTimeMillis();
 
@@ -54,8 +54,11 @@ public class RunClashRoyaleBot {
                 for (int z = 1; z < network.layers; z++) {
                     averageDerivatives[z] += Math.abs(network.derivativesErrorWithRespectToWeights[z][0][0]);
                 }
-                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 1, 0, 0));
-                System.out.println(network.derivativesErrorWithRespectToWeights[1][0][0]);
+//                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 1, 0, 0));
+//                System.out.println(network.derivativesErrorWithRespectToWeights[1][0][0]);
+                if(i % 10 == 0) {
+                    System.out.println("Error at iteration " + i + ": " + network.testLoss(trainingData, trainingDataOutputs));
+                }
 
                 network.gradientDescent();
             }
@@ -89,7 +92,7 @@ public class RunClashRoyaleBot {
             float[] out = network.predictOutput(image);
             int num = getGreatest(Arrays.copyOfRange(out, 0, 3));
             if(num == 1) {
-                if(out[3] < screenTopx || out[3] > screenBottomx || out[4] < screenTopy || out[4] > screenBottomy) {
+                if(out[3] < 0 || out[3] > screenBottomx - screenTopx || out[4] < 0 || out[4] > screenBottomy - screenTopy) {
 
                 }
                 else {
@@ -113,7 +116,10 @@ public class RunClashRoyaleBot {
             else {
                 // do nothing
             }
-            System.out.println(out[0] + "," + out[1] + "," + out[2]);
+            System.out.println("");
+            for(int i = 0; i < out.length; i++) {
+                System.out.print(out[i] + ",");
+            }
         }
     }
 

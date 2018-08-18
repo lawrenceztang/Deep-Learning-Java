@@ -22,6 +22,8 @@ public class DenseRunner {
     public int[] layers;
     public float momentum = .9f;
     public float dropoutProbability = 1;
+    public int updateType = DenseNetwork.UPDATE_NESTEROV;
+    public float[][] learningSchedule;
 
     public int testingIterations = 1000;
 
@@ -55,23 +57,17 @@ public class DenseRunner {
         System.out.println();
     }
 
+    public void preTrain(float[] learningRate, int iterations, int batchSize, float noise) throws Exception{
+        float[][] trainingData2 = reader.get1dColorMatricesFromImages(iterations * batchSize, imageWidth);
+        trainingData2 = reader.preprocessTrainingSet(trainingData2);
+        network.initializeEncoders();
+        network.preTrain(trainingData2, learningRate, batchSize, noise);
+//        new DisplayImage(ArrOperations.convertArrayToImage(reader.unpreproccessExample(network.encoders[0].predictOutput(trainingData2[0])), 28, 28));
+    }
+
     public void train() throws Exception {
         System.out.println(System.getenv());
 
-        reader = new ImageReader(trainingDataPath);
-        if (isImage) {
-            trainingData = reader.get1dColorMatricesFromImages(batchSize * iterations, imageWidth);
-            reader.setPreprocessParameters(trainingData);
-            trainingData = reader.preprocessTrainingSet(trainingData);
-            trainingDataOutputs = reader.oneHotOutputs;
-        } else {
-            //it is a csv file
-            trainingData = new float[2][];
-            trainingDataOutputs = new float[2][];
-        }
-
-
-        network = new DenseNetwork(layers, learningRate, DenseNetwork.UPDATE_SGD, momentum, dropoutProbability);
 
         long time = System.currentTimeMillis();
 
@@ -81,9 +77,27 @@ public class DenseRunner {
         for (int p = 0; p < epochs; p++) {
             System.out.println("Epoch: " + p);
             for (int i = 0; i < trainingData.length; i += batchSize) {
+                if(i + batchSize > trainingData.length) {
+                    break;
+                }
 
                 if (i / batchSize % 1000 == 0) {
                     System.out.println("Iteration: " + i);
+                }
+
+                try {
+                    for (int z = 0; z < learningSchedule.length; z++) {
+                        if (p * iterations + i == learningSchedule[z][2]) {
+                            if (learningSchedule[z][0] != 0) {
+                                learningRate = ArrOperations.vectorScalarProduct(learningRate, learningSchedule[z][0]);
+                            }
+                            if (learningSchedule[z][1] != 0) {
+                                batchSize = (int) learningSchedule[z][1];
+                            }
+                        }
+                    }
+                }
+                catch (Exception e){
                 }
 
                 float[][] tempIn = new float[batchSize][];
@@ -94,13 +108,13 @@ public class DenseRunner {
                 }
 
                 network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
+//                System.out.println(network.derivativeOfWeightCheck(tempIn, tempOut, 1, 0, 0));
+//                System.out.println(network.derivativesErrorWithRespectToWeights[1][0][0]);
 
                 //difference in derivatives of different layers
                 for (int z = 1; z < network.layers; z++) {
                     averageDerivatives[z] += Math.abs(network.derivativesErrorWithRespectToWeights[z][0][0]);
                 }
-                System.out.println(network.derivativeOfWeightCheck(tempIn[0], tempOut[0], 1, 0, 0));
-                System.out.println(network.derivativesErrorWithRespectToWeights[1][0][0]);
 
                 network.gradientDescent();
             }
@@ -119,8 +133,8 @@ public class DenseRunner {
             dream.updateImage(2);
         }
 
-        BufferedImage dreamedImage = ArrOperations.convertArrayToImage(reader.unpreprocessExample(dream.image), imageWidth, imageHeight);
-        BufferedImage previousImage = ArrOperations.convertArrayToImage(reader.unpreprocessExample(trainingData[0]), imageWidth, imageHeight);
+        BufferedImage dreamedImage = ArrOperations.convertArrayToImage(reader.unpreproccessExample(dream.image), imageWidth, imageHeight);
+        BufferedImage previousImage = ArrOperations.convertArrayToImage(reader.unpreproccessExample(trainingData[0]), imageWidth, imageHeight);
         System.out.println(network.predictOutput(dream.image));
         new DisplayImage(dreamedImage);
         new DisplayImage(previousImage);
@@ -169,6 +183,31 @@ public class DenseRunner {
         }
     }
 
+    public DenseRunner initialize() throws Exception{
+        network = new DenseNetwork(layers, learningRate, DenseNetwork.UPDATE_NESTEROV, momentum, dropoutProbability);
+        reader = new ImageReader(trainingDataPath);
+
+        if (isImage) {
+            trainingData = reader.get1dColorMatricesFromImages(batchSize * iterations, imageWidth);
+            reader.setPreprocessParameters(trainingData);
+            trainingData = reader.preprocessTrainingSet(trainingData);
+            trainingDataOutputs = reader.oneHotOutputs;
+        } else {
+            //it is a csv file
+            trainingData = new float[2][];
+            trainingDataOutputs = new float[2][];
+        }
+
+        return this;
+    }
+
+
+    public DenseRunner setSchedule(float[][] multiplierBatchSizeIteration) {
+        //format: {{multiplier, batchSize, iteration}, {multiplier1, batchSize, iteration1}...}
+        this.learningSchedule = multiplierBatchSizeIteration;
+        return this;
+    }
+
     public DenseRunner setBatchSize(int batchSize) {
         this.batchSize = batchSize;
         return this;
@@ -176,6 +215,73 @@ public class DenseRunner {
 
     public DenseRunner setLearningRate(float[] learningRate) {
         this.learningRate = learningRate;
+        return this;
+    }
+
+    public DenseRunner setLearningRate() {
+        float maxOutput = trainingDataOutputs[0][0];
+        float minOutput = trainingDataOutputs[0][0];
+        for (int i = 0; i < 100; i++) {
+            for (int p = 0; p < trainingDataOutputs[i].length; p++) {
+                if (trainingDataOutputs[i][p] > maxOutput) {
+                    maxOutput = trainingDataOutputs[i][p];
+                } else if (trainingDataOutputs[i][p] < minOutput) {
+                    minOutput = trainingDataOutputs[i][p];
+                }
+            }
+        }
+        for (int i = 1; i < learningRate.length - 1; i++) {
+            learningRate[i] = (maxOutput - minOutput) / (float) Math.sqrt(layers[i - 1]);
+        }
+        return this;
+    }
+
+    public DenseRunner setLearningRateByTraining() throws Exception{
+        float[] averageDerivatives = new float[network.layers];
+        for (int p = 0; p < epochs; p++) {
+            System.out.println("Epoch: " + p);
+            for (int i = 0; i < trainingData.length; i += batchSize) {
+
+                if (i / batchSize % 1000 == 0) {
+                    System.out.println("Iteration: " + i);
+                }
+
+                float[][] tempIn = new float[batchSize][];
+                float[][] tempOut = new float[batchSize][];
+                for (int a = 0; a < batchSize; a++) {
+                    tempIn[a] = trainingData[i];
+                    tempOut[a] = trainingDataOutputs[i];
+                }
+
+                network.getDerivativeOfErrorWithRespectToWeights(tempIn, tempOut);
+
+                //difference in derivatives of different layers
+                for (int z = 1; z < network.layers; z++) {
+                    averageDerivatives[z] += Math.abs(network.derivativesErrorWithRespectToWeights[z][0][0]);
+                }
+
+                network.gradientDescent();
+            }
+        }
+        float sum = 0;
+        for(int i = 1; i < learningRate.length; i++) {
+            sum += learningRate[i];
+        }
+
+        float sum2 = 0;
+        for(int i = 1; i < learningRate.length; i++) {
+            learningRate[i] = 1 / network.nodesPerLayer[i - 1] / averageDerivatives[i];
+            sum2 += learningRate[i];
+        }
+
+        for(int i = 0; i < learningRate.length; i++) {
+           learningRate[i] = learningRate[i] / sum2 * sum;
+        }
+        return this;
+    }
+
+    public DenseRunner setUpdateType(int updateType) {
+        this.updateType = updateType;
         return this;
     }
 
@@ -204,7 +310,7 @@ public class DenseRunner {
         return this;
     }
 
-    public DenseRunner setTrainingDataPath(String trainingDataPath) {
+    public DenseRunner setTrainingDataPath(String trainingDataPath) throws Exception{
         this.trainingDataPath = trainingDataPath;
         return this;
     }

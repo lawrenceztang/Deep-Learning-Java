@@ -10,13 +10,11 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /*TODO list:
-finish CNN
-Nesterov
 ResNet
 maxout
+Clustering
 image transformations
 efficient GPU
-Unsupervised Preprocessing
 RNN
 LSTM
 L2 Norm
@@ -32,19 +30,23 @@ public class RunFullyConnected {
 
         DenseRunner runner = new DenseRunner()
                 .setBatchSize(1)
-                .setEpochs(1)
+                .setEpochs(10)
                 .setIsImage(true)
-                .setIterations(1000)
+                .setIterations(10000)
                 .setMomentum(.9f)
                 .setImageHeight(28)
                 .setImageWidth(28)
                 .setLayers(new int[]{2352, 200, 10})
-                .setTestingIterations(1000)
-                .setLearningRate(new float[]{0, .5f, .025f})
-                .setDropout(1)
+                .setTestingIterations(3000)
+                .setLearningRate(new float[]{0, .6f, .3f})
+//                .setSchedule(new float[][]{{0, 10, 70000}})
+                .setDropout(.5f)
+                .setUpdateType(DenseNetwork.UPDATE_NESTEROV)
                 .setTrainingDataPath(trainingDataPath)
-                .setTestingDataPath(testingDataPath);
+                .setTestingDataPath(testingDataPath)
+                .initialize();
 
+//        runner.preTrain(new float[]{0, .15f, 30f},10000, 1, .9f);
         runner.train();
         runner.test();
     }

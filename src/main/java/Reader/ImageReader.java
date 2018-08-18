@@ -105,7 +105,7 @@ public class ImageReader implements Serializable {
         float[][] imagesAsMatrices = new float[batchSize][];
         oneHotOutputs = new float[batchSize][];
 
-        if (CSV = true) {
+        if (CSV) {
             //CSV format of label - can be used for multiple outputs
             allFilesCSVLabel = file.listFiles();
             for (int a = 0; a < batchSize; a++) {
@@ -240,12 +240,28 @@ public class ImageReader implements Serializable {
         }
     }
 
-    public float[] unpreprocessExample(float[] in) {
+    public float[] unpreproccessExample(float[] in) {
         float[] out = new float[in.length];
         for (int i = 0; i < in.length; i++) {
             out[i] = in[i] * standardDeviation + mean;
         }
         return out;
+    }
+
+    public float[][][] unpreproccessExample(float[][][] in) {
+        float[][][] out = new float[in.length][][];
+
+        for(int i = 0; i < out.length; i++) {
+            out[i] = new float[in[i].length][];
+            for(int u = 0; u < out[i].length; u++) {
+                out[i][u] = new float[in[i][u].length];
+                for(int a = 0; a < out[i][u].length; a++) {
+                    out[i][u][a] = in[i][u][a] * standardDeviation + mean;
+                }
+            }
+        }
+        return out;
+
     }
 
     public void setPreprocessParameters(float[][] in) {

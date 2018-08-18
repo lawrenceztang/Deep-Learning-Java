@@ -312,8 +312,7 @@ public class ArrOperations {
 
         for (int i = 0; i < width; i++) {
             for (int u = 0; u < height; u++) {
-
-                Color color = new Color((int) in[i * height * 3 + u * 3], (int) in[i * height * 3 + u * 3 + 1], (int) in[i * height * 3 + u * 3 + 2]);
+                Color color = new Color((int) inTheRange(in[i * height * 3 + u * 3], 0, 255), (int) inTheRange(in[i * height * 3 + u * 3 + 1], 0, 255), (int) inTheRange(in[i * height * 3 + u * 3 + 2], 0, 255));
                 out.setRGB(i, u, color.getRGB());
             }
         }
@@ -377,12 +376,20 @@ public class ArrOperations {
 
     public static float[][][] makeCopy(float[][][] in) {
         float[][][] out = new float[in.length][][];
-        for (int i = 0; i < in.length; i++) {
-            out[i] = new float[in[i].length][];
-            for (int u = 0; u < in[i].length; u++) {
-                out[i][u] = new float[in[i][u].length];
-                for (int a = 0; a < in[i][u].length; a++) {
-                    out[i][u][a] = in[i][u][a];
+        if (in != null) {
+            for (int i = 0; i < in.length; i++) {
+                if (in[i] != null) {
+                    out[i] = new float[in[i].length][];
+
+                    for (int u = 0; u < in[i].length; u++) {
+                        if (in[i][u] != null) {
+                            out[i][u] = new float[in[i][u].length];
+
+                            for (int a = 0; a < in[i][u].length; a++) {
+                                out[i][u][a] = in[i][u][a];
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -391,9 +398,14 @@ public class ArrOperations {
 
     public static float[][] makeCopy(float[][] in) {
         float[][] out = new float[in.length][];
-        for (int i = 0; i < in.length; i++) {
-            for (int p = 0; p < in[i].length; p++) {
-                out[i][p] = in[i][p];
+        if (in != null) {
+            for (int i = 0; i < in.length; i++) {
+                if (in[i] != null) {
+                    out[i] = new float[in[i].length];
+                    for (int p = 0; p < in[i].length; p++) {
+                        out[i][p] = in[i][p];
+                    }
+                }
             }
         }
         return out;
@@ -454,5 +466,14 @@ public class ArrOperations {
             }
         }
         return out;
+    }
+
+    public static float inTheRange(float in, float lower, float upper) {
+        if (in > upper) {
+            return upper;
+        } else if (in < lower) {
+            return lower;
+        }
+        return in;
     }
 }

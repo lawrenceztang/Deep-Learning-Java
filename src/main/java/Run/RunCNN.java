@@ -1,9 +1,12 @@
 package Run;
 
+import Display.DisplayImage;
 import Network.ConvNetwork;
 import Network.DenseNetwork;
 import Reader.ImageReader;
 import Util.ArrOperations;
+
+import java.awt.image.BufferedImage;
 
 public class RunCNN {
 
@@ -57,6 +60,16 @@ public class RunCNN {
         }
 
         System.out.println(network.test(trainingData, trainingDataOutputs));
+
+        ConvNetwork.DeepDream dream = network.new DeepDream(trainingData[0], 100);
+        for(int i = 0; i < 100; i++) {
+            dream.updateImage(0);
+        }
+        BufferedImage dreamedImage = ArrOperations.convertArrayToImage(reader.unpreproccessExample(dream.image));
+        BufferedImage previousImage = ArrOperations.convertArrayToImage(reader.unpreproccessExample(trainingData[0]));
+        System.out.println(network.predictOutput(dream.image));
+        new DisplayImage(dreamedImage);
+        new DisplayImage(previousImage);
     }
 
 

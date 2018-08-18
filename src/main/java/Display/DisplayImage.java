@@ -21,7 +21,6 @@ public class DisplayImage {
         lbl.setIcon(icon);
         frame.add(lbl);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public DisplayImage(BufferedImage img, JFrame frame) throws IOException
@@ -33,6 +32,5 @@ public class DisplayImage {
         lbl.setIcon(icon);
         frame.add(lbl);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

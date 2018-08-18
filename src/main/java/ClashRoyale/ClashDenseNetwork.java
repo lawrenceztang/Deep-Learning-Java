@@ -1,74 +1,39 @@
 package ClashRoyale;
 
+import Network.DenseNetwork;
 import Util.ArrOperations;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 
-public class ClashDenseNetwork implements Serializable {
-    Random rand;
+public class ClashDenseNetwork extends DenseNetwork {
 
-    //constants
-    public final static int UPDATE_SGD = 0;
-    public final static int UPDATE_MOMENTUM = 1;
-    public final static int UPDATE_NESTEROV = 2;
-    public final static int UPDATE_RMSPROP = 3;
+    float learningRateRegression;
 
-    final static float WEIGHT_DROPPED_OUT = 0;
-
-
-    //hyperparameters
-    public int layers;
-    public int[] nodesPerLayer;
-    public int numInputs;
-    public int numOutputs;
-    public float learningRate[];
-    public float momentum;
-    float dropoutProbability = 1;
-    int updateRule = 0;
-
-
-    //learned parameters
-    float[][][] weights;
-    float[][] biases;
-    float[][] derivativesErrorWithRespectToBiases;
-    public float[][][] derivativesErrorWithRespectToWeights;
-    float[][] outputsInAllLayers;
-    float[][][] weightMomentumUpdate;
-    float[][] derivativesErrorWithRespectToInputsToActivation;
-    float[][][] weightsAfterDropout;
-
-    public ClashDenseNetwork(int[] nodesPerLayer, float[] learningRate, int updateRule, float momentum, float dropoutProbability) {
-        rand = new Random();
-        outputsInAllLayers = new float[nodesPerLayer.length][];
-        weightsAfterDropout = new float[nodesPerLayer.length][][];
-
-        //layers includes output and input layer
-        this.layers = nodesPerLayer.length;
-        this.nodesPerLayer = nodesPerLayer;
-        this.numInputs = nodesPerLayer[0];
-        this.numOutputs = nodesPerLayer[nodesPerLayer.length - 1];
-        this.learningRate = learningRate;
-        this.updateRule = updateRule;
-        this.momentum = momentum;
-        this.dropoutProbability = dropoutProbability;
-
-        setWeights();
+    public ClashDenseNetwork(int[] nodesPerLayer, float[] learningRate, float learningRateRegression, int updateRule, float momentum, float dropoutProbability) {
+        super(nodesPerLayer, learningRate, updateRule, momentum, dropoutProbability);
+        this.learningRateRegression = learningRateRegression;
     }
 
     public void gradientDescent() {
 
         for (int i = 1; i < weights.length; i++) {
-            int nodesPreviousLayer = nodesPerLayer[i - 1];
             for (int t = 0; t < weights[i].length; t++) {
                 for (int y = 0; y < weights[i][t].length; y++) {
-                    if (weightsAfterDropout[i][t][y] != WEIGHT_DROPPED_OUT) {
-                        weightMomentumUpdate[i][t][y] = weightMomentumUpdate[i][t][y] * momentum + (1 - momentum) * learningRate[i] * derivativesErrorWithRespectToWeights[i][t][y];
-                        weights[i][t][y] = weights[i][t][y] - weightMomentumUpdate[i][t][y];
+                    float rate;
+                    if(i == weights.length - 1 && t == 3 || t == 4) {
+                        rate = learningRateRegression;
+                    }
+                    else {
+                        rate = learningRate[i];
                     }
 
-                    biases[i][t] = biases[i][t] - derivativesErrorWithRespectToBiases[i][t] * learningRate[i] * .01f;
+                    weightMomentumUpdate[i][t][y] = weightMomentumUpdate[i][t][y] * momentum + (1 - momentum) * rate * derivativesErrorWithRespectToWeights[i][t][y];
+                    weights[i][t][y] = weights[i][t][y] - weightMomentumUpdate[i][t][y];
+
+                    biases[i][t] = biases[i][t] - derivativesErrorWithRespectToBiases[i][t] * rate * .01f;
                 }
             }
         }
@@ -97,11 +62,11 @@ public class ClashDenseNetwork implements Serializable {
             forwardPass(inputs[w]);
 
             if (outputs[0][0] == 1) {
-                for (int i = 3; i < outputs.length; i++) {
+                for (int i = 3; i < outputs[0].length; i++) {
                     outputsInAllLayers[layers - 1][i] = outputs[0][i];
                 }
             } else if (outputs[0][1] == 1) {
-                for (int i = 5; i < outputs.length; i++) {
+                for (int i = 5; i < outputs[0].length; i++) {
                     outputsInAllLayers[layers - 1][i] = outputs[0][i];
                 }
             } else if (outputs[0][2] == 1) {
@@ -117,7 +82,7 @@ public class ClashDenseNetwork implements Serializable {
                     for (int j = 0; j < 3; j++) {
                         derivativesErrorWithRespectToInputsToActivation[p][j] = temp1[j];
                     }
-                    for(int j = 5; j < outputs[0].length; j++) {
+                    for (int j = 5; j < outputs[0].length; j++) {
                         derivativesErrorWithRespectToInputsToActivation[p][j] = temp2[j];
                     }
                     derivativesErrorWithRespectToInputsToActivation[p][3] = ArrOperations.getDerivativeFromMSE(outputs[w], outputsInAllLayers[layers - 1])[3];
@@ -226,226 +191,27 @@ public class ClashDenseNetwork implements Serializable {
         return in;
     }
 
-    //weight initialization can be improved
-    //intialize weights at very beginning
-    public void setWeights() {
-        weights = new float[layers][][];
-        biases = new float[layers][];
-        for (int i = 0; i < layers; i++) {
-            weights[i] = new float[nodesPerLayer[i]][];
-            biases[i] = new float[nodesPerLayer[i]];
-            //last layer - numOutputs outputs
+    public float testLoss(float[][] in, float[][] out) throws Exception {
+        int loss = 0;
+        for (int a = 0; a < out.length; a++) {
+            float[] prediction = predictOutput(in[a]);
 
-            if (i == 0) {
-                //no weights first layer or input layer
-            } else {
-                for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    weights[i][a] = new float[nodesPerLayer[i - 1]];
-                    biases[i][a] = ArrOperations.gaussianRandomVariable(.01f, 0);
-                    for (int u = 0; u < nodesPerLayer[i - 1]; u++) {
-                        weights[i][a][u] = ArrOperations.gaussianRandomVariable((float) Math.sqrt(2 / ((float) nodesPerLayer[i - 1] + (float) nodesPerLayer[i])), 0);
-                    }
+            if (out[a][0] == 1) {
+                for (int i = 3; i < out[a].length; i++) {
+                    prediction[i] = out[a][i];
                 }
+            } else if (out[a][1] == 1) {
+                for (int i = 5; i < out[a].length; i++) {
+                    prediction[i] = out[a][i];
+                }
+            } else if (out[a][2] == 1) {
+                prediction[3] = out[a][3];
+                prediction[4] = out[a][4];
             }
+
+            loss += ArrOperations.meanSquaredError(prediction, out[a]);
         }
-        weightMomentumUpdate = getNewDerivativeWeights();
-        weightsAfterDropout = weights;
-    }
-
-    public float[][] getNewDerivativeBiasesAndOutputs() {
-        float[][] derivativesErrorWithRespectToBiasesCopy = new float[layers][];
-        for (int i = 0; i < layers; i++) {
-            derivativesErrorWithRespectToBiasesCopy[i] = new float[nodesPerLayer[i]];
-            if (i == 0) {
-                //no weights first layer or input layer
-            } else {
-                for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    derivativesErrorWithRespectToBiasesCopy[i][a] = 0f;
-                }
-            }
-        }
-        return derivativesErrorWithRespectToBiasesCopy;
-    }
-
-    public float[][][] getNewDerivativeWeights() {
-        float[][][] derivativesErrorWithRespectToWeightsCopy = new float[layers][][];
-        for (int i = 0; i < layers; i++) {
-            derivativesErrorWithRespectToWeightsCopy[i] = new float[nodesPerLayer[i]][];
-
-            if (i == 0) {
-                //no weights first layer or input layer
-            } else {
-                for (int a = 0; a < nodesPerLayer[i]; a++) {
-                    derivativesErrorWithRespectToWeightsCopy[i][a] = new float[nodesPerLayer[i - 1]];
-                    for (int u = 0; u < nodesPerLayer[i - 1]; u++) {
-                        derivativesErrorWithRespectToWeightsCopy[i][a][u] = 0f;
-                    }
-                }
-            }
-        }
-        return derivativesErrorWithRespectToWeightsCopy;
-    }
-
-
-    public void setDropout() {
-        if (dropoutProbability == 1) {
-            weightsAfterDropout = weights;
-            return;
-        }
-        dropoutProbability = dropoutProbability;
-        weightsAfterDropout = getNewDerivativeWeights();
-        for (int i = 1; i < weights.length; i++) {
-            for (int a = 0; a < weights[i].length; a++) {
-                for (int q = 0; q < weights[i][a].length; q++) {
-                    if (rand.nextFloat() >= dropoutProbability) {
-                        //will be ignored when doing backpropogation and gradient descent
-                        weightsAfterDropout[i][a][q] = WEIGHT_DROPPED_OUT;
-                    }
-                }
-            }
-        }
-    }
-
-    public void setUpdateRule() {
-        if (updateRule == UPDATE_NESTEROV) {
-            for (int i = 1; i < weightsAfterDropout.length; i++) {
-                for (int u = 0; u < weightsAfterDropout[i].length; u++) {
-                    for (int a = 0; a < weightsAfterDropout[i][u].length; a++) {
-                        if (weightsAfterDropout[i][u][a] != WEIGHT_DROPPED_OUT) {
-                            weightsAfterDropout[i][u][a] += weightMomentumUpdate[i][u][a] * momentum;
-                        }
-                    }
-                }
-            }
-        } else {
-
-        }
-    }
-
-    //tests on dataset, returns percentage accurate
-    public float test(float[][] in, float[][] out) throws Exception {
-        int numCorrect = 0;
-        for (int i = 0; i < in.length; i++) {
-            float[] array = predictOutput(in[i]);
-            int prediction = 0;
-
-            for (int p = 0; p < array.length; p++) {
-                if (array[p] > array[prediction]) {
-                    prediction = p;
-                }
-            }
-
-            int output = 0;
-            for (int p = 0; p < array.length; p++) {
-                if (out[i][p] > out[i][output]) {
-                    output = p;
-                }
-            }
-
-            if (prediction == output) {
-                numCorrect++;
-            }
-        }
-        return numCorrect / (float) in.length;
-    }
-
-
-    //NOTE: convenience methods not central to the neural network
-
-    //not working
-    public void setLearningRateAutomatically(float[][] trainingDataOutputs) {
-        float maxOutput = -9999;
-        float minOutput = 9999;
-        for (int i = 0; i < 100; i++) {
-            for (int p = 0; p < trainingDataOutputs[i].length; p++) {
-                if (trainingDataOutputs[i][p] > maxOutput) {
-                    maxOutput = trainingDataOutputs[i][p];
-                } else if (trainingDataOutputs[i][p] < minOutput) {
-                    minOutput = trainingDataOutputs[i][p];
-                }
-            }
-        }
-        for (int i = 1; i < learningRate.length - 1; i++) {
-            learningRate[i] = 10 / nodesPerLayer[i];
-        }
-    }
-
-    //doesnt work if dropout is used
-    public float derivativeOfWeightCheck(float[] in, float[] out, int layer, int node, int previousLayerNode) throws Exception {
-        float interval = .0001f;
-        weights[layer][node][previousLayerNode] -= interval;
-        float loss = ArrOperations.meanSquaredError(predictOutput(in), out);
-        weights[layer][node][previousLayerNode] += interval * 2;
-        float output = (ArrOperations.meanSquaredError(predictOutput(in), out) - loss) / interval / 2;
-        weights[layer][node][previousLayerNode] -= interval;
-        return output;
-    }
-
-    public class DeepDream {
-        ClashDenseNetwork network;
-        public float[] image;
-        float[] derivativeErrorWithRespectToInputs;
-
-        float learningRate = 1;
-        float max = -9999;
-        float min = 9999;
-
-        public DeepDream(ClashDenseNetwork network, float[] image, float learningRate) {
-            this.network = network;
-            this.image = ArrOperations.makeCopy(image);
-            this.learningRate = learningRate;
-
-
-            for (int i = 0; i < image.length; i++) {
-                if (image[i] > max) {
-                    max = image[i];
-                }
-                if (image[i] < min) {
-                    min = image[i];
-                }
-            }
-        }
-
-        public void updateImage(int desiredOutput) throws Exception {
-
-            derivativeErrorWithRespectToInputs = new float[image.length];
-            for (int i = 0; i < image.length; i++) {
-                derivativeErrorWithRespectToInputs[i] = 0f;
-            }
-
-            float[] outputs = new float[network.numOutputs];
-            for (int i = 0; i < network.numOutputs; i++) {
-                if (i == desiredOutput) {
-                    outputs[i] = 0f;
-                } else {
-                    outputs[i] = 0f;
-                }
-            }
-            float[][] inputsToNetwork = new float[1][];
-            inputsToNetwork[0] = image;
-
-            float[][] outputsOfNetwork = new float[1][];
-            outputsOfNetwork[0] = outputs;
-
-
-            network.getDerivativeOfErrorWithRespectToWeights(inputsToNetwork, outputsOfNetwork);
-
-            for (int i = 0; i < network.derivativesErrorWithRespectToInputsToActivation[1].length; i++) {
-                for (int u = 0; u < network.numInputs; u++) {
-                    derivativeErrorWithRespectToInputs[u] += network.derivativesErrorWithRespectToInputsToActivation[1][i] * network.weights[1][i][u];
-                }
-            }
-
-            for (int i = 0; i < derivativeErrorWithRespectToInputs.length; i++) {
-                image[i] = image[i] - derivativeErrorWithRespectToInputs[i] * learningRate;
-                if (image[i] < min) {
-                    image[i] = min;
-                }
-                if (image[i] > max) {
-                    image[i] = max;
-                }
-            }
-        }
+        return loss / (float) in.length;
     }
 
 
