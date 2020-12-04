@@ -1,5 +1,7 @@
 # Deep-Learning-Java
-* Deep learning library with neural networks, autoencoders and clusterinig in Java.
+* Neural network library that contains vanilla neural networks, convolutional neural networks, autoencoders, and deep dreaming
+
+* Was able to achieve over 95% testing accuracy on the MNIST dataset
 
 * Run example at src/main/java/Run/RunFullyConnected.java
   
